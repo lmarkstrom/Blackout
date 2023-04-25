@@ -28,7 +28,7 @@ public class Panel extends JPanel implements Runnable{
     private KeyHandler keyHandler = new KeyHandler();
     private Player player = new Player(keyHandler);
     private TileManager tileManager = new TileManager(this, player);
-
+    private CollisionHandler collisionHandler = new CollisionHandler(player, this, tileManager);
 
     public Panel(){
         // setUp game panel
@@ -68,6 +68,7 @@ public class Panel extends JPanel implements Runnable{
      */
     public void update() {
         // call method that should be updated here:
+        collisionHandler.update();
         player.update();
       
     }
