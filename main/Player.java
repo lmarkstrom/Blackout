@@ -53,7 +53,7 @@ public class Player  {
        }
 
        if(!collide){
-            y += 1;
+            y += 5;
             System.out.println(y);
             System.out.println(collide);
         }

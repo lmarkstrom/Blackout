@@ -21,6 +21,7 @@ public class Panel extends JPanel implements Runnable{
     public final int maxRows = 8;
     public final int width = tileSize*maxCol;
     public final int height = tileSize*maxRows;
+    public final int FPS = 60;
 
     // thread that runs the game update and drawing
     public Thread thread;
@@ -54,8 +55,28 @@ public class Panel extends JPanel implements Runnable{
      */
     @Override
     public void run() {
+        // FPS setup
+        double drawInterval = 1000000000/FPS;
+        double nextDrawTime = System.nanoTime() + drawInterval;
+        double timePassed = System.nanoTime();
         // game loop
         while(thread != null){
+            // FPS calculator
+            if(System.nanoTime() - timePassed > 1000000000) {
+                timePassed = System.nanoTime();
+            }
+            try {
+                double remainingTime = nextDrawTime - System.nanoTime();
+                remainingTime = remainingTime/1000000;
+                if(remainingTime < 0){
+                    remainingTime = 0;
+                }
+                Thread.sleep((long) remainingTime);
+            } 
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            nextDrawTime += drawInterval;
             // update for position and physics
             update();
             // update for painting graphics
