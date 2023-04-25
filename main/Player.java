@@ -1,9 +1,11 @@
+package main;
+
 import java.awt.Color;
 import java.awt.Graphics;
 
 public class Player  {
     
-    private int x;
+    public int x;
     private int y;
     public Color red = Color.RED;
     KeyHandler keyHandler;

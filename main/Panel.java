@@ -1,3 +1,5 @@
+package main;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -12,19 +14,20 @@ import javax.swing.JPanel;
  */
 public class Panel extends JPanel implements Runnable{
     // fields
-    private final int tileSize = 32;
-    private final int scale = 3;
-    private final int maxCol = 12;
-    private final int maxRows = 8;
-    private final int width = tileSize*scale*maxCol;
-    private final int height = tileSize*scale*maxRows;
+    private final int tilePixels = 32;
+    public final int scale = 3;
+    public final int tileSize = tilePixels*scale;
+    public final int maxCol = 12;
+    public final int maxRows = 8;
+    public final int width = tileSize*maxCol;
+    public final int height = tileSize*maxRows;
 
     // thread that runs the game update and drawing
     public Thread thread;
-
     
-    KeyHandler keyHandler = new KeyHandler();
-    Player player = new Player(keyHandler);
+    private KeyHandler keyHandler = new KeyHandler();
+    private Player player = new Player(keyHandler);
+    private TileManager tileManager = new TileManager(this, player);
 
 
     public Panel(){
@@ -84,7 +87,7 @@ public class Panel extends JPanel implements Runnable{
         g.drawString("String", 10, 14);
 
         // call method to paint player and map here:
-
+        tileManager.draw(g);
         player.draw(g);
 
         // dispose graphic
