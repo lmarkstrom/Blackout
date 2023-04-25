@@ -23,7 +23,6 @@ public class TileManager {
     
     /**
     Constructor for the TileManager class.
-    
     @param panel The game panel object.
     @param player The player object.
     */
