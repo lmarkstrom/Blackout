@@ -8,10 +8,6 @@ import javax.imageio.ImageIO;
 
 public class TileManager {
     // constants
-    // final static int maxCols = 40;
-    // final static int maxRows = panel.maxRows;
-    // final static int tileSize = panel.tileSize;
-    // final static int scale = panel.scale;
     public int map[][];
     private int posX;
 
