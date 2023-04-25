@@ -6,7 +6,11 @@ import java.awt.Graphics;
 public class Player  {
     
     public int x;
-    private int y;
+    public int y;
+    public int speed;
+    public int gravity;
+    public boolean collide;
+    public int movement;
     public Color red = Color.RED;
     KeyHandler keyHandler;
 
