@@ -2,7 +2,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-
 import javax.swing.JPanel;
 
 /**
@@ -13,15 +12,19 @@ import javax.swing.JPanel;
  */
 public class Panel extends JPanel implements Runnable{
     // fields
-    private final int WIDTH = 400;
-    private final int HEIGHT = 400;
+    private final int tileSize = 32;
+    private final int scale = 3;
+    private final int maxCol = 12;
+    private final int maxRows = 8;
+    private final int width = tileSize*scale*maxCol;
+    private final int height = tileSize*scale*maxRows;
 
     // thread that runs the game update and drawing
     public Thread thread;
 
     public Panel(){
         // setUp game panel
-        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        this.setPreferredSize(new Dimension(width, height));
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true); // Buffer to the panel, so it starts painting before the next drawtime
         this.setFocusable(true);
