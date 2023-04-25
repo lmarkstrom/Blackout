@@ -9,3 +9,12 @@
 * Sekundär updelning: Updelning utifrån nya funktioner som ska integreras i mån av tid
 
 * Group members: **Elsa, Linus, Albin**
+
+### Install and use instructions
+För att installera och köra programmet, ladda ner programmet och kompliera och kör Main.java klassen.
+
+Spelaren kontrolleras genom WASD eller piltangenterna. 
+ - Gå höger (Pil höger / D)
+ - Gå vänster (Pil vänster / A)
+ - Hoppa (Pil upp / W)
+ - Ducka (Pil ner / S)
