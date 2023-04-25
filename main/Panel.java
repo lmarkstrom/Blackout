@@ -26,7 +26,7 @@ public class Panel extends JPanel implements Runnable{
     public Thread thread;
     
     private KeyHandler keyHandler = new KeyHandler();
-    private Player player = new Player(keyHandler);
+    private Player player = new Player(keyHandler, this);
     private TileManager tileManager = new TileManager(this, player);
     private CollisionHandler collisionHandler = new CollisionHandler(player, this, tileManager);
 
