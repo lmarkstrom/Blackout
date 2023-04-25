@@ -21,7 +21,7 @@ public class TileManager {
     private Player player;
     
     /**
-    Constructor for the TileManager class.
+    Constructor for the TileManager class. 
     @param panel The game panel object.
     @param player The player object.
     */
