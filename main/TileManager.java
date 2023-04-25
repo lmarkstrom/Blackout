@@ -6,6 +6,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import javax.imageio.ImageIO;
 
+/**
+TileManager class is responsible for managing the game tiles, loading the map
+layout, and rendering the tiles on the screen. It uses a 2D array to store
+the map layout and a separate array to store the tile images.
+*/
 public class TileManager {
     // constants
     public int map[][];
@@ -16,7 +21,12 @@ public class TileManager {
     public Tile[] tiles;
     private Player player;
     
-
+    /**
+    Constructor for the TileManager class.
+    
+    @param panel The game panel object.
+    @param player The player object.
+    */
     public TileManager(Panel panel, Player player){
         this.panel = panel;
         this.player = player;
@@ -28,8 +38,11 @@ public class TileManager {
     }
 
     /**
-     * Loads in the images for the different tiles
-     */
+    Loads the images for the different tiles and returns an array of Tile
+    objects.
+    
+    @return An array of Tile objects containing the loaded images.
+    */
     private Tile[] getTileImage() {
         Tile[] tile = new Tile[10];
         try {
@@ -43,18 +56,17 @@ public class TileManager {
     }
 
     /**
-     * Updates the cam position
-     */
+    Updates the camera position according to the player's position.
+    */
     public void update(){
         posX = player.x;
     }
     
     /**
-     * Draws the tiles
-     * 
-     * @param g
-     * @param player
-     */
+    Draws the tiles on the game panel.
+    
+    @param g The Graphics object to draw the tiles with.
+    */
     public void draw(Graphics g){
         int x = 0;
         int y = 0;
@@ -69,8 +81,8 @@ public class TileManager {
     }
 
     /**
-     * Loads the map schedule
-     */
+    Loads the map layout from a text file into a 2D array.
+    */
     public void loadMap(){
         try {
             InputStream stream = getClass().getResourceAsStream("/data/map.txt");
