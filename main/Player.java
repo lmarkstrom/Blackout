@@ -17,11 +17,11 @@ public class Player  {
     }
 
     public void update(){
-       if (keyHandler.right == true){
-            x += 1;
+       if (keyHandler.right){
+            x ++;
             keyHandler.right = false;
-       } else if(keyHandler.left == true){
-            x -= 1;
+       } else if(keyHandler.left){
+            x --;
             keyHandler.left = false;
        }
     }

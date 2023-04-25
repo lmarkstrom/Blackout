@@ -30,6 +30,14 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
      
+        // int key = e.getKeyCode();
+
+        // if(key == KeyEvent.VK_LEFT){
+        //     left = false;
+        // }
+        // if(key == KeyEvent.VK_RIGHT){
+        //     right = false;
+        // }
         // TODO Auto-generated method stub
         //throw new UnsupportedOperationException("Unimplemented method 'keyReleased'");
     }
