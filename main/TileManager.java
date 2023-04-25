@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import javax.imageio.ImageIO;
 
 /**
 TileManager class is responsible for managing the game tiles, loading the map
@@ -23,7 +22,6 @@ public class TileManager {
     
     /**
     Constructor for the TileManager class.
-    
     @param panel The game panel object.
     @param player The player object.
     */
@@ -72,7 +70,7 @@ public class TileManager {
         int y = 0;
         while(x < panel.maxCol && y < panel.maxRows){
             while(x < panel.maxCol){
-                g.drawImage(tiles[map[x][y]].image, (x*panel.tileSize + posX), (y*panel.tileSize), panel.tileSize, panel.tileSize, null);
+                g.drawImage(tiles[map[x][y]].image, (x*panel.tileSize - posX), (y*panel.tileSize), panel.tileSize, panel.tileSize, null);
                 x++;
             }
             if(x == panel.maxCol) x = 0;   

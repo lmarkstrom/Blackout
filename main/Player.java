@@ -22,10 +22,10 @@ public class Player  {
 
     public void update(){
        if (keyHandler.right == true){
-            x += 1;
+            x += 10;
             keyHandler.right = false;
        } else if(keyHandler.left == true){
-            x -= 1;
+            x -= 10;
             keyHandler.left = false;
        }
     }

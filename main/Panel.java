@@ -68,6 +68,7 @@ public class Panel extends JPanel implements Runnable{
      */
     public void update() {
         // call method that should be updated here:
+        tileManager.update();
         collisionHandler.update();
         player.update();
       
