@@ -7,6 +7,11 @@ public class Frame {
     private BufferedImage frame;
     private int duration;
 
+    /**
+     * @param frame
+     * @param duration
+     * @author Elsa
+     */
     public Frame(BufferedImage frame, int duration) {
         this.frame = frame;
         this.duration = duration;
