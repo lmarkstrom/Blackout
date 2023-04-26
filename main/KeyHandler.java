@@ -1,10 +1,12 @@
 package main;
 
-
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+    /**
+     * KeyHandler implements KeyListener
+     * @author Elsa
+     */
 public class KeyHandler implements KeyListener {
     boolean left, right, up;
 
@@ -19,13 +21,13 @@ public class KeyHandler implements KeyListener {
         // TODO Auto-generated method stub
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_LEFT) {
+        if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
             left = true;
         }
-        if (key == KeyEvent.VK_RIGHT) {
+        if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
             right = true;
         }
-        if(key == KeyEvent.VK_UP){
+        if(key == KeyEvent.VK_UP || key == KeyEvent.VK_W){
             up = true;
         }
     }
@@ -33,14 +35,20 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
      
-        // int key = e.getKeyCode();
+        int key = e.getKeyCode();
 
-        // if(key == KeyEvent.VK_LEFT){
-        //     left = false;
-        // }
-        // if(key == KeyEvent.VK_RIGHT){
-        //     right = false;
-        // }
+        if(key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A){
+            left = false;
+        }
+
+        if(key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D){
+            right = false;
+        }
+
+        if(key == KeyEvent.VK_UP || key == KeyEvent.VK_W){
+            up = false;
+        }
+
         // TODO Auto-generated method stub
         //throw new UnsupportedOperationException("Unimplemented method 'keyReleased'");
     }
