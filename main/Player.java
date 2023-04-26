@@ -61,13 +61,13 @@ public class Player  {
      */
     public void update(){
        if (keyHandler.right){
-            x += 10;
             animation.start();
+            x += 10;
             direction = size;
        } else if(keyHandler.left){
+            animation.start();
             x -= 10;
             direction = -size;
-            animation.start();
        }  
        if(keyHandler.up && y >= ground){ 
             y -= 200;
