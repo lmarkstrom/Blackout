@@ -16,9 +16,7 @@ public class Player  {
     public int movement;
     private int size;
     private KeyHandler keyHandler;
-    private BufferedImage image, walk, walk1, walk2;
-    private BufferedImage[] walkingFrames;
-    private Animation walkRight;
+    private BufferedImage image, walk;
     private Animation animation;
 
     /**
@@ -36,13 +34,6 @@ public class Player  {
         // y = panel.height/2;
         y = 0;
         loadTextures();
-        // init();
-    }
-
-    private void init(){
-        walkingFrames = new BufferedImage[] {getSprite(walk, 0, 1), getSprite(walk, 0, 2)};
-        walkRight = new Animation(walkingFrames, 10);
-        animation = new Animation(walkingFrames, 10);
     }
 
     /**
@@ -52,18 +43,15 @@ public class Player  {
         try{
             image = ImageIO.read(getClass().getResourceAsStream("/tex/player.png"));
             walk = ImageIO.read(getClass().getResourceAsStream("/tex/walk.png"));
-            walk1 = ImageIO.read(getClass().getResourceAsStream("/tex/walk-1.png.png"));
-            walk2 = ImageIO.read(getClass().getResourceAsStream("/tex/walk-2.png.png"));
-            // walkingFrames.add(walk);
+
+            animation = new Animation(walk, 10, 2, 1);
+
         }
         catch(Exception e){
             System.out.println(e);
         }
     }
 
-    private BufferedImage getSprite(BufferedImage sprite, int xGrid, int yGrid){
-        return sprite.getSubimage(xGrid*size, yGrid*size, size, size);
-    }
 
     /**
      * uppdate movment
@@ -85,8 +73,7 @@ public class Player  {
        if(!collide){
             y += 5;
         }
-        // animation.update();
-
+        animation.update();
     }
 
 
@@ -99,11 +86,8 @@ public class Player  {
 
         g.drawImage(image, xx, y, size, size, null);
 
-        // int height = walk.getHeight()/2;
-        // g.drawImage(walk, 300, 300, size, size, null);
-        // g.drawImage(getSprite(walk), 300, 300, size, size, null);
-        g.drawImage(walk2, 300, 300, size, size, null);
 
+        g.drawImage(animation.getSprite(), xx-100, y, size, size, null);
 
     }
 }
