@@ -10,8 +10,8 @@ public class Animation {
     private int frameDelay;
     private int currentFrame;
     private int totalFrames;              
-    private BufferedImage[] walkingFrames;
     private List<Frame> frames = new ArrayList<Frame>();  
+
     private int col, row, height, width;
     private boolean stopped;
 
@@ -30,21 +30,13 @@ public class Animation {
         stopped = true;
         height = sprite.getHeight();
         width = sprite.getWidth();
+        this.ticks = 0;
+        this.currentFrame = 0;
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
+                addFrame(getSprite(sprite, j, i));
             }
         }
-        //TODO skapa inte detta manuellt utan i for-looparna på något sätt 
-        walkingFrames = new BufferedImage[] {getSprite(sprite, 0, 0), getSprite(sprite, 0, 1)};
-
-
-        for (int i = 0; i < walkingFrames.length; i++) {
-            addFrame(walkingFrames[i], frameDelay);
-        }
-
-        this.ticks = 0;
-        this.frameDelay = frameDelay;
-        this.currentFrame = 0;
         this.totalFrames = this.frames.size();
     }
 
@@ -59,18 +51,12 @@ public class Animation {
     }
 
     /**
-     * adds frame to frames list of frames
+     * adds frame to list of frames: frames
      * changes currentframe to 0
      * @param frame
-     * @param duration
      */
-    private void addFrame(BufferedImage frame, int duration) {
-        if (duration <= 0) {
-            System.err.println("Invalid duration: " + duration);
-            throw new RuntimeException("Invalid duration: " + duration);
-        }
-
-        frames.add(new Frame(frame, duration));
+    private void addFrame(BufferedImage frame) {
+        frames.add(new Frame(frame));
         currentFrame = 0;
     }
 
@@ -115,6 +101,7 @@ public class Animation {
     }
     /**
      * runs the animation
+     * change current frame
      */
     public void update() {
         if (!stopped) {
