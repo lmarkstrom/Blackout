@@ -2,7 +2,6 @@ package main;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-
 import javax.imageio.ImageIO;
 
 public class Player  {
@@ -48,7 +47,6 @@ public class Player  {
             walk = ImageIO.read(getClass().getResourceAsStream("/tex/walk.png"));
 
             animation = new Animation(walk, 10, 2, 1);
-
         }
         catch(Exception e){
             System.out.println(e);
@@ -86,8 +84,6 @@ public class Player  {
         animation.update();
     }
 
-
-
     /**
      * draw player
      * @param g
@@ -96,10 +92,6 @@ public class Player  {
 
         g.drawImage(image, xx, y, size, size, null);
 
-        g.drawImage(animation.getSprite(), xx-100, y, direction, size, null);
-        // går baklänges ska första size va -
-        //TODO teleportera inte när du byter riktining
-        // så du måste lösa på något annat sätt med direction
-
+        g.drawImage(animation.getSprite(), xx-direction/2, y, direction, size, null);
     }
 }
