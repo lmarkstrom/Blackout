@@ -18,7 +18,7 @@ public class CollisionHandler{
     private void controllGround(){
         // setting up values of the player pos
         double playerPosYBottom = player.y + panel.tileSize + player.speed + player.gravity;
-        int playerPosX = panel.width/2 + player.x + panel.tileSize/2;
+        int playerPosX = panel.width/2 + player.x;
         int playerCol = playerPosX/panel.tileSize;
         int bottomRow = (int) playerPosYBottom/panel.tileSize;
         player.collideY = false;

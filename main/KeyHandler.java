@@ -12,13 +12,11 @@ public class KeyHandler implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
         //throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        // TODO Auto-generated method stub
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
@@ -49,7 +47,6 @@ public class KeyHandler implements KeyListener {
             up = false;
         }
 
-        // TODO Auto-generated method stub
         //throw new UnsupportedOperationException("Unimplemented method 'keyReleased'");
     }
 

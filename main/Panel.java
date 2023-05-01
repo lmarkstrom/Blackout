@@ -4,9 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import javax.swing.JPanel;
 
@@ -67,7 +64,7 @@ public class Panel extends JPanel implements Runnable{
         double nextDrawTime = System.nanoTime() + drawInterval;
         double timePassed = System.nanoTime();
         // game loop
-        while(thread != null){
+        while(thread != null && !player.isInMenu){
             // FPS calculator
             if(System.nanoTime() - timePassed > 1000000000) {
                 timePassed = System.nanoTime();
