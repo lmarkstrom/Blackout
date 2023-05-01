@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import javax.swing.JPanel;
 
 /**
@@ -25,10 +29,13 @@ public class Panel extends JPanel implements Runnable{
 
     // thread that runs the game update and drawing
     public Thread thread;
-    
+
     private KeyHandler keyHandler = new KeyHandler();
+
     private Player player = new Player(keyHandler, this);
+
     private TileManager tileManager = new TileManager(this, player);
+
     private CollisionHandler collisionHandler = new CollisionHandler(player, this, tileManager);
 
     public Panel(){
@@ -38,9 +45,12 @@ public class Panel extends JPanel implements Runnable{
         this.setDoubleBuffered(true); // Buffer to the panel, so it starts painting before the next drawtime
         this.setFocusable(true);
         this.addKeyListener(keyHandler);
+        //setMaxXY();
 
 
     }
+
+
 
     /*
      * Sets up the thread that runs the game

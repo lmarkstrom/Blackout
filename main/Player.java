@@ -18,7 +18,8 @@ public class Player  {
     public int dy;
     public int speed;
     public int gravity;
-    public boolean collide;
+    public boolean collideX;
+    public boolean collideY;
     public int movement;
     private int size;
     private KeyHandler keyHandler;
@@ -80,7 +81,7 @@ public class Player  {
        }  
        if(keyHandler.up && y >= ground){ 
             dy -= 15;
-            collide = false;
+            collideY = false;
             keyHandler.up = false;
        }
 
@@ -89,7 +90,7 @@ public class Player  {
             animation.reset();
        } 
 
-       if(!collide){
+       if(!collideY){
             y += dy;
             dy += gravity;
         } else {
