@@ -128,12 +128,4 @@ public class TileManager {
             System.out.println(e);
         }
     }
-
-    /**
-     * Returns the tile at the Y coordinate of the X coordinate of the player
-     */
-
-    // public int tileAt(int y) {
-
-    // }
 }

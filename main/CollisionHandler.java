@@ -18,14 +18,14 @@ public class CollisionHandler{
     private void controllGround(){
         // setting up values of the player pos
         double playerPosYBottom = player.y + panel.tileSize + player.speed + player.gravity;
-        int playerPosX = panel.width/4 - player.x + panel.tileSize/2;
+        int playerPosX = panel.width/2 + player.x + panel.tileSize/2;
         int playerCol = playerPosX/panel.tileSize;
         int bottomRow = (int) playerPosYBottom/panel.tileSize;
         player.collideY = false;
         // controll if the player is below or above screen
         if(playerCol < tileManager.mapSizeX && playerCol >= 0 && bottomRow < tileManager.mapSizeY && bottomRow >= 0 ){
             if (playerPosYBottom > panel.height) player.collideY = true;
-            if (player.movement >= 0){
+            if (player.dy >= 0){
                 int tileVal = map[playerCol][bottomRow];
                 if (tileManager.tiles[tileVal].collision == true) player.collideY = true;
             }

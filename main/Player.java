@@ -20,7 +20,7 @@ public class Player  {
     public int gravity;
     public boolean collideX;
     public boolean collideY;
-    public int movement;
+    private int movement;
     private int size;
     private KeyHandler keyHandler;
     private BufferedImage image, walk;
