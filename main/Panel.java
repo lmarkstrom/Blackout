@@ -4,7 +4,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**
@@ -35,6 +39,8 @@ public class Panel extends JPanel implements Runnable{
 
     private CollisionHandler collisionHandler = new CollisionHandler(player, this, tileManager);
 
+    private Image backgroundImage;
+    
     public Panel(){
         // setUp game panel
         this.setPreferredSize(new Dimension(width, height));
@@ -42,6 +48,12 @@ public class Panel extends JPanel implements Runnable{
         this.setDoubleBuffered(true); // Buffer to the panel, so it starts painting before the next drawtime
         this.setFocusable(true);
         this.addKeyListener(keyHandler);
+        try { 
+            backgroundImage = ImageIO.read(new File("tex/preliminaryBackgroundImage.png"));
+        } 
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -107,6 +119,9 @@ public class Panel extends JPanel implements Runnable{
 
         // create graphic object
         Graphics2D g = (Graphics2D) graphics;
+        
+        // Draw background
+        g.drawImage(backgroundImage, 0, 0, this.getWidth(), this.getHeight(), this);
 
         // draw test
         g.setColor(Color.WHITE);
