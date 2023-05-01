@@ -30,6 +30,14 @@ public class Panel extends JPanel implements Runnable{
     private Player player = new Player(keyHandler, this);
     private TileManager tileManager = new TileManager(this, player);
     private CollisionHandler collisionHandler = new CollisionHandler(player, this, tileManager);
+    private Menu menu = new Menu(this);
+    
+    private enum STATE{
+        MENU,
+        GAME
+    }
+
+    public STATE state = STATE.MENU;
 
     public Panel(){
         // setUp game panel
@@ -38,8 +46,6 @@ public class Panel extends JPanel implements Runnable{
         this.setDoubleBuffered(true); // Buffer to the panel, so it starts painting before the next drawtime
         this.setFocusable(true);
         this.addKeyListener(keyHandler);
-
-
     }
 
     /*
@@ -89,10 +95,11 @@ public class Panel extends JPanel implements Runnable{
      */
     public void update() {
         // call method that should be updated here:
-        tileManager.update();
-        collisionHandler.update();
-        player.update();
-      
+        if(state == STATE.GAME){
+            tileManager.update();
+            collisionHandler.update();
+            player.update();
+        }
     }
 
     /*
@@ -104,15 +111,14 @@ public class Panel extends JPanel implements Runnable{
         // create graphic object
         Graphics2D g = (Graphics2D) graphics;
 
-        // draw test
-        g.setColor(Color.WHITE);
-        g.fillRect(100, 100, 200, 200);
-        g.drawString("String", 10, 14);
-
         // call method to paint player and map here:
-        tileManager.draw(g);
-        player.draw(g);
-
+        if(state == STATE.GAME){
+            tileManager.draw(g);
+            player.draw(g);
+        } else if(state == STATE.MENU){
+            menu.drawMain(g);
+        }
+        
         // dispose graphic
         g.dispose();
     }

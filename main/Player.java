@@ -46,7 +46,7 @@ public class Player  {
             image = ImageIO.read(getClass().getResourceAsStream("/tex/player.png"));
             walk = ImageIO.read(getClass().getResourceAsStream("/tex/walk.png"));
 
-            animation = new Animation(walk, 10, 2, 1);
+            animation = new Animation(walk, 10, 1, 4);
         }
         catch(Exception e){
             System.out.println(e);
@@ -90,7 +90,7 @@ public class Player  {
      */
     public void draw(Graphics g){
 
-        g.drawImage(image, xx, y, size, size, null);
+        //g.drawImage(image, xx, y, size, size, null);
 
         g.drawImage(animation.getSprite(), xx-direction/2, y, direction, size, null);
     }

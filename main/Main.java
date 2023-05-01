@@ -10,6 +10,7 @@ import javax.swing.JFrame;
  * 
  */
 class Main{
+
     public static void main(String[] args) {
         // window object
         JFrame window = new JFrame();
