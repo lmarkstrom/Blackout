@@ -79,24 +79,20 @@ public class TileManager {
     }
 
     /**
-    Loads the map layout from a text file into a 2D array.
-    */
+     * Loads the map layout from a text file into a 2D array.
+     */
     public void loadMap(){
         try {
             InputStream stream = getClass().getResourceAsStream("/data/map.txt");
             BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-            int x = 0;
-            int y = 0;
-            while(x < panel.maxCol && y < panel.maxRows){
+
+            for (int y = 0; y < panel.maxRows; y++) {
                 String line = reader.readLine();
                 String nums[] = line.split(" ");
-                while(x < panel.maxCol){
+                for (int x = 0; x < panel.maxCol; x++) {
                     int num = Integer.parseInt(nums[x]);
                     map[x][y] = num;
-                    x++;
                 }
-                if(x == panel.maxCol) x = 0;
-                y++;
             }
 
             reader.close();
@@ -104,4 +100,5 @@ public class TileManager {
             System.out.println(e);
         }
     }
+
 }

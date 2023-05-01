@@ -8,7 +8,6 @@ public class CollisionHandler{
 
     public int map[][];
 
-
     public CollisionHandler(Player player, Panel panel, TileManager tileManager){
         this.player = player;
         this.panel = panel;
@@ -22,6 +21,7 @@ public class CollisionHandler{
         int playerPosX = panel.width/4 - player.x + panel.tileSize/2;
         int playerCol = playerPosX/panel.tileSize;
         int bottomRow = (int) playerPosYBottom/panel.tileSize;
+        player.collide = false;
         // controll if the player is below or above screen
         if(playerCol < panel.maxCol && playerCol >= 0 && bottomRow < panel.maxRows && bottomRow >= 0 ){
             if (playerPosYBottom > panel.height) player.collide = true;
