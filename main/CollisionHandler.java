@@ -28,10 +28,14 @@ public class CollisionHandler{
             if (player.dy >= 0){
                 int tileVal = map[playerCol][bottomRow];
                 if (tileManager.tiles[tileVal].collision == true) player.isGrounded = true;
-            }
-        }
+                else player.isGrounded = false;
+            }else player.isGrounded = false;
+        } else player.isGrounded = false;
     }
-    
+
+    private void controllside(){
+        
+    }
 
     public void update(){
         controllGround();
