@@ -49,7 +49,7 @@ public class Panel extends JPanel implements Runnable{
         this.setFocusable(true);
         this.addKeyListener(keyHandler);
         try { 
-            backgroundImage = ImageIO.read(new File("tex/preliminaryBackgroundImage.png"));
+            backgroundImage = ImageIO.read(new File("tex/newBGImage.jpg"));
         } 
         catch (IOException e) {
             e.printStackTrace();

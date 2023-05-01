@@ -36,8 +36,6 @@ public class TileManager {
         this.tiles = getTileImage();
 
         loadMap();
-        System.out.println(map.length + " ");
-
     }
 
     private void setMaxXY() {
@@ -57,10 +55,7 @@ public class TileManager {
             }
             maxX = lastLine.split(" ").length;
 
-            reader.close();
-
-            System.out.println(maxX + " " + maxY);
-            
+            reader.close();            
             this.mapSizeX = maxX;
             this.mapSizeY = maxY;
         } catch (Exception e) {
