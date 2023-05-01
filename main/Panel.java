@@ -108,11 +108,6 @@ public class Panel extends JPanel implements Runnable{
         // create graphic object
         Graphics2D g = (Graphics2D) graphics;
 
-        // draw test
-        g.setColor(Color.WHITE);
-        g.fillRect(100, 100, 200, 200);
-        g.drawString("String", 10, 14);
-
         // call method to paint player and map here:
         tileManager.draw(g);
         player.draw(g);

@@ -1,9 +1,12 @@
 package main;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import javax.imageio.ImageIO;
 
 /**
 TileManager class is responsible for managing the game tiles, loading the map
@@ -21,6 +24,7 @@ public class TileManager {
     private Panel panel;
     public Tile[] tiles;
     private Player player;
+    private BufferedImage background;
     
     /**
     Constructor for the TileManager class. 
@@ -102,6 +106,7 @@ public class TileManager {
     @param g The Graphics object to draw the tiles with.
     */
     public void draw(Graphics g) {
+        g.drawImage(background, 0, 0, panel.width, panel.height, null);
         for (int y = 0; y < mapSizeY; y++) {
             for (int x = 0; x < mapSizeX; x++) {
                 g.drawImage(tiles[map[x][y]].image, (x * panel.tileSize - posX), (y * panel.tileSize), panel.tileSize, panel.tileSize, null);
@@ -127,6 +132,7 @@ public class TileManager {
             }
 
             reader.close();
+            background = ImageIO.read(getClass().getResourceAsStream("/tex/gameBg.png"));
         } catch (Exception e) {
             System.out.println(e);
         }
