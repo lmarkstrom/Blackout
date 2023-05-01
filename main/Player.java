@@ -2,6 +2,7 @@ package main;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+
 import javax.imageio.ImageIO;
 
 /**
@@ -20,14 +21,14 @@ public class Player  {
     public int gravity;
     public boolean collideX;
     public boolean collideY;
-    private int movement;
     private int size;
     private KeyHandler keyHandler;
     private BufferedImage image, walk;
     private Animation animation;
     private int direction;
-    private int ground;
     public boolean isGrounded;
+    private Panel panel;
+    public boolean isInMenu;
 
     /**
      * Constructs a new Player object with the given KeyHandler and Panel.
@@ -39,10 +40,11 @@ public class Player  {
      */
     public Player(KeyHandler keyHandler, Panel panel){
         this.keyHandler = keyHandler;
+        this.panel = panel;
+        this.isInMenu = false;
         size = panel.tileSize;
         x = 0;
         xx = panel.width/2;
-        ground = panel.height-3*size;
         y = 0;
         gravity = 1;
         direction = size;
@@ -65,12 +67,49 @@ public class Player  {
         }
     }
 
+    private void set(int newX, int newY) {
+        this.xx = newX;
+        this.y = newY;
+        panel.repaint();
+    }
+
+    private void victoryAnimation(int y) throws InterruptedException {
+        int currentx = panel.width/2;
+        int currenty = y;
+
+        while (currenty < 484) {
+            currenty += 1;
+            Thread.sleep(10);
+            set(currentx, currenty);
+        }
+
+        while (currentx < panel.width/2 + panel.width/5) {
+            currentx += 1;
+            Thread.sleep(10);
+            set(currentx, currenty);
+        }
+
+        // TODO gör att karaktären vrider på sig 180 grader innan slutscenen
+
+        // TODO gör en meny för när spelaren klarat banan
+        isInMenu = true;
+
+    }
+
     /**
      * Updates the player's position and movement based on keyboard input.
      * Handles player jumping and gravity.
      * Updates the walking animation if the player is moving.
+     * @throws InterruptedException
      */
     public void update(){
+        if (x >= 2800) {
+            try {
+                victoryAnimation(y);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
        if (keyHandler.right){
             animation.start();
             x += 10;
