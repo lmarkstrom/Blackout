@@ -4,11 +4,18 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
+/**
+ * The Player class represents a character in the game.
+ * It handles player movement, animation, and rendering.
+ *
+ * @author Elsa
+ */
 public class Player  {
     
     public int x;
     private int xx;
     public int y;
+    public int dy;
     public int speed;
     public int gravity;
     public boolean collide;
@@ -21,10 +28,12 @@ public class Player  {
     private int ground;
 
     /**
-     * Player class that handle player movment and animation
-     * @param keyHandler
-     * @param panel
-     * @author Elsa
+     * Constructs a new Player object with the given KeyHandler and Panel.
+     * Initializes the player's position, size, and direction.
+     * Loads the player's textures and sets up the animation.
+     *
+     * @param keyHandler The KeyHandler object for handling keyboard input.
+     * @param panel The Panel object representing the game panel.
      */
     public Player(KeyHandler keyHandler, Panel panel){
         this.keyHandler = keyHandler;
@@ -33,13 +42,14 @@ public class Player  {
         xx = panel.width/2;
         ground = panel.height-3*size;
         y = 0;
+        gravity = 1;
         direction = size;
         loadTextures();
     }
 
     /**
-     * load the textures
-     * and create new Animation
+     * Loads the textures for the player's sprite and walking animation.
+     * Creates a new Animation object for the walking animation.
      */
     private void loadTextures(){
         try{
@@ -53,9 +63,10 @@ public class Player  {
         }
     }
 
-
     /**
-     * uppdates the movment 
+     * Updates the player's position and movement based on keyboard input.
+     * Handles player jumping and gravity.
+     * Updates the walking animation if the player is moving.
      */
     public void update(){
        if (keyHandler.right){
@@ -68,7 +79,7 @@ public class Player  {
             direction = -size;
        }  
        if(keyHandler.up && y >= ground){ 
-            y -= 200;
+            dy -= 15;
             collide = false;
             keyHandler.up = false;
        }
@@ -79,14 +90,18 @@ public class Player  {
        } 
 
        if(!collide){
-            y += 5;
+            y += dy;
+            dy += gravity;
+        } else {
+            dy = 0;
         }
         animation.update();
     }
 
     /**
-     * draw player
-     * @param g
+     * Renders the player's sprite and walking animation on the graphics context.
+     *
+     * @param g The Graphics object to draw the player on.
      */
     public void draw(Graphics g){
 
