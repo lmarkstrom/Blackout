@@ -27,7 +27,7 @@ public class CollisionHandler{
             if (playerPosYBottom > panel.height) player.collideY = true;
             if (player.dy >= 0){
                 int tileVal = map[playerCol][bottomRow];
-                if (tileManager.tiles[tileVal].collision == true) player.collideY = true;
+                if (tileManager.tiles[tileVal].collision == true) player.isGrounded = true;
             }
         }
     }

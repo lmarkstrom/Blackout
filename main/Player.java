@@ -27,6 +27,7 @@ public class Player  {
     private Animation animation;
     private int direction;
     private int ground;
+    public boolean isGrounded;
 
     /**
      * Constructs a new Player object with the given KeyHandler and Panel.
@@ -79,9 +80,9 @@ public class Player  {
             x -= 10;
             direction = -size;
        }  
-       if(keyHandler.up && y >= ground){ 
+       if(keyHandler.up && isGrounded){ 
             dy -= 15;
-            collideY = false;
+            isGrounded = false;
             keyHandler.up = false;
        }
 
@@ -90,7 +91,7 @@ public class Player  {
             animation.reset();
        } 
 
-       if(!collideY){
+       if(!isGrounded){
             y += dy;
             dy += gravity;
         } else {
