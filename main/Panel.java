@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+
 import javax.swing.JPanel;
 
 /**
@@ -25,10 +26,13 @@ public class Panel extends JPanel implements Runnable{
 
     // thread that runs the game update and drawing
     public Thread thread;
-    
+
     private KeyHandler keyHandler = new KeyHandler();
+
     private Player player = new Player(keyHandler, this);
+
     private TileManager tileManager = new TileManager(this, player);
+
     private CollisionHandler collisionHandler = new CollisionHandler(player, this, tileManager);
 
     public Panel(){
@@ -38,9 +42,9 @@ public class Panel extends JPanel implements Runnable{
         this.setDoubleBuffered(true); // Buffer to the panel, so it starts painting before the next drawtime
         this.setFocusable(true);
         this.addKeyListener(keyHandler);
-
-
     }
+
+
 
     /*
      * Sets up the thread that runs the game
@@ -60,7 +64,7 @@ public class Panel extends JPanel implements Runnable{
         double nextDrawTime = System.nanoTime() + drawInterval;
         double timePassed = System.nanoTime();
         // game loop
-        while(thread != null){
+        while(thread != null && !player.isInMenu){
             // FPS calculator
             if(System.nanoTime() - timePassed > 1000000000) {
                 timePassed = System.nanoTime();

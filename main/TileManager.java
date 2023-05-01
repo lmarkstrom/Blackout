@@ -13,6 +13,8 @@ the map layout and a separate array to store the tile images.
 public class TileManager {
     // constants
     public int map[][];
+    public int mapSizeX;
+    public int mapSizeY;
     private int posX;
 
     // objects
@@ -29,10 +31,41 @@ public class TileManager {
         this.panel = panel;
         this.player = player;
         this.tiles = new Tile[10];
-        this.map = new int[panel.maxCol][panel.maxRows];
+        setMaxXY();
+        this.map = new int[mapSizeX][mapSizeY];
         this.tiles = getTileImage();
 
         loadMap();
+        System.out.println(map.length + " ");
+
+    }
+
+    private void setMaxXY() {
+        try {
+            InputStream stream = getClass().getResourceAsStream("/data/map.txt");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+            
+            int maxX = -1;
+            int maxY = -1;
+            String currentLine = "";
+            String lastLine = "";
+            
+            while (currentLine != null) {
+                lastLine = currentLine;
+                currentLine = reader.readLine();
+                maxY++;
+            }
+            maxX = lastLine.split(" ").length;
+
+            reader.close();
+
+            System.out.println(maxX + " " + maxY);
+            
+            this.mapSizeX = maxX;
+            this.mapSizeY = maxY;
+        } catch (Exception e) {
+            System.out.println(e);
+        }    
     }
 
     /**
@@ -44,9 +77,12 @@ public class TileManager {
     private Tile[] getTileImage() {
         Tile[] tile = new Tile[10];
         try {
-            tile[0] = new Tile(false, "/tex/empty.png");
-            tile[1] = new Tile(true, "/tex/dirt.png");
-            tile[2] = new Tile(true, "/tex/grass.png");
+            tile[0] = new Tile(false, "/tex/0empty.png");
+            tile[1] = new Tile(true, "/tex/1dirt.png");
+            tile[2] = new Tile(true, "/tex/2grass.png");
+            tile[3] = new Tile(false, "/tex/3flagPole.png");
+            tile[4] = new Tile(false, "/tex/4flagTop.png");
+            tile[5] = new Tile(false, "/tex/5playerHouse.png");
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -65,38 +101,29 @@ public class TileManager {
     
     @param g The Graphics object to draw the tiles with.
     */
-    public void draw(Graphics g){
-        int x = 0;
-        int y = 0;
-        while(x < panel.maxCol && y < panel.maxRows){
-            while(x < panel.maxCol){
-                g.drawImage(tiles[map[x][y]].image, (x*panel.tileSize - posX), (y*panel.tileSize), panel.tileSize, panel.tileSize, null);
-                x++;
+    public void draw(Graphics g) {
+        for (int y = 0; y < mapSizeY; y++) {
+            for (int x = 0; x < mapSizeX; x++) {
+                g.drawImage(tiles[map[x][y]].image, (x * panel.tileSize - posX), (y * panel.tileSize), panel.tileSize, panel.tileSize, null);
             }
-            if(x == panel.maxCol) x = 0;   
-            y++;
         }
     }
 
     /**
-    Loads the map layout from a text file into a 2D array.
-    */
+     * Loads the map layout from a text file into a 2D array.
+     */
     public void loadMap(){
         try {
             InputStream stream = getClass().getResourceAsStream("/data/map.txt");
             BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-            int x = 0;
-            int y = 0;
-            while(x < panel.maxCol && y < panel.maxRows){
+            
+            for (int y = 0; y < mapSizeY; y++) {
                 String line = reader.readLine();
                 String nums[] = line.split(" ");
-                while(x < panel.maxCol){
+                for (int x = 0; x < mapSizeX; x++) {
                     int num = Integer.parseInt(nums[x]);
                     map[x][y] = num;
-                    x++;
                 }
-                if(x == panel.maxCol) x = 0;
-                y++;
             }
 
             reader.close();
