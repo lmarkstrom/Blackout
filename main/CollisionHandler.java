@@ -19,7 +19,7 @@ public class CollisionHandler{
 
     private void controllGround(){
         // setting up values of the player pos
-        double playerPosYBottom = player.y + panel.tileSize + player.speed + player.gravity;
+        double playerPosYBottom = player.y + panel.tileSize; 
         int playerPosX = panel.width/2 + player.x;
         int playerCol = playerPosX/panel.tileSize;
         int bottomRow = (int) playerPosYBottom/panel.tileSize;
@@ -30,7 +30,7 @@ public class CollisionHandler{
                 int tileVal = map[playerCol][bottomRow];
                 if (tileManager.tiles[tileVal].collision == true) {
                     player.isGrounded = true;
-                    //player.y = (player.y/panel.tileSize)*panel.tileSize;
+                    if (player.dy >= 0) player.y = (player.y/panel.tileSize)*panel.tileSize;
                 } else {
                     player.isGrounded = false;
                 }
@@ -62,12 +62,31 @@ public class CollisionHandler{
         } else player.collideX = false;
     }
 
+    private void controllTop(){
+        // setting up values of the player pos
+        double playerPosYTop = player.y - player.jumpHeight; 
+        int playerPosX = panel.width/2 + player.x;
+        int playerCol = playerPosX/panel.tileSize;
+        int topRow = (int) playerPosYTop/panel.tileSize; 
+        // controll if the player is below or above screen
+        if(playerCol < tileManager.mapSizeX && playerCol >= 0 && topRow < tileManager.mapSizeY && topRow >= 0 ){
+            if (player.dy >= 0){
+                int tileVal = map[playerCol][topRow];
+                if (tileManager.tiles[tileVal].collision == true) {
+                    player.collideTop = true;
+                    if (player.dy >= 0) player.y = (player.y/panel.tileSize)*panel.tileSize;
+                } else {
+                    player.collideTop = false;
+                }
+            }else player.collideTop = false;
+        } else player.collideTop = false;
+    }
+
     public void update(){
-        controllGround();
-        // right
-        System.out.println(player.collideX );
+        controllTop();
         if (keyHandler.right || keyHandler.left){
             controllside(player.direction);
         }
+        controllGround();
     }
 }

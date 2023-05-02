@@ -18,9 +18,11 @@ public class Player  {
     public int y;
     public int dy;
     public int speed = 10;
+    public int jumpHeight = 15;
     public int gravity;
     public boolean collideX;
     public boolean collideY;
+    public boolean collideTop;
     private int size;
     private KeyHandler keyHandler;
     private BufferedImage idle, walk;
@@ -118,17 +120,15 @@ public class Player  {
             if(collideX == false){  
                 x += speed;
             }
-            //collideX = false;
        } else if(keyHandler.left){
             animation.start();
             direction = -size;
             if(collideX == false){
                 x -= speed;
             }
-            //collideX = false;
        } else direction = 0;
-       if(keyHandler.up && isGrounded){ 
-            dy -= 15;
+       if(keyHandler.up && isGrounded && !collideTop){
+            dy -= jumpHeight;
             isGrounded = false;
             keyHandler.up = false;
        }
