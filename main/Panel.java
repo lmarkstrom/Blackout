@@ -4,6 +4,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**
@@ -25,20 +30,20 @@ public class Panel extends JPanel implements Runnable{
 
     // thread that runs the game update and drawing
     public Thread thread;
-    public Thread threadStore;
-    
     private KeyHandler keyHandler = new KeyHandler();
+
     private Player player = new Player(keyHandler, this);
+
     private TileManager tileManager = new TileManager(this, player);
-    private CollisionHandler collisionHandler = new CollisionHandler(player, this, tileManager);
-    //private Menu menu = new Menu(this);
-    
+    private CollisionHandler collisionHandler = new CollisionHandler(player, this, tileManager, keyHandler);
+
     private enum STATE{
         MENU,
         GAME
     }
 
     public STATE state;
+    private Image backgroundImage;
 
     public Panel(){
         state = STATE.MENU;
@@ -48,7 +53,15 @@ public class Panel extends JPanel implements Runnable{
         this.setDoubleBuffered(true); // Buffer to the panel, so it starts painting before the next drawtime
         this.setFocusable(true);
         this.addKeyListener(keyHandler);
+        try { 
+            backgroundImage = ImageIO.read(new File("tex/newBGImage.jpg"));
+        } 
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+
 
     /*
      * Sets up the thread that runs the game
@@ -84,7 +97,6 @@ public class Panel extends JPanel implements Runnable{
             update();
             // update for painting graphics
             repaint();
-
             // FPS calculator
             if(System.nanoTime() - timePassed > 1000000000) {
                 timePassed = System.nanoTime();
@@ -126,6 +138,9 @@ public class Panel extends JPanel implements Runnable{
 
         // create graphic object
         Graphics2D g = (Graphics2D) graphics;
+
+        // Draw background
+        g.drawImage(backgroundImage, 0, 0, this.getWidth(), this.getHeight(), this);
 
         // call method to paint player and map here:
         tileManager.draw(g);
