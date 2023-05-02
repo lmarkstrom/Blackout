@@ -37,7 +37,7 @@ public class Panel extends JPanel implements Runnable{
 
     private TileManager tileManager = new TileManager(this, player);
 
-    private CollisionHandler collisionHandler = new CollisionHandler(player, this, tileManager);
+    private CollisionHandler collisionHandler = new CollisionHandler(player, this, tileManager, keyHandler);
 
     private Image backgroundImage;
     

@@ -17,15 +17,18 @@ public class Player  {
     private int xx;
     public int y;
     public int dy;
-    public int speed;
+    public int speed = 10;
+    public int jumpHeight = 15;
     public int gravity;
     public boolean collideX;
     public boolean collideY;
+    public boolean collideTop;
     private int size;
     private KeyHandler keyHandler;
-    private BufferedImage image, walk;
+    private BufferedImage idle, walk;
     private Animation animation;
-    private int direction;
+    private Animation idleAnimation;
+    public int direction;
     public boolean isGrounded;
     private Panel panel;
     public boolean isInMenu;
@@ -57,10 +60,11 @@ public class Player  {
      */
     private void loadTextures(){
         try{
-            image = ImageIO.read(getClass().getResourceAsStream("/tex/player.png"));
+            idle = ImageIO.read(getClass().getResourceAsStream("/tex/idle.png"));
             walk = ImageIO.read(getClass().getResourceAsStream("/tex/walk.png"));
 
             animation = new Animation(walk, 10, 1, 4);
+            idleAnimation = new Animation(idle, 30, 1, 4);
         }
         catch(Exception e){
             System.out.println(e);
@@ -112,15 +116,19 @@ public class Player  {
         }
        if (keyHandler.right){
             animation.start();
-            x += 10;
             direction = size;
+            if(collideX == false){  
+                x += speed;
+            }
        } else if(keyHandler.left){
             animation.start();
-            x -= 10;
             direction = -size;
-       }  
-       if(keyHandler.up && isGrounded){ 
-            dy -= 15;
+            if(collideX == false){
+                x -= speed;
+            }
+       } else direction = 0;
+       if(keyHandler.up && isGrounded && !collideTop){
+            dy -= jumpHeight;
             isGrounded = false;
             keyHandler.up = false;
        }
@@ -137,6 +145,7 @@ public class Player  {
             dy = 0;
         }
         animation.update();
+        idleAnimation.update();
     }
 
     /**
@@ -147,7 +156,12 @@ public class Player  {
     public void draw(Graphics g){
 
         //g.drawImage(image, xx, y, size, size, null);
-
-        g.drawImage(animation.getSprite(), xx-direction/2, y, direction, size, null);
+        if (direction == 0){
+            idleAnimation.start();
+            g.drawImage(idleAnimation.getSprite(), xx-size/2, y, size, size, null);
+        }else{
+            idleAnimation.stop();
+            g.drawImage(animation.getSprite(), xx-direction/2, y, direction, size, null);
+        }
     }
 }
