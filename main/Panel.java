@@ -25,21 +25,23 @@ public class Panel extends JPanel implements Runnable{
 
     // thread that runs the game update and drawing
     public Thread thread;
+    public Thread threadStore;
     
     private KeyHandler keyHandler = new KeyHandler();
     private Player player = new Player(keyHandler, this);
     private TileManager tileManager = new TileManager(this, player);
     private CollisionHandler collisionHandler = new CollisionHandler(player, this, tileManager);
-    private Menu menu = new Menu(this);
+    //private Menu menu = new Menu(this);
     
     private enum STATE{
         MENU,
         GAME
     }
 
-    public STATE state = STATE.MENU;
+    public STATE state;
 
     public Panel(){
+        state = STATE.MENU;
         // setUp game panel
         this.setPreferredSize(new Dimension(width, height));
         this.setBackground(Color.BLACK);
@@ -53,7 +55,18 @@ public class Panel extends JPanel implements Runnable{
      */
     public void mainThread(){
         thread = new Thread(this);
+        
         thread.start();
+    }
+
+    public void startGame(){
+        state = STATE.GAME;
+        System.out.println(state);
+    }
+
+    public void stopGame(){
+        state = STATE.MENU;
+        System.out.println(state);
     }
 
     /*
@@ -67,6 +80,11 @@ public class Panel extends JPanel implements Runnable{
         double timePassed = System.nanoTime();
         // game loop
         while(thread != null){
+            // update for position and physics
+            update();
+            // update for painting graphics
+            repaint();
+
             // FPS calculator
             if(System.nanoTime() - timePassed > 1000000000) {
                 timePassed = System.nanoTime();
@@ -83,10 +101,6 @@ public class Panel extends JPanel implements Runnable{
                 e.printStackTrace();
             }
             nextDrawTime += drawInterval;
-            // update for position and physics
-            update();
-            // update for painting graphics
-            repaint();
         }
     }
 
@@ -95,11 +109,13 @@ public class Panel extends JPanel implements Runnable{
      */
     public void update() {
         // call method that should be updated here:
-        if(state == STATE.GAME){
+        if (state == STATE.GAME){
             tileManager.update();
             collisionHandler.update();
             player.update();
         }
+        
+        
     }
 
     /*
@@ -112,12 +128,8 @@ public class Panel extends JPanel implements Runnable{
         Graphics2D g = (Graphics2D) graphics;
 
         // call method to paint player and map here:
-        if(state == STATE.GAME){
-            tileManager.draw(g);
-            player.draw(g);
-        } else if(state == STATE.MENU){
-            menu.drawMain(g);
-        }
+        tileManager.draw(g);
+        player.draw(g);
         
         // dispose graphic
         g.dispose();
