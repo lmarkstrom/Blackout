@@ -5,33 +5,28 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
-/**
- * The Player class represents a character in the game.
- * It handles player movement, animation, and rendering.
- *
- * @author Elsa
- */
-public class Player extends Entity {
+
+public class Enemy {
     
-    // public int x;
-    // private int xx;
-    // public int y;
-    // public int dy;
-    // public int speed = 10;
-    // public int jumpHeight = 15;
-    // public int gravity;
-    // public boolean collideX;
-    // public boolean collideY;
-    // public boolean collideTop;
+    public int x;
+    private int xx;
+    public int y;
+    public int dy;
+    public int speed = 10;
+    public int jumpHeight = 15;
+    public int gravity;
+    public boolean collideX;
+    public boolean collideY;
+    public boolean collideTop;
     private int size;
     private KeyHandler keyHandler;
     private BufferedImage idle, walk;
     private Animation animation;
     private Animation idleAnimation;
-    // public int direction;
-    // public boolean isGrounded;
-    // private Panel panel;
-    // public boolean isInMenu;
+    public int direction;
+    public boolean isGrounded;
+    private Panel panel;
+    public boolean isInMenu;
 
     /**
      * Constructs a new Player object with the given KeyHandler and Panel.
@@ -41,8 +36,7 @@ public class Player extends Entity {
      * @param keyHandler The KeyHandler object for handling keyboard input.
      * @param panel The Panel object representing the game panel.
      */
-    public Player(KeyHandler keyHandler, Panel panel){
-        super();
+    public Enemy(KeyHandler keyHandler, Panel panel){
         this.keyHandler = keyHandler;
         this.panel = panel;
         this.isInMenu = false;

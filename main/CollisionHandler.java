@@ -2,14 +2,14 @@ package main;
 
 public class CollisionHandler{
 
-    private Player player;
+    private Entity player;
     private Panel panel;
     private TileManager tileManager;
     private KeyHandler keyHandler;
 
     public int map[][];
 
-    public CollisionHandler(Player player, Panel panel, TileManager tileManager, KeyHandler keyHandler){
+    public CollisionHandler(Entity player, Panel panel, TileManager tileManager, KeyHandler keyHandler){
         this.player = player;
         this.panel = panel;
         this.tileManager = tileManager;
