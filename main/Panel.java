@@ -35,7 +35,7 @@ public class Panel extends JPanel implements Runnable{
     private Player player = new Player(keyHandler, this);
 
     private TileManager tileManager = new TileManager(this, player);
-    private CollisionHandler collisionHandler = new CollisionHandler(player, this, tileManager, keyHandler);
+    public CollisionHandler collisionHandler = new CollisionHandler(/*player ,*/ this, tileManager, keyHandler);
 
     private enum STATE{
         MENU,
@@ -123,7 +123,7 @@ public class Panel extends JPanel implements Runnable{
         // call method that should be updated here:
         if (state == STATE.GAME){
             tileManager.update();
-            collisionHandler.update();
+            // collisionHandler.update();
             player.update();
         }
         

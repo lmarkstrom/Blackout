@@ -5,12 +5,6 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
-/**
- * The Player class represents a character in the game.
- * It handles player movement, animation, and rendering.
- *
- * @author Elsa
- */
 public class Entity {
     
     public int x;
@@ -32,6 +26,10 @@ public class Entity {
     public boolean isGrounded;
     public Panel panel;
     public boolean isInMenu;
+
+    public void updateCollission() {
+        panel.collisionHandler.update(this);
+    }
 
     /**
      * Constructs a new Player object with the given KeyHandler and Panel.
