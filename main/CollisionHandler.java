@@ -2,22 +2,22 @@ package main;
 
 public class CollisionHandler{
 
-    private Player player;
+    // private Entity player;
     private Panel panel;
     private TileManager tileManager;
     private KeyHandler keyHandler;
 
     public int map[][];
 
-    public CollisionHandler(Player player, Panel panel, TileManager tileManager, KeyHandler keyHandler){
-        this.player = player;
+    public CollisionHandler(/*Entity player,*/ Panel panel, TileManager tileManager, KeyHandler keyHandler){
+        // this.player = player;
         this.panel = panel;
         this.tileManager = tileManager;
         this.keyHandler = keyHandler;
         map = tileManager.map;
     }
 
-    private void controllGround(){
+    private void controllGround(Entity player){
         // setting up values of the player pos
         double playerPosYBottom = player.y + panel.tileSize; 
         int playerPosX = panel.width/2 + player.x;
@@ -38,7 +38,7 @@ public class CollisionHandler{
         } else player.isGrounded = false;
     }
 
-    private void controllside(int direction){
+    private void controllside(int direction, Entity player){
         // setting up values of the player pos
         double playerPosYTop = player.y + player.gravity;
         double playerPosYBottom = player.y + 50;
@@ -62,10 +62,11 @@ public class CollisionHandler{
         } else player.collideX = false;
     }
 
-    private void controllTop(){
+    private void controllTop(Entity player){
         // setting up values of the player pos
         double playerPosYTop = player.y - player.jumpHeight; 
         int playerPosX = panel.width/2 + player.x;
+        //if(!player.isPlayer) playerPosX -= panel.width/2;
         int playerCol = playerPosX/panel.tileSize;
         int topRow = (int) playerPosYTop/panel.tileSize; 
         // controll if the player is below or above screen
@@ -82,11 +83,15 @@ public class CollisionHandler{
         } else player.collideTop = false;
     }
 
-    public void update(){
-        controllTop();
-        if (keyHandler.right || keyHandler.left){
-            controllside(player.direction);
+    public void update(Entity player){
+        controllTop(player);
+        if(player.isPlayer){
+            if (keyHandler.right || keyHandler.left){
+                controllside(player.direction, player);
+            }
+        } else{
+            controllside(player.direction, player); 
         }
-        controllGround();
+        controllGround(player);
     }
 }

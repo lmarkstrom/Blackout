@@ -121,7 +121,12 @@ public class TileManager {
                 String line = reader.readLine();
                 String nums[] = line.split(" ");
                 for (int x = 0; x < mapSizeX; x++) {
-                    int num = Integer.parseInt(nums[x]);
+                    int num = 0;
+                    try {
+                        num = Integer.parseInt(nums[x]);
+                    } catch (Exception e) {
+                        panel.enemies.add(new Enemy(panel, x*panel.tileSize, y*panel.tileSize, player, 2));
+                    }
                     map[x][y] = num;
                 }
             }

@@ -11,27 +11,13 @@ import javax.imageio.ImageIO;
  *
  * @author Elsa
  */
-public class Player  {
+public class Player extends Entity {
     
-    public int x;
-    private int xx;
-    public int y;
-    public int dy;
-    public int speed = 10;
-    public int jumpHeight = 15;
-    public int gravity;
-    public boolean collideX;
-    public boolean collideY;
-    public boolean collideTop;
     private int size;
     private KeyHandler keyHandler;
     private BufferedImage idle, walk;
     private Animation animation;
     private Animation idleAnimation;
-    public int direction;
-    public boolean isGrounded;
-    private Panel panel;
-    //public boolean isInMenu;
 
     /**
      * Constructs a new Player object with the given KeyHandler and Panel.
@@ -42,6 +28,8 @@ public class Player  {
      * @param panel The Panel object representing the game panel.
      */
     public Player(KeyHandler keyHandler, Panel panel){
+        super();
+        this.isPlayer = true;
         this.keyHandler = keyHandler;
         this.panel = panel;
         //this.isInMenu = false;
@@ -144,6 +132,7 @@ public class Player  {
         } else {
             dy = 0;
         }
+        super.updateCollission();
         animation.update();
         idleAnimation.update();
     }
