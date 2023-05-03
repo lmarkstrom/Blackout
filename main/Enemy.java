@@ -22,7 +22,7 @@ public class Enemy extends Entity {
         this.panel = panel;
         this.isInMenu = false;
         size = panel.tileSize;
-        this.x = x;
+        this.x = x - panel.width/2;
         xx = panel.width/2;
         this.y = y;
         this.speed = speed;
@@ -51,18 +51,30 @@ public class Enemy extends Entity {
     }
 
     private void updateAI() {
-
+        System.out.println(collideX + " " + isGrounded);
+        if(!collideX && walkDirection > 0){
+            System.out.println("walk");
+            x += speed;
+        } else if(!collideX && walkDirection < 0){
+            System.out.println("walk");
+            x -= speed;
+        } else {
+            walkDirection = -walkDirection;
+            collideX = false;
+            x += walkDirection*speed;
+        } 
     }
 
     public void update(){ 
-
+        //xx = x - player.x;
+        //x = player.xx;
+        if(isGrounded) updateAI();
        if(!isGrounded){
             y += dy;
             dy += gravity;
-        } else {
+       } else {
             dy = 0;
         }
-        updateAI();
         super.updateCollission();
         animation.update();
         idleAnimation.update();
@@ -75,11 +87,10 @@ public class Enemy extends Entity {
         //g.drawImage(image, xx, y, size, size, null);
         if (direction == 0){
             idleAnimation.start();
-            g.drawImage(idleAnimation.getSprite(), (x - player.x), y, size, size, null);
+            g.drawImage(idleAnimation.getSprite(), (x - player.x + panel.width/2), y, size, size, null);
         }else{
             idleAnimation.stop();
-            g.drawImage(animation.getSprite(), (x - player.x), y, direction, size, null);
+            g.drawImage(animation.getSprite(), (x - player.x + panel.width/2), y, direction, size, null);
         }
-        System.out.println("X: " + (x - player.x) + " Y: " + y);
     }
 }

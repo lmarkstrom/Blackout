@@ -23,9 +23,10 @@ public class Entity {
     // private Animation animation;
     // private Animation idleAnimation;
     public int direction;
-    public boolean isGrounded;
+    public boolean isGrounded = false;
     public Panel panel;
     public boolean isInMenu;
+    public boolean isPlayer;
 
     public void updateCollission() {
         panel.collisionHandler.update(this);

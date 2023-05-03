@@ -29,6 +29,7 @@ public class Player extends Entity {
      */
     public Player(KeyHandler keyHandler, Panel panel){
         super();
+        this.isPlayer = true;
         this.keyHandler = keyHandler;
         this.panel = panel;
         this.isInMenu = false;
