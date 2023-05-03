@@ -32,7 +32,7 @@ public class Player extends Entity {
         this.isPlayer = true;
         this.keyHandler = keyHandler;
         this.panel = panel;
-        this.isInMenu = false;
+        //this.isInMenu = false;
         size = panel.tileSize;
         x = 0;
         xx = panel.width/2;
@@ -84,7 +84,7 @@ public class Player extends Entity {
         // TODO gör att karaktären vrider på sig 180 grader innan slutscenen
 
         // TODO gör en meny för när spelaren klarat banan
-        isInMenu = true;
+        //isInMenu = true;
 
     }
 

@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
@@ -23,7 +24,8 @@ class Main{
         pane.setPreferredSize(new Dimension(panel.width, panel.height));
         panel.setBounds(0, 0, panel.width, panel.height);
         panel.mainThread();
-        Menu mainMenu = new Menu(panel, window, pane);
+        Menu menu = new Menu(panel, window, pane);
+        panel.addPause(menu);
         pane.add(panel, JLayeredPane.DEFAULT_LAYER); // Adds panel to the window object
         
         

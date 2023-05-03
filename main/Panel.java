@@ -36,6 +36,7 @@ public class Panel extends JPanel implements Runnable{
     private Player player = new Player(keyHandler, this);
     private TileManager tileManager = new TileManager(this, player);
     public CollisionHandler collisionHandler = new CollisionHandler(/*player ,*/ this, tileManager, keyHandler);
+    private Menu menu;
 
     private enum STATE{
         MENU,
@@ -61,7 +62,9 @@ public class Panel extends JPanel implements Runnable{
         }
     }
 
-
+    public void addPause(Menu menu){
+        this.menu = menu;
+    }
 
     /*
      * Sets up the thread that runs the game
@@ -122,12 +125,16 @@ public class Panel extends JPanel implements Runnable{
     public void update() {
         // call method that should be updated here:
         if (state == STATE.GAME){
-            tileManager.update();
-            // collisionHandler.update();
-            for (Enemy enemy : enemies) {
-                enemy.update();
+            if(keyHandler.pause) {
+                state = STATE.MENU;
+                menu.pausePanel.setVisible(true);
+            }else{
+                tileManager.update();
+                for (Enemy enemy : enemies) {
+                    enemy.update();
+                }
+                player.update();
             }
-            player.update();
         }
         
         
