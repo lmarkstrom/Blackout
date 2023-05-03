@@ -32,11 +32,9 @@ public class Enemy extends Entity {
 
     private void loadTextures(){
         try{
-            idle = ImageIO.read(getClass().getResourceAsStream("/tex/idle.png"));
-            walk = ImageIO.read(getClass().getResourceAsStream("/tex/walk.png"));
+            walk = ImageIO.read(getClass().getResourceAsStream("/tex/policeWalk.png"));
 
             animation = new Animation(walk, 10, 1, 4);
-            idleAnimation = new Animation(idle, 30, 1, 4);
         }
         catch(Exception e){
             System.out.println(e);
@@ -73,7 +71,6 @@ public class Enemy extends Entity {
         }
         super.updateCollission();
         animation.update();
-        idleAnimation.update();
     }
 
     public void draw(Graphics g){
