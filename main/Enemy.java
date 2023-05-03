@@ -29,6 +29,7 @@ public class Enemy extends Entity {
         gravity = 1;
         direction = size;
         loadTextures();
+        animation.start();
     }
 
     private void loadTextures(){
@@ -55,8 +56,10 @@ public class Enemy extends Entity {
         if(!collideX && walkDirection > 0){
             System.out.println("walk");
             x += speed;
+            direction = size;
         } else if(!collideX && walkDirection < 0){
             System.out.println("walk");
+            direction = -size;
             x -= speed;
         } else {
             walkDirection = -walkDirection;
@@ -73,6 +76,7 @@ public class Enemy extends Entity {
             y += dy;
             dy += gravity;
        } else {
+
             dy = 0;
         }
         super.updateCollission();
@@ -81,16 +85,7 @@ public class Enemy extends Entity {
     }
 
     public void draw(Graphics g){
-        //g.drawRect(x, y, size, size);
-        //System.out.println("x: " + x + " Y: " + y);
-
-        //g.drawImage(image, xx, y, size, size, null);
-        if (direction == 0){
-            idleAnimation.start();
-            g.drawImage(idleAnimation.getSprite(), (x - player.x + panel.width/2), y, size, size, null);
-        }else{
-            idleAnimation.stop();
-            g.drawImage(animation.getSprite(), (x - player.x + panel.width/2), y, direction, size, null);
-        }
+        g.drawImage(animation.getSprite(), (x - player.x + panel.width/2 - direction/2), y, direction, size, null);
+    
     }
 }
