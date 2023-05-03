@@ -15,7 +15,7 @@ public class Enemy extends Entity {
     private int walkDirection = 1;
     private Player player;
 
-    public Enemy(Panel panel, int x, int y, Player player){
+    public Enemy(Panel panel, int x, int y, Player player, int speed){
         super();
         // this.keyHandler = keyHandler;
         this.player = player;
@@ -25,6 +25,7 @@ public class Enemy extends Entity {
         this.x = x;
         xx = panel.width/2;
         this.y = y;
+        this.speed = speed;
         gravity = 1;
         direction = size;
         loadTextures();
@@ -50,9 +51,6 @@ public class Enemy extends Entity {
     }
 
     private void updateAI() {
-        if (collideX) {
-            walkDirection = -walkDirection;
-        }
 
     }
 
