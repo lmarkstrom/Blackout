@@ -31,7 +31,7 @@ public class Player  {
     public int direction;
     public boolean isGrounded;
     private Panel panel;
-    public boolean isInMenu;
+    //public boolean isInMenu;
 
     /**
      * Constructs a new Player object with the given KeyHandler and Panel.
@@ -44,7 +44,7 @@ public class Player  {
     public Player(KeyHandler keyHandler, Panel panel){
         this.keyHandler = keyHandler;
         this.panel = panel;
-        this.isInMenu = false;
+        //this.isInMenu = false;
         size = panel.tileSize;
         x = 0;
         xx = panel.width/2;
@@ -96,7 +96,7 @@ public class Player  {
         // TODO gör att karaktären vrider på sig 180 grader innan slutscenen
 
         // TODO gör en meny för när spelaren klarat banan
-        isInMenu = true;
+        //isInMenu = true;
 
     }
 
