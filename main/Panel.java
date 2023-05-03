@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -31,9 +32,8 @@ public class Panel extends JPanel implements Runnable{
     // thread that runs the game update and drawing
     public Thread thread;
     private KeyHandler keyHandler = new KeyHandler();
-
+    public ArrayList<Enemy> enemies = new ArrayList<>();
     private Player player = new Player(keyHandler, this);
-
     private TileManager tileManager = new TileManager(this, player);
     public CollisionHandler collisionHandler = new CollisionHandler(/*player ,*/ this, tileManager, keyHandler);
 
@@ -124,6 +124,9 @@ public class Panel extends JPanel implements Runnable{
         if (state == STATE.GAME){
             tileManager.update();
             // collisionHandler.update();
+            for (Enemy enemy : enemies) {
+                enemy.update();
+            }
             player.update();
         }
         
@@ -144,6 +147,9 @@ public class Panel extends JPanel implements Runnable{
 
         // call method to paint player and map here:
         tileManager.draw(g);
+        for (Enemy enemy : enemies) {
+            enemy.draw(g);
+        }
         player.draw(g);
         
         // dispose graphic

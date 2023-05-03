@@ -12,16 +12,19 @@ public class Enemy extends Entity {
     private BufferedImage idle, walk;
     private Animation animation;
     private Animation idleAnimation;
+    private int walkDirection = 1;
+    private Player player;
 
-    public Enemy(Panel panel){
+    public Enemy(Panel panel, int x, int y, Player player){
         super();
         // this.keyHandler = keyHandler;
+        this.player = player;
         this.panel = panel;
         this.isInMenu = false;
         size = panel.tileSize;
-        x = 0;
+        this.x = x;
         xx = panel.width/2;
-        y = 0;
+        this.y = y;
         gravity = 1;
         direction = size;
         loadTextures();
@@ -46,6 +49,13 @@ public class Enemy extends Entity {
         panel.repaint();
     }
 
+    private void updateAI() {
+        if (collideX) {
+            walkDirection = -walkDirection;
+        }
+
+    }
+
     public void update(){ 
 
        if(!isGrounded){
@@ -54,19 +64,24 @@ public class Enemy extends Entity {
         } else {
             dy = 0;
         }
+        updateAI();
+        super.updateCollission();
         animation.update();
         idleAnimation.update();
     }
 
     public void draw(Graphics g){
+        //g.drawRect(x, y, size, size);
+        //System.out.println("x: " + x + " Y: " + y);
 
         //g.drawImage(image, xx, y, size, size, null);
         if (direction == 0){
             idleAnimation.start();
-            g.drawImage(idleAnimation.getSprite(), xx-size/2, y, size, size, null);
+            g.drawImage(idleAnimation.getSprite(), (x - player.x), y, size, size, null);
         }else{
             idleAnimation.stop();
-            g.drawImage(animation.getSprite(), xx-direction/2, y, direction, size, null);
+            g.drawImage(animation.getSprite(), (x - player.x), y, direction, size, null);
         }
+        System.out.println("X: " + (x - player.x) + " Y: " + y);
     }
 }
