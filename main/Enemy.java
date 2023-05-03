@@ -8,7 +8,6 @@ import javax.imageio.ImageIO;
 public class Enemy extends Entity {
     
     private int size;
-    // private KeyHandler keyHandler;
     private BufferedImage idle, walk;
     private Animation animation;
     private Animation idleAnimation;
@@ -17,7 +16,6 @@ public class Enemy extends Entity {
 
     public Enemy(Panel panel, int x, int y, Player player, int speed){
         super();
-        // this.keyHandler = keyHandler;
         this.player = player;
         this.panel = panel;
         this.isInMenu = false;
@@ -43,12 +41,6 @@ public class Enemy extends Entity {
         catch(Exception e){
             System.out.println(e);
         }
-    }
-
-    private void set(int newX, int newY) {
-        this.xx = newX;
-        this.y = newY;
-        panel.repaint();
     }
 
     private void updateAI() {

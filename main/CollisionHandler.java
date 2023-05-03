@@ -9,8 +9,7 @@ public class CollisionHandler{
 
     public int map[][];
 
-    public CollisionHandler(/*Entity player,*/ Panel panel, TileManager tileManager, KeyHandler keyHandler){
-        // this.player = player;
+    public CollisionHandler(Panel panel, TileManager tileManager, KeyHandler keyHandler){
         this.panel = panel;
         this.tileManager = tileManager;
         this.keyHandler = keyHandler;
@@ -66,7 +65,6 @@ public class CollisionHandler{
         // setting up values of the player pos
         double playerPosYTop = player.y - player.jumpHeight; 
         int playerPosX = panel.width/2 + player.x;
-        //if(!player.isPlayer) playerPosX -= panel.width/2;
         int playerCol = playerPosX/panel.tileSize;
         int topRow = (int) playerPosYTop/panel.tileSize; 
         // controll if the player is below or above screen

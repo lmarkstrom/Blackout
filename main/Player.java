@@ -32,7 +32,6 @@ public class Player extends Entity {
         this.isPlayer = true;
         this.keyHandler = keyHandler;
         this.panel = panel;
-        //this.isInMenu = false;
         size = panel.tileSize;
         x = 0;
         xx = panel.width/2;
@@ -80,12 +79,6 @@ public class Player extends Entity {
             Thread.sleep(10);
             set(currentx, currenty);
         }
-
-        // TODO gör att karaktären vrider på sig 180 grader innan slutscenen
-
-        // TODO gör en meny för när spelaren klarat banan
-        //isInMenu = true;
-
     }
 
     /**
@@ -143,8 +136,6 @@ public class Player extends Entity {
      * @param g The Graphics object to draw the player on.
      */
     public void draw(Graphics g){
-
-        //g.drawImage(image, xx, y, size, size, null);
         if (direction == 0){
             idleAnimation.start();
             g.drawImage(idleAnimation.getSprite(), xx-size/2, y, size, size, null);
