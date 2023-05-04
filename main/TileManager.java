@@ -76,12 +76,12 @@ public class TileManager {
     private Tile[] getTileImage() {
         Tile[] tile = new Tile[10];
         try {
-            tile[0] = new Tile(false, "/tex/0empty.png");
-            tile[1] = new Tile(true, "/tex/1dirt.png");
-            tile[2] = new Tile(true, "/tex/2grass.png");
-            tile[3] = new Tile(false, "/tex/3flagPole.png");
-            tile[4] = new Tile(false, "/tex/4flagTop.png");
-            tile[5] = new Tile(false, "/tex/5playerHouse.png");
+            tile[0] = new Tile(false, "/tex/0empty.png", false);
+            tile[1] = new Tile(true, "/tex/1dirt.png", false);
+            tile[2] = new Tile(true, "/tex/2grass.png", false);
+            tile[3] = new Tile(false, "/tex/3flagPole.png", false);
+            tile[4] = new Tile(false, "/tex/4flagTop.png", false);
+            tile[5] = new Tile(false, "/tex/5playerHouse.png", false);
         } catch (Exception e) {
             System.out.println(e);
         }

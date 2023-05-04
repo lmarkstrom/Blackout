@@ -6,6 +6,7 @@ public class CollisionHandler{
     private Panel panel;
     private TileManager tileManager;
     private KeyHandler keyHandler;
+    private boolean damageTaken;
 
     public int map[][];
 
@@ -33,8 +34,12 @@ public class CollisionHandler{
                 } else {
                     player.isGrounded = false;
                 }
-            }else player.isGrounded = false;
-        } else player.isGrounded = false;
+            }else {
+                player.isGrounded = false;
+            }
+        } else {
+            player.isGrounded = false;
+        }
     }
 
     private void controllside(int direction, Entity player){
@@ -58,7 +63,9 @@ public class CollisionHandler{
                     player.collideX = false;
                 }
             }
-        } else player.collideX = false;
+        } else {
+            player.collideX = false;
+        }
     }
 
     private void controllTop(Entity player){

@@ -10,6 +10,7 @@ about the tile's image, collision properties, and whether it is a point or not.
 public class Tile {
     public boolean collision;
     public boolean point;
+    public boolean damage;
     public BufferedImage image;
 
     /**
@@ -18,9 +19,10 @@ public class Tile {
     @param path The path to the image file for this tile.
     @throws IOException If an error occurs while reading the image file.
     */
-    public Tile(boolean collision, String path) throws IOException{
+    public Tile(boolean collision, String path, boolean damage) throws IOException{
         this.collision = collision;
         this.point = false;
+        this.damage = damage; 
         this.image = ImageIO.read(getClass().getResourceAsStream(path));
     }
 }
