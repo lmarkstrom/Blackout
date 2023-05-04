@@ -32,7 +32,7 @@ public class Player extends Entity {
     public Player(KeyHandler keyHandler, Panel panel){
         super();
         maxHealth = 100;
-        maxStamina = 100;
+        maxStamina = 10000;
         health = maxHealth;
         stamina = maxStamina;
         this.isPlayer = true;
@@ -106,12 +106,14 @@ public class Player extends Entity {
             direction = size;
             if(collideX == false){  
                 x += speed;
+                stamina -= 1;
             }
        } else if(keyHandler.left){
             animation.start();
             direction = -size;
             if(collideX == false){
                 x -= speed;
+                stamina -= 1;
             }
        } else direction = 0;
        if(keyHandler.up && isGrounded && !collideTop){
@@ -143,7 +145,8 @@ public class Player extends Entity {
 
     private void takeFallDamage(){
         if(fallHeight > 28){
-            health -= 10;
+            health -= 5;
+            fallHeight = 0;
         }
     }
 
