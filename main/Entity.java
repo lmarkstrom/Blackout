@@ -17,6 +17,10 @@ public class Entity {
     public Panel panel;
     public boolean isInMenu;
     public boolean isPlayer;
+    public int health;
+    public int maxHealth;
+    public int stamina;
+    public int maxStamina;
 
     public void updateCollission() {
         panel.collisionHandler.update(this);

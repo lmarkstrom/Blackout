@@ -42,13 +42,10 @@ public class Enemy extends Entity {
     }
 
     private void updateAI() {
-        System.out.println(collideX + " " + isGrounded);
         if(!collideX && walkDirection > 0){
-            System.out.println("walk");
             x += speed;
             direction = size;
         } else if(!collideX && walkDirection < 0){
-            System.out.println("walk");
             direction = -size;
             x -= speed;
         } else {

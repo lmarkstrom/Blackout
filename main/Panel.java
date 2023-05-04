@@ -33,10 +33,11 @@ public class Panel extends JPanel implements Runnable{
     public Thread thread;
     private KeyHandler keyHandler = new KeyHandler();
     public ArrayList<Enemy> enemies = new ArrayList<>();
-    private Player player = new Player(keyHandler, this);
+    public Player player = new Player(keyHandler, this);
     private TileManager tileManager = new TileManager(this, player);
     public CollisionHandler collisionHandler = new CollisionHandler(/*player ,*/ this, tileManager, keyHandler);
     private Menu menu;
+    private PlayerData playerData = new PlayerData(this);
 
     private enum STATE{
         MENU,
@@ -124,6 +125,7 @@ public class Panel extends JPanel implements Runnable{
      */
     public void update() {
         // call method that should be updated here:
+        playerData.update();
         if (state == STATE.GAME){
             if(keyHandler.pause) {
                 state = STATE.MENU;
@@ -135,9 +137,7 @@ public class Panel extends JPanel implements Runnable{
                 }
                 player.update();
             }
-        }
-        
-        
+        }    
     }
 
     /*
@@ -158,6 +158,7 @@ public class Panel extends JPanel implements Runnable{
             enemy.draw(g);
         }
         player.draw(g);
+        playerData.draw(g);
         
         // dispose graphic
         g.dispose();
