@@ -125,7 +125,7 @@ public class Player extends Entity {
        } else if(keyHandler.down){
             animation = crouchAnimation;
             animation.start();
-            SoundEffects.one.play();
+            SoundEffects.sniffle.play();
        }
 
        if(keyHandler.up && isGrounded && !collideTop){
@@ -134,7 +134,6 @@ public class Player extends Entity {
             dy -= jumpHeight;
             isGrounded = false;
             keyHandler.up = false;
-            SoundEffects.two.play();
        }
 
        if(!keyHandler.anyKeyPressed){
@@ -160,7 +159,6 @@ public class Player extends Entity {
         if(fallHeight > 28){
             health -= 5;
             fallHeight = 0;
-            SoundEffects.sniffle.play();
         }
     }
 
