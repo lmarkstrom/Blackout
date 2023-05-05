@@ -10,7 +10,8 @@ import java.net.URL;
 public enum SoundEffects{
 
     one("sounds/Vomit-in-Bathroom.wav"),
-    two("sounds/Vomiting-Close.wav");
+    two("sounds/Vomiting-Close.wav"),
+    sniffle("sounds/Sniffle.wav");
 
     private Clip clip;
  

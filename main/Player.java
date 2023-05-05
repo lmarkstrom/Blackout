@@ -160,6 +160,7 @@ public class Player extends Entity {
         if(fallHeight > 28){
             health -= 5;
             fallHeight = 0;
+            SoundEffects.sniffle.play();
         }
     }
 
