@@ -2,11 +2,7 @@ package main;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-
 import javax.imageio.ImageIO;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
  * The Player class represents a character in the game.
@@ -23,7 +19,6 @@ public class Player extends Entity {
     private BufferedImage idle, walk, jump, crouch;
     private Animation walkAnimation, idleAnimation, jumpAnimation, crouchAnimation;
     private Animation animation;
-    private Sound sound;
 
     /**
      * Constructs a new Player object with the given KeyHandler and Panel.
@@ -33,7 +28,7 @@ public class Player extends Entity {
      * @param keyHandler The KeyHandler object for handling keyboard input.
      * @param panel The Panel object representing the game panel.
      */
-    public Player(KeyHandler keyHandler, Panel panel, Sound sound){
+    public Player(KeyHandler keyHandler, Panel panel){
         super();
         maxHealth = 100;
         maxStamina = 10000;
@@ -42,7 +37,6 @@ public class Player extends Entity {
         this.isPlayer = true;
         this.keyHandler = keyHandler;
         this.panel = panel;
-        this.sound = sound;
         size = panel.tileSize;
         x = 0;
         xx = panel.width/2;
@@ -131,7 +125,7 @@ public class Player extends Entity {
        } else if(keyHandler.down){
             animation = crouchAnimation;
             animation.start();
-            sound.play();
+            SoundEffects.one.play();
        }
 
        if(keyHandler.up && isGrounded && !collideTop){
@@ -140,6 +134,7 @@ public class Player extends Entity {
             dy -= jumpHeight;
             isGrounded = false;
             keyHandler.up = false;
+            SoundEffects.two.play();
        }
 
        if(!keyHandler.anyKeyPressed){
