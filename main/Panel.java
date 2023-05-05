@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JPanel;
 
 /**
@@ -33,7 +35,8 @@ public class Panel extends JPanel implements Runnable{
     public Thread thread;
     private KeyHandler keyHandler = new KeyHandler();
     public ArrayList<Enemy> enemies = new ArrayList<>();
-    public Player player = new Player(keyHandler, this);
+    private Sound sound = new Sound();
+    public Player player = new Player(keyHandler, this, sound);
     private TileManager tileManager = new TileManager(this, player);
     public CollisionHandler collisionHandler = new CollisionHandler(/*player ,*/ this, tileManager, keyHandler);
     private Menu menu;
@@ -59,6 +62,19 @@ public class Panel extends JPanel implements Runnable{
             backgroundImage = ImageIO.read(new File("tex/newBGImage.jpg"));
         } 
         catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            sound.loadSounds();
+        } catch (UnsupportedAudioFileException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
