@@ -3,6 +3,7 @@ package main;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -31,20 +32,26 @@ public class TileManager {
     @param panel The game panel object.
     @param player The player object.
     */
-    public TileManager(Panel panel, Player player){
+    public TileManager(Panel panel, Player player, String levelPath, String bgPath){
         this.panel = panel;
         this.player = player;
         this.tiles = new Tile[10];
-        setMaxXY();
+        setMaxXY(levelPath);
         this.map = new int[mapSizeX][mapSizeY];
         this.tiles = getTileImage();
 
-        loadMap();
+        loadMap(levelPath);
+        try {
+            background = ImageIO.read(getClass().getResourceAsStream(bgPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    private void setMaxXY() {
+    private void setMaxXY(String path) {
         try {
-            InputStream stream = getClass().getResourceAsStream("/data/map.txt");
+            InputStream stream = getClass().getResourceAsStream(path);
             BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
             
             int maxX = -1;
@@ -112,9 +119,9 @@ public class TileManager {
     /**
      * Loads the map layout from a text file into a 2D array.
      */
-    public void loadMap(){
+    public void loadMap(String path){
         try {
-            InputStream stream = getClass().getResourceAsStream("/data/map.txt");
+            InputStream stream = getClass().getResourceAsStream(path);
             BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
             
             for (int y = 0; y < mapSizeY; y++) {
@@ -132,7 +139,6 @@ public class TileManager {
             }
 
             reader.close();
-            background = ImageIO.read(getClass().getResourceAsStream("/tex/gameBg.png"));
         } catch (Exception e) {
             System.out.println(e);
         }

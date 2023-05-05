@@ -31,12 +31,12 @@ public class Panel extends JPanel implements Runnable{
     // thread that runs the game update and drawing
     public Thread thread;
     private KeyHandler keyHandler = new KeyHandler();
-    public ArrayList<Enemy> enemies = new ArrayList<>();
-    public Player player = new Player(keyHandler, this);
-    private TileManager tileManager = new TileManager(this, player);
-    public CollisionHandler collisionHandler = new CollisionHandler(/*player ,*/ this, tileManager, keyHandler);
+    public ArrayList<Enemy> enemies;
+    public Player player;
+    private TileManager tileManager;
+    public CollisionHandler collisionHandler;
     private Menu menu;
-    private PlayerData playerData = new PlayerData(this);
+    private PlayerData playerData;
 
     private enum STATE{
         MENU,
@@ -46,6 +46,9 @@ public class Panel extends JPanel implements Runnable{
     public STATE state;
     private Image backgroundImage;
 
+    private String[] level;
+    private int levelIndex;
+
     public Panel(){
         state = STATE.MENU;
         // setUp game panel
@@ -54,10 +57,18 @@ public class Panel extends JPanel implements Runnable{
         this.setDoubleBuffered(true); // Buffer to the panel, so it starts painting before the next drawtime
         this.setFocusable(true);
         this.addKeyListener(keyHandler);
-        try { 
-            backgroundImage = ImageIO.read(new File("tex/newBGImage.jpg"));
-        } 
-        catch (IOException e) {
+        
+
+        this.level = new String[] {"/data/map.txt", "/data/map2.txt"};
+        this.levelIndex = 0;
+        this.enemies = new ArrayList<>();
+        this.player = new Player(keyHandler, this);
+        this.tileManager = new TileManager(this, player, level[0], "/tex/gameBg.png");
+        this.collisionHandler = new CollisionHandler(this, tileManager, keyHandler);
+        this.playerData = new PlayerData(this);
+        try {
+            this.backgroundImage = ImageIO.read(getClass().getResourceAsStream("/tex/gameBg.png"));
+        } catch (IOException e) {
             e.printStackTrace();
         }
         SoundEffects.init();
@@ -65,6 +76,14 @@ public class Panel extends JPanel implements Runnable{
 
     public void addPause(Menu menu){
         this.menu = menu;
+    }
+
+
+    
+    public void deleteEnemies() {
+        for (int i = 0; i < enemies.size(); i++) {
+            enemies.remove(i);
+        }
     }
 
     /*
@@ -137,7 +156,22 @@ public class Panel extends JPanel implements Runnable{
                 }
                 player.update();
             }
+
+            // LEVEL TEST (tryck "L" för att få ny bana)
+            if (keyHandler.L) {
+                this.levelIndex = (this.levelIndex+1)%level.length;
+                updateLevel();
+                keyHandler.L = false;
+            }
         }    
+    }
+
+    private void updateLevel() {
+        deleteEnemies();
+        this.tileManager = new TileManager(this, player, level[levelIndex], "/tex/gameBg.png");
+        this.collisionHandler = new CollisionHandler(this, tileManager, keyHandler);
+        // player.x = width/2;
+        // player.y = height/2;
     }
 
     /*
