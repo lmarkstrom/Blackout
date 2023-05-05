@@ -7,10 +7,8 @@ import javax.imageio.ImageIO;
 
 public class Enemy extends Entity {
     
-    private int size;
-    private BufferedImage idle, walk;
+    private BufferedImage walk;
     private Animation animation;
-    private Animation idleAnimation;
     private int walkDirection = 1;
     private Player player;
 
@@ -24,7 +22,6 @@ public class Enemy extends Entity {
         xx = panel.width/2;
         this.y = y;
         this.speed = speed;
-        gravity = 1;
         direction = size;
         loadTextures();
         animation.start();
@@ -66,6 +63,9 @@ public class Enemy extends Entity {
 
             dy = 0;
         }
+
+        
+
         super.updateCollission();
         animation.update();
     }

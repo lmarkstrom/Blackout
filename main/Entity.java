@@ -6,9 +6,10 @@ public class Entity {
     public int xx;
     public int y;
     public int dy;
+    public int size;
     public int speed = 10;
     public int jumpHeight = 15;
-    public int gravity;
+    public int gravity = 1;
     public boolean collideX;
     public boolean collideY;
     public boolean collideTop;

@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
      * @author Elsa
      */
 public class KeyHandler implements KeyListener {
-    boolean left, right, up, down, pause, anyKeyPressed, L;
+    boolean left, right, up, down, pause, anyKeyPressed, L, F;
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -41,6 +41,11 @@ public class KeyHandler implements KeyListener {
         if (key == KeyEvent.VK_L) {
             L = true;
         }
+
+        // make police angry
+        if (key == KeyEvent.VK_F){
+            F = true;
+        }
     }
 
     @Override
@@ -68,6 +73,10 @@ public class KeyHandler implements KeyListener {
 
         if(key == KeyEvent.VK_ESCAPE){
             pause = false;
+        }
+
+        if (key == KeyEvent.VK_F){
+            F = false;
         }
 
         //throw new UnsupportedOperationException("Unimplemented method 'keyReleased'");

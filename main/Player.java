@@ -13,10 +13,9 @@ import javax.imageio.ImageIO;
  */
 public class Player extends Entity {
     
-    private int size;
     private int fallHeight = 0;
 
-    private KeyHandler keyHandler;
+    public KeyHandler keyHandler;
     private BufferedImage idle, walk, jump, crouch;
     private Animation walkAnimation, idleAnimation, jumpAnimation, crouchAnimation;
     private Animation animation;
@@ -42,10 +41,10 @@ public class Player extends Entity {
         x = 0;
         xx = panel.width/2;
         y = panel.height/2;
-        gravity = 1;
         direction = size;
         loadTextures();
         animation = idleAnimation;
+        animation.start();
     }
 
     /**
