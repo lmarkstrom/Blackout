@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
      * @author Elsa
      */
 public class KeyHandler implements KeyListener {
-    boolean left, right, up, pause, L;
+    boolean left, right, up, down, pause, L, anyKeyPressed;
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -19,6 +19,8 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
+        anyKeyPressed = true;
+
         if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
             left = true;
         }
@@ -27,6 +29,9 @@ public class KeyHandler implements KeyListener {
         }
         if(key == KeyEvent.VK_UP || key == KeyEvent.VK_W){
             up = true;
+        }
+        if(key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S){
+            down = true;
         }
         // pause game
         if(key == KeyEvent.VK_ESCAPE){
@@ -43,6 +48,8 @@ public class KeyHandler implements KeyListener {
      
         int key = e.getKeyCode();
 
+        anyKeyPressed = false;
+
         if(key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A){
             left = false;
         }
@@ -53,6 +60,10 @@ public class KeyHandler implements KeyListener {
 
         if(key == KeyEvent.VK_UP || key == KeyEvent.VK_W){
             up = false;
+        }
+
+        if(key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S){
+            down = false;
         }
 
         if(key == KeyEvent.VK_ESCAPE){

@@ -8,7 +8,6 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -72,7 +71,7 @@ public class Panel extends JPanel implements Runnable{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        SoundEffects.init();
     }
 
     public void addPause(Menu menu){

@@ -2,7 +2,6 @@ package main;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-
 import javax.imageio.ImageIO;
 
 /**
@@ -17,9 +16,9 @@ public class Player extends Entity {
     private int fallHeight = 0;
 
     private KeyHandler keyHandler;
-    private BufferedImage idle, walk;
+    private BufferedImage idle, walk, jump, crouch;
+    private Animation walkAnimation, idleAnimation, jumpAnimation, crouchAnimation;
     private Animation animation;
-    private Animation idleAnimation;
 
     /**
      * Constructs a new Player object with the given KeyHandler and Panel.
@@ -45,6 +44,7 @@ public class Player extends Entity {
         gravity = 1;
         direction = size;
         loadTextures();
+        animation = idleAnimation;
     }
 
     /**
@@ -55,9 +55,14 @@ public class Player extends Entity {
         try{
             idle = ImageIO.read(getClass().getResourceAsStream("/tex/idle.png"));
             walk = ImageIO.read(getClass().getResourceAsStream("/tex/walk.png"));
+            jump = ImageIO.read(getClass().getResourceAsStream("/tex/jump.png"));
+            crouch = ImageIO.read(getClass().getResourceAsStream("/tex/crouch.png"));
 
-            animation = new Animation(walk, 10, 1, 4);
+            walkAnimation = new Animation(walk, 10, 1, 4);
             idleAnimation = new Animation(idle, 30, 1, 4);
+            jumpAnimation = new Animation(jump, 10, 1, 4);
+            crouchAnimation = new Animation(crouch, 20, 1, 2);
+            
         }
         catch(Exception e){
             System.out.println(e);
@@ -102,6 +107,7 @@ public class Player extends Entity {
             }
         }
        if (keyHandler.right){
+            animation = walkAnimation;
             animation.start();
             direction = size;
             if(collideX == false){  
@@ -109,30 +115,37 @@ public class Player extends Entity {
                 stamina -= 1;
             }
        } else if(keyHandler.left){
+            animation = walkAnimation;
             animation.start();
             direction = -size;
             if(collideX == false){
                 x -= speed;
                 stamina -= 1;
             }
-       } else direction = 0;
+       } else if(keyHandler.down){
+            animation = crouchAnimation;
+            animation.start();
+            SoundEffects.sniffle.play();
+       }
+
        if(keyHandler.up && isGrounded && !collideTop){
+            animation = jumpAnimation;
+            animation.start();
             dy -= jumpHeight;
             isGrounded = false;
             keyHandler.up = false;
        }
 
-       if(!keyHandler.left && !keyHandler.right){
-            animation.stop();
-            animation.reset();
+       if(!keyHandler.anyKeyPressed){
+            animation = idleAnimation;
        } 
 
        if(!isGrounded){
+            animation = jumpAnimation;
             y += dy;
             dy += gravity;
             if(dy > 0) fallHeight += 1;
             takeFallDamage();
-            System.out.println(fallHeight);
         } else {
             dy = 0;
             fallHeight = 0;
@@ -140,7 +153,6 @@ public class Player extends Entity {
         
         super.updateCollission();
         animation.update();
-        idleAnimation.update();
     }
 
     private void takeFallDamage(){
@@ -155,13 +167,7 @@ public class Player extends Entity {
      *
      * @param g The Graphics object to draw the player on.
      */
-    public void draw(Graphics g){
-        if (direction == 0){
-            idleAnimation.start();
-            g.drawImage(idleAnimation.getSprite(), xx-size/2, y, size, size, null);
-        }else{
-            idleAnimation.stop();
-            g.drawImage(animation.getSprite(), xx-direction/2, y, direction, size, null);
-        }
+    public void draw(Graphics g){    
+        g.drawImage(animation.getSprite(), xx-direction/2, y, direction, size, null);
     }
 }
