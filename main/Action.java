@@ -2,7 +2,6 @@ package main;
 
 public class Action {
 
-
     private int anger;
     private int minAnger;
     private KeyHandler keyHandler;

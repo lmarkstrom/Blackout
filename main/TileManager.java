@@ -99,7 +99,7 @@ public class TileManager {
     Updates the camera position according to the player's position.
     */
     public void update(){
-        posX = player.x;
+        posX = player.cam;
     }
     
     /**

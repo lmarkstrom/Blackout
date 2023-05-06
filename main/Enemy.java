@@ -18,8 +18,8 @@ public class Enemy extends Entity {
         this.panel = panel;
         this.isInMenu = false;
         size = panel.tileSize;
-        this.x = x - panel.width/2;
-        xx = panel.width/2;
+        this.cam = x - panel.width/2;
+        x = panel.width/2;
         this.y = y;
         this.speed = speed;
         direction = size;
@@ -40,15 +40,15 @@ public class Enemy extends Entity {
 
     private void updateAI() {
         if(!collideX && walkDirection > 0){
-            x += speed;
+            cam += speed;
             direction = size;
         } else if(!collideX && walkDirection < 0){
             direction = -size;
-            x -= speed;
+            cam -= speed;
         } else {
             walkDirection = -walkDirection;
             collideX = false;
-            x += walkDirection*speed;
+            cam += walkDirection*speed;
         } 
     }
 
@@ -56,14 +56,12 @@ public class Enemy extends Entity {
         //xx = x - player.x;
         //x = player.xx;
         if(isGrounded) updateAI();
-       if(!isGrounded){
+        if(!isGrounded){
             y += dy;
             dy += gravity;
-       } else {
-
+        } else {
             dy = 0;
         }
-
         
 
         super.updateCollission();
@@ -71,7 +69,7 @@ public class Enemy extends Entity {
     }
 
     public void draw(Graphics g){
-        g.drawImage(animation.getSprite(), (x - player.x + panel.width/2 - direction/2), y, direction, size, null);
+        g.drawImage(animation.getSprite(), (cam - player.cam + panel.width/2 - direction/2), y, direction, size, null);
     
     }
 }

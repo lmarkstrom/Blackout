@@ -20,7 +20,7 @@ public class CollisionHandler{
     private void controllGround(Entity player){
         // setting up values of the player pos
         double playerPosYBottom = player.y + panel.tileSize; 
-        int playerPosX = panel.width/2 + player.x;
+        int playerPosX = panel.width/2 + player.cam;
         int playerCol = playerPosX/panel.tileSize;
         int bottomRow = (int) playerPosYBottom/panel.tileSize;
         // controll if the player is below or above screen
@@ -47,8 +47,8 @@ public class CollisionHandler{
         double playerPosYTop = player.y + player.gravity;
         double playerPosYBottom = player.y + 50;
         int playerPosX;
-        if (direction > 0) playerPosX = panel.width/2 + player.x + panel.tileSize/2 - 10;
-        else playerPosX = panel.width/2 + player.x - panel.tileSize/2 + 10; 
+        if (direction > 0) playerPosX = panel.width/2 + player.cam + panel.tileSize/2 - 10;
+        else playerPosX = panel.width/2 + player.cam - panel.tileSize/2 + 10; 
         int playerCol = playerPosX/panel.tileSize;
         int playerRow1 = (int) playerPosYTop/panel.tileSize;
         int playerRow2 = (int) playerPosYBottom/panel.tileSize;
@@ -71,7 +71,7 @@ public class CollisionHandler{
     private void controllTop(Entity player){
         // setting up values of the player pos
         double playerPosYTop = player.y - player.jumpHeight; 
-        int playerPosX = panel.width/2 + player.x;
+        int playerPosX = panel.width/2 + player.cam;
         int playerCol = playerPosX/panel.tileSize;
         int topRow = (int) playerPosYTop/panel.tileSize; 
         // controll if the player is below or above screen

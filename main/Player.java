@@ -38,8 +38,8 @@ public class Player extends Entity {
         this.keyHandler = keyHandler;
         this.panel = panel;
         size = panel.tileSize;
-        x = 0;
-        xx = panel.width/2;
+        cam = 0;
+        x = panel.width/2;
         y = panel.height/2;
         direction = size;
         loadTextures();
@@ -70,7 +70,7 @@ public class Player extends Entity {
     }
 
     private void set(int newX, int newY) {
-        this.xx = newX;
+        this.x = newX;
         this.y = newY;
         panel.repaint();
     }
@@ -99,7 +99,7 @@ public class Player extends Entity {
      * @throws InterruptedException
      */
     public void update(){
-        if (x >= 2800) {
+        if (cam >= 2800) {
             try {
                 victoryAnimation(y);
             } catch (InterruptedException e) {
@@ -111,7 +111,7 @@ public class Player extends Entity {
             animation.start();
             direction = size;
             if(collideX == false){  
-                x += speed;
+                cam += speed;
                 stamina -= 1;
             }
        } else if(keyHandler.left){
@@ -119,7 +119,7 @@ public class Player extends Entity {
             animation.start();
             direction = -size;
             if(collideX == false){
-                x -= speed;
+                cam -= speed;
                 stamina -= 1;
             }
        } else if(keyHandler.down){
@@ -167,6 +167,6 @@ public class Player extends Entity {
      * @param g The Graphics object to draw the player on.
      */
     public void draw(Graphics g){    
-        g.drawImage(animation.getSprite(), xx-direction/2, y, direction, size, null);
+        g.drawImage(animation.getSprite(), x-direction/2, y, direction, size, null);
     }
 }

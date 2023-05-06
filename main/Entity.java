@@ -2,8 +2,8 @@ package main;
 
 public class Entity {
     
+    public int cam;
     public int x;
-    public int xx;
     public int y;
     public int dy;
     public int size;
