@@ -2,7 +2,6 @@ package main;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-
 import javax.imageio.ImageIO;
 
 /**
@@ -14,7 +13,6 @@ import javax.imageio.ImageIO;
 public class Player extends Entity {
     
     private int fallHeight = 0;
-
     public KeyHandler keyHandler;
     private BufferedImage idle, walk, jump, crouch;
     private Animation walkAnimation, idleAnimation, jumpAnimation, crouchAnimation;
@@ -45,6 +43,7 @@ public class Player extends Entity {
         loadTextures();
         animation = idleAnimation;
         animation.start();
+
     }
 
     /**
@@ -125,6 +124,7 @@ public class Player extends Entity {
        } else if(keyHandler.down){
             animation = crouchAnimation;
             animation.start();
+            SoundEffects.sniffle.play();
        }
 
        if(keyHandler.up && isGrounded && !collideTop){
@@ -138,6 +138,7 @@ public class Player extends Entity {
         if(!keyHandler.up && !keyHandler.down && !keyHandler.left && !keyHandler.right){
             animation = idleAnimation;
             animation.start();
+
        } 
         
 
@@ -170,5 +171,6 @@ public class Player extends Entity {
      */
     public void draw(Graphics g){    
         g.drawImage(animation.getSprite(), x-direction/2, y, direction, size, null);
+
     }
 }

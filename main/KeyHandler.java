@@ -10,6 +10,7 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener {
     boolean left, right, up, down, pause, L, F;
 
+
     @Override
     public void keyTyped(KeyEvent e) {
         // throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
@@ -18,7 +19,6 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-
 
         if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
             left = true;
@@ -51,7 +51,6 @@ public class KeyHandler implements KeyListener {
     public void keyReleased(KeyEvent e) {
      
         int key = e.getKeyCode();
-
 
         if(key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A){
             left = false;
