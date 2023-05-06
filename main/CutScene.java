@@ -10,16 +10,12 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 public class CutScene{
-    private Thread thread;
-    private Graphics g;
     public int n;
-    private boolean called;
     public boolean cutSceneDone = false;
     private Panel panel;
     private ArrayList<BufferedImage> frames;
@@ -29,17 +25,6 @@ public class CutScene{
     public CutScene(Panel panel){
         this.panel = panel;
     }
-    
-    public void introScene(){
-        called = true;
-        getFrames("cutscenes/introScene.gif");
-        for (BufferedImage frame : frames){
-            //g.drawImage(frame, 0, 0, panel.width, panel.height, null);
-            System.out.println("1");
-            
-        }
-        cutSceneDone = true;
-    }
 
     public void getFrames(String fileName){
         ArrayList<BufferedImage> frames = new ArrayList<>();
@@ -48,7 +33,6 @@ public class CutScene{
             File input = new File(fileName);
             ImageInputStream stream = ImageIO.createImageInputStream(input);
             reader.setInput(stream);
-        
             int count = reader.getNumImages(true);
             for (int index = 0; index < count; index++) {
                 BufferedImage frame = reader.read(index);
