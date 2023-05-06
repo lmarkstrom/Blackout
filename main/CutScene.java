@@ -16,7 +16,7 @@ public class CutScene{
     private Panel panel;
     private ArrayList<BufferedImage> frames;
     public int count;
-    private int frameCount = 0;
+    public int frameCount = 0;
 
     public CutScene(Panel panel){
         this.panel = panel;

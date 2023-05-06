@@ -102,6 +102,7 @@ public class Panel extends JPanel implements Runnable{
 
     public void startGame(){
         state = STATE.GAME;
+        cutScene.cutSceneDone = true;
         System.out.println(state);
     }
 
@@ -109,6 +110,7 @@ public class Panel extends JPanel implements Runnable{
         state = STATE.GAME;
         cutScene.cutSceneDone = false;
         cutScene.count = 0;
+        cutScene.frameCount = 0;
         player.cam = 0;
         player.y = height/2;
         cutScene.getFrames("cutscenes/introScene.gif");
