@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
@@ -37,6 +36,7 @@ public class Panel extends JPanel implements Runnable{
     public CollisionHandler collisionHandler;
     private Menu menu;
     private PlayerData playerData;
+    private Action action;
 
     private enum STATE{
         MENU,
@@ -66,11 +66,13 @@ public class Panel extends JPanel implements Runnable{
         this.tileManager = new TileManager(this, player, level[0], "/tex/gameBg.png");
         this.collisionHandler = new CollisionHandler(this, tileManager, keyHandler);
         this.playerData = new PlayerData(this);
+        this.action = new Action(keyHandler, player, this);
         try {
             this.backgroundImage = ImageIO.read(getClass().getResourceAsStream("/tex/gameBg.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         SoundEffects.init();
     }
 
@@ -155,6 +157,7 @@ public class Panel extends JPanel implements Runnable{
                     enemy.update();
                 }
                 player.update();
+                action.update();
             }
 
             // LEVEL TEST (tryck "L" för att få ny bana)

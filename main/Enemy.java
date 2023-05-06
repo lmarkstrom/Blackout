@@ -7,24 +7,23 @@ import javax.imageio.ImageIO;
 
 public class Enemy extends Entity {
     
-    private int size;
-    private BufferedImage idle, walk;
+    private BufferedImage walk;
     private Animation animation;
-    private Animation idleAnimation;
     private int walkDirection = 1;
     private Player player;
+    private boolean isChasing;
 
-    public Enemy(Panel panel, int x, int y, Player player, int speed){
+    public Enemy(Panel panel, int x, int y, Player player, int speed, boolean isChasing){
         super();
         this.player = player;
         this.panel = panel;
         this.isInMenu = false;
         size = panel.tileSize;
-        this.x = x - panel.width/2;
-        xx = panel.width/2;
+        this.cam = x - panel.width/2;
+        x = panel.width/2;
         this.y = y;
         this.speed = speed;
-        gravity = 1;
+        this.isChasing = isChasing;
         direction = size;
         loadTextures();
         animation.start();
@@ -43,35 +42,52 @@ public class Enemy extends Entity {
 
     private void updateAI() {
         if(!collideX && walkDirection > 0){
-            x += speed;
+            cam += speed;
             direction = size;
         } else if(!collideX && walkDirection < 0){
             direction = -size;
-            x -= speed;
+            cam -= speed;
         } else {
             walkDirection = -walkDirection;
             collideX = false;
-            x += walkDirection*speed;
+            cam += walkDirection*speed;
         } 
+    }
+
+    private void updateChase(){
+        if(!collideX && walkDirection > 0){
+            cam += speed;
+            direction = size;
+        } else if(collideX && walkDirection > 0 && isGrounded){
+            dy -= jumpHeight+2;
+            isGrounded = false;
+        }
+        if(!isGrounded){
+            y += dy;
+            dy += gravity;
+        } else {
+            dy = 0;
+        }
     }
 
     public void update(){ 
         //xx = x - player.x;
         //x = player.xx;
-        if(isGrounded) updateAI();
-       if(!isGrounded){
+        if(isChasing) updateChase();
+        else if (isGrounded) updateAI();
+        else if(!isGrounded){
             y += dy;
             dy += gravity;
-       } else {
-
+        } else {
             dy = 0;
         }
+        
         super.updateCollission();
         animation.update();
     }
 
     public void draw(Graphics g){
-        g.drawImage(animation.getSprite(), (x - player.x + panel.width/2 - direction/2), y, direction, size, null);
+        g.drawImage(animation.getSprite(), (cam - player.cam + panel.width/2 - direction/2), y, direction, size, null);
     
     }
 }
