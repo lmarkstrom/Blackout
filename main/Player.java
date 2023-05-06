@@ -134,10 +134,12 @@ public class Player extends Entity {
             isGrounded = false;
             keyHandler.up = false;
        }
-
-       if(!keyHandler.anyKeyPressed){
+        
+        if(!keyHandler.up && !keyHandler.down && !keyHandler.left && !keyHandler.right){
             animation = idleAnimation;
+            animation.start();
        } 
+        
 
        if(!isGrounded){
             animation = jumpAnimation;
