@@ -8,18 +8,17 @@ import java.awt.event.KeyListener;
      * @author Elsa
      */
 public class KeyHandler implements KeyListener {
-    boolean left, right, up, down, pause, L, anyKeyPressed;
+    boolean left, right, up, down, pause, L, F;
+
 
     @Override
     public void keyTyped(KeyEvent e) {
-        //throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
+        // throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-
-        anyKeyPressed = true;
 
         if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
             left = true;
@@ -41,14 +40,17 @@ public class KeyHandler implements KeyListener {
         if (key == KeyEvent.VK_L) {
             L = true;
         }
+
+        // make police angry
+        if (key == KeyEvent.VK_F){
+            F = true;
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
      
         int key = e.getKeyCode();
-
-        anyKeyPressed = false;
 
         if(key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A){
             left = false;
@@ -70,7 +72,10 @@ public class KeyHandler implements KeyListener {
             pause = false;
         }
 
-        //throw new UnsupportedOperationException("Unimplemented method 'keyReleased'");
+        if (key == KeyEvent.VK_F){
+            F = false;
+        }
+
     }
 
 
