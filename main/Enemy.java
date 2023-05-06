@@ -11,8 +11,9 @@ public class Enemy extends Entity {
     private Animation animation;
     private int walkDirection = 1;
     private Player player;
+    private boolean isChasing;
 
-    public Enemy(Panel panel, int x, int y, Player player, int speed){
+    public Enemy(Panel panel, int x, int y, Player player, int speed, boolean isChasing){
         super();
         this.player = player;
         this.panel = panel;
@@ -22,6 +23,7 @@ public class Enemy extends Entity {
         x = panel.width/2;
         this.y = y;
         this.speed = speed;
+        this.isChasing = isChasing;
         direction = size;
         loadTextures();
         animation.start();
@@ -52,18 +54,34 @@ public class Enemy extends Entity {
         } 
     }
 
-    public void update(){ 
-        //xx = x - player.x;
-        //x = player.xx;
-        if(isGrounded) updateAI();
+    private void updateChase(){
+        if(!collideX && walkDirection > 0){
+            cam += speed;
+            direction = size;
+        } else if(collideX && walkDirection > 0 && isGrounded){
+            dy -= jumpHeight+2;
+            isGrounded = false;
+        }
         if(!isGrounded){
             y += dy;
             dy += gravity;
         } else {
             dy = 0;
         }
-        
+    }
 
+    public void update(){ 
+        //xx = x - player.x;
+        //x = player.xx;
+        if(isChasing) updateChase();
+        else if (isGrounded) updateAI();
+        else if(!isGrounded){
+            y += dy;
+            dy += gravity;
+        } else {
+            dy = 0;
+        }
+        
         super.updateCollission();
         animation.update();
     }

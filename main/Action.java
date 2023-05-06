@@ -27,7 +27,7 @@ public class Action {
 
         if(anger >= 100 && !busted){
             busted = true;
-            panel.enemies.add(new Enemy(panel, 0, panel.height/2, player, 1));
+            panel.enemies.add(new Enemy(panel, 0, panel.height/2, player, 5, true));
         }
     }
 }

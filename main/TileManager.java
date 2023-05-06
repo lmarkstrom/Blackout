@@ -132,7 +132,7 @@ public class TileManager {
                     try {
                         num = Integer.parseInt(nums[x]);
                     } catch (Exception e) {
-                        panel.enemies.add(new Enemy(panel, x*panel.tileSize, y*panel.tileSize, player, 2));
+                        panel.enemies.add(new Enemy(panel, x*panel.tileSize, y*panel.tileSize, player, 2, false));
                     }
                     map[x][y] = num;
                 }
