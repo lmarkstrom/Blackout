@@ -26,7 +26,6 @@ public class Panel extends JPanel implements Runnable{
     public final int width = tileSize*maxCol;
     public final int height = tileSize*maxRows;
     public final int FPS = 60;
-    private boolean introPlayed = false;
 
     // thread that runs the game update and drawing
     public Thread thread;
@@ -36,7 +35,7 @@ public class Panel extends JPanel implements Runnable{
     private TileManager tileManager;
     public CollisionHandler collisionHandler;
     private Menu menu;
-    private PlayerData playerData;
+    public PlayerData playerData;
     private CutScene cutScene;
     private Action action;
 
@@ -49,7 +48,7 @@ public class Panel extends JPanel implements Runnable{
     private Image backgroundImage;
 
     private String[] level;
-    private int levelIndex;
+    public int levelIndex;
 
     public Panel(){
         state = STATE.MENU;
@@ -76,6 +75,7 @@ public class Panel extends JPanel implements Runnable{
             e.printStackTrace();
         }
 
+        playerData.loadSaves();
         SoundEffects.init();
     }
 
@@ -102,7 +102,15 @@ public class Panel extends JPanel implements Runnable{
 
     public void startGame(){
         state = STATE.GAME;
+        System.out.println(state);
+    }
+
+    public void startNewGame(){
+        state = STATE.GAME;
+        cutScene.cutSceneDone = false;
         cutScene.count = 0;
+        player.cam = 0;
+        player.y = height/2;
         cutScene.getFrames("cutscenes/introScene.gif");
         System.out.println(state);
     }

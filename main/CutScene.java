@@ -5,10 +5,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
-import javax.swing.JPanel;
-
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -16,7 +12,7 @@ import java.io.IOException;
 
 public class CutScene{
     public int n;
-    public boolean cutSceneDone = false;
+    public boolean cutSceneDone = true;
     private Panel panel;
     private ArrayList<BufferedImage> frames;
     public int count;
