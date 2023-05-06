@@ -26,6 +26,7 @@ public class Panel extends JPanel implements Runnable{
     public final int width = tileSize*maxCol;
     public final int height = tileSize*maxRows;
     public final int FPS = 60;
+    private boolean introPlayed = false;
 
     // thread that runs the game update and drawing
     public Thread thread;
@@ -36,6 +37,7 @@ public class Panel extends JPanel implements Runnable{
     public CollisionHandler collisionHandler;
     private Menu menu;
     private PlayerData playerData;
+    private CutScene cutScene;
     private Action action;
 
     private enum STATE{
@@ -66,6 +68,7 @@ public class Panel extends JPanel implements Runnable{
         this.tileManager = new TileManager(this, player, level[0], "/tex/gameBg.png");
         this.collisionHandler = new CollisionHandler(this, tileManager, keyHandler);
         this.playerData = new PlayerData(this);
+        this.cutScene = new CutScene(this);
         this.action = new Action(keyHandler, player, this);
         try {
             this.backgroundImage = ImageIO.read(getClass().getResourceAsStream("/tex/gameBg.png"));
@@ -99,6 +102,8 @@ public class Panel extends JPanel implements Runnable{
 
     public void startGame(){
         state = STATE.GAME;
+        cutScene.count = 0;
+        cutScene.getFrames("cutscenes/introScene.gif");
         System.out.println(state);
     }
 
@@ -186,16 +191,22 @@ public class Panel extends JPanel implements Runnable{
         // create graphic object
         Graphics2D g = (Graphics2D) graphics;
 
-        // Draw background
-        g.drawImage(backgroundImage, 0, 0, this.getWidth(), this.getHeight(), this);
+        
+        
+        if(!cutScene.cutSceneDone && state == STATE.GAME){
+            cutScene.draw(g);
+        } else if (cutScene.cutSceneDone){
+            // Draw background
+            g.drawImage(backgroundImage, 0, 0, this.getWidth(), this.getHeight(), this);
 
-        // call method to paint player and map here:
-        tileManager.draw(g);
-        for (Enemy enemy : enemies) {
-            enemy.draw(g);
+            // call method to paint player and map here:
+            tileManager.draw(g);
+            for (Enemy enemy : enemies) {
+                enemy.draw(g);
+            }
+            player.draw(g);
+            playerData.draw(g);
         }
-        player.draw(g);
-        playerData.draw(g);
         
         // dispose graphic
         g.dispose();
