@@ -63,7 +63,7 @@ public class Menu implements ActionListener{
 
     private void loadImage(){
         try{
-            background = ImageIO.read(getClass().getResourceAsStream("/tex/menuBg.png"));
+            background = ImageIO.read(getClass().getResourceAsStream("/tex/bg/menuBg.png"));
         }
         catch(Exception e){
             System.out.println(e);

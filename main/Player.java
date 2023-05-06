@@ -52,10 +52,10 @@ public class Player extends Entity {
      */
     private void loadTextures(){
         try{
-            idle = ImageIO.read(getClass().getResourceAsStream("/tex/idle.png"));
-            walk = ImageIO.read(getClass().getResourceAsStream("/tex/walk.png"));
-            jump = ImageIO.read(getClass().getResourceAsStream("/tex/jump.png"));
-            crouch = ImageIO.read(getClass().getResourceAsStream("/tex/crouch.png"));
+            idle = ImageIO.read(getClass().getResourceAsStream("/tex/anim/idle.png"));
+            walk = ImageIO.read(getClass().getResourceAsStream("/tex/anim/walk.png"));
+            jump = ImageIO.read(getClass().getResourceAsStream("/tex/anim/jump.png"));
+            crouch = ImageIO.read(getClass().getResourceAsStream("/tex/anim/crouch.png"));
 
             walkAnimation = new Animation(walk, 10, 1, 4);
             idleAnimation = new Animation(idle, 30, 1, 4);

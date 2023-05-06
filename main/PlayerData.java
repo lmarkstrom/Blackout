@@ -58,8 +58,8 @@ public class PlayerData {
 
     private void loadTex(){
         try {
-            healthBar = ImageIO.read(getClass().getResourceAsStream("/tex/bar.png"));
-            staminaBar = ImageIO.read(getClass().getResourceAsStream("/tex/bar2.png"));
+            healthBar = ImageIO.read(getClass().getResourceAsStream("/tex/ui/bar.png"));
+            staminaBar = ImageIO.read(getClass().getResourceAsStream("/tex/ui/bar2.png"));
         } catch (Exception e) {
             System.out.println(e);
         }

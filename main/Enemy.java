@@ -31,7 +31,7 @@ public class Enemy extends Entity {
 
     private void loadTextures(){
         try{
-            walk = ImageIO.read(getClass().getResourceAsStream("/tex/policeWalk.png"));
+            walk = ImageIO.read(getClass().getResourceAsStream("/tex/anim/policeWalk.png"));
 
             animation = new Animation(walk, 10, 1, 4);
         }

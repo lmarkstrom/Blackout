@@ -64,13 +64,13 @@ public class Panel extends JPanel implements Runnable{
         this.levelIndex = 0;
         this.enemies = new ArrayList<>();
         this.player = new Player(keyHandler, this);
-        this.tileManager = new TileManager(this, player, level[0], "/tex/gameBg.png");
+        this.tileManager = new TileManager(this, player, level[0], "/tex/bg/gameBg.png");
         this.collisionHandler = new CollisionHandler(this, tileManager, keyHandler);
         this.playerData = new PlayerData(this);
         this.cutScene = new CutScene(this);
         this.action = new Action(keyHandler, player, this);
         try {
-            this.backgroundImage = ImageIO.read(getClass().getResourceAsStream("/tex/gameBg.png"));
+            this.backgroundImage = ImageIO.read(getClass().getResourceAsStream("/tex/bg/gameBg.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -186,7 +186,7 @@ public class Panel extends JPanel implements Runnable{
 
     private void updateLevel() {
         deleteEnemies();
-        this.tileManager = new TileManager(this, player, level[levelIndex], "/tex/gameBg.png");
+        this.tileManager = new TileManager(this, player, level[levelIndex], "/tex/bg/gameBg.png");
         this.collisionHandler = new CollisionHandler(this, tileManager, keyHandler);
         // player.x = width/2;
         // player.y = height/2;
