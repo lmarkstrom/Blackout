@@ -12,6 +12,7 @@ public class Enemy extends Entity {
     private int walkDirection = 1;
     private Player player;
     private boolean isChasing;
+    private boolean copVisible = false;
 
     private boolean collidePlayer = false;
 
@@ -66,6 +67,12 @@ public class Enemy extends Entity {
             collidePlayer = false;
         }
 
+        if(cam > (player.cam - 6*panel.tileSize) && cam < (player.cam + 6*panel.tileSize) && !copVisible){
+            // if(cam > (player.cam - 6*panel.tileSize) && cam < (player.cam + 6*panel.tileSize) && !copVisible){
+            copVisible = true;
+            SoundEffects.kollaInte.play();
+        }
+
     }
 
     private void updateChase(){
@@ -84,8 +91,10 @@ public class Enemy extends Entity {
         }
 
         if ( player.cam <= cam){
+            SoundEffects.chilla.play();
+            //TODO spelare och polis ska stanna 
+
             //TODO play cutScene: fyllecell
-            System.out.println("fångad");
         } 
     }
 

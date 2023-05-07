@@ -26,6 +26,7 @@ public class Player extends Entity {
 
     public int anger; 
 
+    private ArrayList<SoundEffects> snoring = new ArrayList<>();
     private ArrayList<SoundEffects> injuries = new ArrayList<>();
     private Random random = new Random();
 
@@ -55,6 +56,11 @@ public class Player extends Entity {
         injuries.add(SoundEffects.ramlar);
         injuries.add(SoundEffects.ramlar2);
         injuries.add(SoundEffects.ramlar3);
+        snoring.add(SoundEffects.snark);
+        snoring.add(SoundEffects.snark2);
+        snoring.add(SoundEffects.snark3);
+        snoring.add(SoundEffects.hemmaAntligen);
+        snoring.add(SoundEffects.hemmaAntligen2);
         loadTextures();
         animation = idleAnimation;
         animation.start();
@@ -100,6 +106,8 @@ public class Player extends Entity {
         int currentx = panel.width/2;
         int currenty = y;
 
+        snoring.get(random.nextInt(snoring.size())).play();
+
         while (currenty < 484) {
             currenty += 1;
             Thread.sleep(10);
@@ -127,10 +135,6 @@ public class Player extends Entity {
                 e.printStackTrace();
             }
         }
-        // if(keyHandler.J){
-        //     animation = danceAnimation1;
-        //     animation.start();
-        // } else if (keyHandler.right){
         if (keyHandler.right){
             animation = walkAnimation;
             animation.start();

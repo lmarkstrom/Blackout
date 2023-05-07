@@ -46,12 +46,14 @@ public class Action {
 
     public void update(){
         if(keyHandler.F){
+            SoundEffects.fAina.play();
             player.anger += 20;
             keyHandler.F = false;
         }
         if(keyHandler.H){
             songs.get(random.nextInt(songs.size())).play();
             keyHandler.H = false;
+            //TODO ex. spela låten och gör en dansanimation så länge klippet håller på
         }
 
         if(keyHandler.J){
@@ -71,11 +73,11 @@ public class Action {
 
 
         //TODO dethär vill bara göra  om ingget annat ljud spelas upp samtidigt, hur?
-        ticks++;
-        if(ticks >= 60*7){
-            noise.get(random.nextInt(noise.size())).play();
-            ticks = 0;
-        } 
+        // ticks++;
+        // if(ticks >= 60*7){
+        //     noise.get(random.nextInt(noise.size())).play();
+        //     ticks = 0;
+        // } 
 
 
     }

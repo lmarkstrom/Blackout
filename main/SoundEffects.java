@@ -23,9 +23,17 @@ public enum SoundEffects{
     theNights("sounds/theNights.wav"),
     fAina("sounds/fAina.wav"),
     kattjaKatt("sounds/katjaKatt.wav"),
-    chilla("sounds/chilla.wav");
+    chilla("sounds/chilla.wav"), 
+    kollaInte("sounds/kolla inte.wav"),
+    snark("sounds/snark1.wav"),
+    snark2("sounds/snark2.wav"),
+    snark3("sounds/snark3.wav"), 
+    hemmaAntligen("sounds/hemmaAntligen.wav"),
+    hemmaAntligen2("sounds/hemmaAntligen2.wav");
+
 
     private Clip clip;
+    public float durationInSeconds;
  
     /**
      * Constructs a new SoundEffect object with the specified sound file name.
@@ -35,6 +43,12 @@ public enum SoundEffects{
         try {
             URL url = this.getClass().getClassLoader().getResource(soundFileName);
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
+            // AudioFormat format = audioInputStream.getFormat();
+            // long audioFileLength = url.length(); //måste va file inte url
+            // int frameSize = format.getFrameSize();
+            // float frameRate = format.getFrameRate();
+            // durationInSeconds = (audioFileLength / (frameSize * frameRate));
+            // TODO gör ett sätt att veta hur lång klippet är
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
         } catch (UnsupportedAudioFileException e){
@@ -44,7 +58,6 @@ public enum SoundEffects{
         } catch (LineUnavailableException e){
             e.printStackTrace();
         }
-
     }
 
     /**
