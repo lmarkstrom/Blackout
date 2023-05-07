@@ -19,7 +19,12 @@ public class Player extends Entity {
     public KeyHandler keyHandler;
     private BufferedImage idle, walk, jump, crouch;
     private Animation walkAnimation, idleAnimation, jumpAnimation, crouchAnimation;
-    private Animation animation;
+    public Animation animation;
+
+    private BufferedImage dance1, dance2, dance3;
+    public Animation danceAnimation1, danceAnimation2, danceAnimation3;
+
+    public int anger; 
 
     private ArrayList<SoundEffects> injuries = new ArrayList<>();
     private Random random = new Random();
@@ -53,7 +58,6 @@ public class Player extends Entity {
         loadTextures();
         animation = idleAnimation;
         animation.start();
-
     }
 
     /**
@@ -71,6 +75,14 @@ public class Player extends Entity {
             idleAnimation = new Animation(idle, 30, 1, 4);
             jumpAnimation = new Animation(jump, 10, 1, 4);
             crouchAnimation = new Animation(crouch, 20, 1, 2);
+
+            dance1 = ImageIO.read(getClass().getResourceAsStream("/tex/dance1.png"));
+            dance2 = ImageIO.read(getClass().getResourceAsStream("/tex/dance2.png"));
+            dance3 = ImageIO.read(getClass().getResourceAsStream("/tex/dance3.png"));
+
+            danceAnimation1 = new Animation(dance1, 10, 1, 2);
+            danceAnimation2 = new Animation(dance2, 10, 1, 2);
+            danceAnimation3 = new Animation(dance3, 10, 1, 2);
             
         }
         catch(Exception e){
@@ -115,7 +127,11 @@ public class Player extends Entity {
                 e.printStackTrace();
             }
         }
-       if (keyHandler.right){
+        // if(keyHandler.J){
+        //     animation = danceAnimation1;
+        //     animation.start();
+        // } else if (keyHandler.right){
+        if (keyHandler.right){
             animation = walkAnimation;
             animation.start();
             direction = size;
@@ -145,11 +161,10 @@ public class Player extends Entity {
             keyHandler.up = false;
        }
         
-        if(!keyHandler.up && !keyHandler.down && !keyHandler.left && !keyHandler.right){
+        if(!keyHandler.up && !keyHandler.down && !keyHandler.left && !keyHandler.right && !keyHandler.J){
             animation = idleAnimation;
             animation.start();
-
-       } 
+        } 
         
 
        if(!isGrounded){

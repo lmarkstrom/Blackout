@@ -13,6 +13,8 @@ public class Enemy extends Entity {
     private Player player;
     private boolean isChasing;
 
+    private boolean collidePlayer = false;
+
     public Enemy(Panel panel, int x, int y, Player player, int speed, boolean isChasing){
         super();
         this.player = player;
@@ -27,6 +29,7 @@ public class Enemy extends Entity {
         direction = size;
         loadTextures();
         animation.start();
+
     }
 
     private void loadTextures(){
@@ -52,6 +55,17 @@ public class Enemy extends Entity {
             collideX = false;
             cam += walkDirection*speed;
         } 
+
+        int width = animation.getSprite().getWidth();
+        if(cam > player.cam - width && cam < player.cam + width && player.y == y && !collidePlayer){
+            player.anger +=20;
+            collidePlayer = true;
+        } 
+        
+        if(cam < player.cam - width || cam > player.cam + width && collidePlayer){
+            collidePlayer = false;
+        }
+
     }
 
     private void updateChase(){
@@ -68,6 +82,11 @@ public class Enemy extends Entity {
         } else {
             dy = 0;
         }
+
+        if ( player.cam <= cam){
+            //TODO play cutScene: fyllecell
+            System.out.println("fångad");
+        } 
     }
 
     public void update(){ 
