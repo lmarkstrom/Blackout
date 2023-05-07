@@ -9,7 +9,21 @@ import java.net.URL;
  */
 public enum SoundEffects{
 
-    sniffle("sounds/Sniffle.wav");
+    sniffle("sounds/Sniffle.wav"),
+    bananMelon("sounds/BananMelon.wav"),
+    girlInWorld("sounds/GirlInWorld.wav"),
+    summer("sounds/summer.wav"),
+    ramlar("sounds/ramlar.wav"),
+    ramlar2("sounds/ramlar2.wav"),
+    ramlar3("sounds/ramlar3.wav"), 
+    harklar("sounds/harklar.wav"),
+    rap("sounds/rap.wav"),
+    studenten("sounds/studenten.wav"),
+    beatbox("sounds/epicBeatbox.wav"),
+    theNights("sounds/theNights.wav"),
+    fAina("sounds/fAina.wav"),
+    kattjaKatt("sounds/katjaKatt.wav"),
+    chilla("sounds/chilla.wav");
 
     private Clip clip;
  
@@ -30,6 +44,7 @@ public enum SoundEffects{
         } catch (LineUnavailableException e){
             e.printStackTrace();
         }
+
     }
 
     /**
@@ -40,7 +55,7 @@ public enum SoundEffects{
         clip.setFramePosition(0); 
         clip.start();    
     }
-     
+
     /**
      * Initializes all SoundEffects objects.
      */

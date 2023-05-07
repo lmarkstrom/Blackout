@@ -2,6 +2,9 @@ package main;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Random;
+
 import javax.imageio.ImageIO;
 
 /**
@@ -17,6 +20,10 @@ public class Player extends Entity {
     private BufferedImage idle, walk, jump, crouch;
     private Animation walkAnimation, idleAnimation, jumpAnimation, crouchAnimation;
     private Animation animation;
+
+    private ArrayList<SoundEffects> injuries = new ArrayList<>();
+    private Random random = new Random();
+
 
     /**
      * Constructs a new Player object with the given KeyHandler and Panel.
@@ -40,6 +47,9 @@ public class Player extends Entity {
         x = panel.width/2;
         y = panel.height/2;
         direction = size;
+        injuries.add(SoundEffects.ramlar);
+        injuries.add(SoundEffects.ramlar2);
+        injuries.add(SoundEffects.ramlar3);
         loadTextures();
         animation = idleAnimation;
         animation.start();
@@ -161,6 +171,8 @@ public class Player extends Entity {
         if(fallHeight > 28){
             health -= 5;
             fallHeight = 0;
+            injuries.get(random.nextInt(injuries.size())).play();
+
         }
     }
 
