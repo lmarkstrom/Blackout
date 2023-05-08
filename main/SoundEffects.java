@@ -70,7 +70,7 @@ public enum SoundEffects{
                 e.printStackTrace();
             }
             try {
-                duration = Objects.requireNonNull(fileInputStream).getChannel().size() / 128;
+                duration = Objects.requireNonNull(fileInputStream).getChannel().size() / (128*12);
             } catch (IOException e) {
                 e.printStackTrace();
             }

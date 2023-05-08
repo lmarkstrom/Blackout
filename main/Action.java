@@ -76,7 +76,7 @@ public class Action {
 
         if(keyHandler.H && !danceing ){
             var song = changeSong();
-            duration = song.duration/10;
+            duration = song.duration;
             danceing = true;
             panel.startCutScene();
             song.play();
@@ -87,7 +87,7 @@ public class Action {
         if (danceing){
             dur ++;
         } 
-        if (dur > duration){
+        if (dur > duration-60){
             dur = 0;
             panel.stopCutScene();
             danceing = false;
