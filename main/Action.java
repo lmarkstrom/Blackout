@@ -5,13 +5,11 @@ import java.util.Random;
 
 public class Action {
 
-    // private int anger;
     private int minAnger;
     private KeyHandler keyHandler;
     private Player player;
     private Panel panel;
     private boolean busted;
-
     private ArrayList<SoundEffects> songs = new ArrayList<>();
     private ArrayList<SoundEffects> noise = new ArrayList<>();
     private Random random = new Random();

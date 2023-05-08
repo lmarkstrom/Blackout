@@ -29,7 +29,11 @@ public enum SoundEffects{
     snark2("sounds/snark2.wav"),
     snark3("sounds/snark3.wav"), 
     hemmaAntligen("sounds/hemmaAntligen.wav"),
-    hemmaAntligen2("sounds/hemmaAntligen2.wav");
+    hemmaAntligen2("sounds/hemmaAntligen2.wav"),
+    hopp("sounds/Hopp1.wav"),
+    hopp2("sounds/Hopp2.wav"),
+    hopp3("sounds/Hopp3.wav"),
+    hopp4("sounds/Hopp4.wav");
 
 
     private Clip clip;

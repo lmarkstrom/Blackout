@@ -28,6 +28,7 @@ public class Player extends Entity {
 
     private ArrayList<SoundEffects> snoring = new ArrayList<>();
     private ArrayList<SoundEffects> injuries = new ArrayList<>();
+    private ArrayList<SoundEffects> jumping = new ArrayList<>();
     private Random random = new Random();
 
 
@@ -53,7 +54,7 @@ public class Player extends Entity {
         x = panel.width/2;
         y = panel.height/2;
         direction = size;
-        injuries.add(SoundEffects.ramlar);
+        injuries.add(SoundEffects.ramlar); //TODO denna skullle unna va när man dör istället? 
         injuries.add(SoundEffects.ramlar2);
         injuries.add(SoundEffects.ramlar3);
         snoring.add(SoundEffects.snark);
@@ -61,6 +62,10 @@ public class Player extends Entity {
         snoring.add(SoundEffects.snark3);
         snoring.add(SoundEffects.hemmaAntligen);
         snoring.add(SoundEffects.hemmaAntligen2);
+        jumping.add(SoundEffects.hopp);
+        jumping.add(SoundEffects.hopp2);
+        jumping.add(SoundEffects.hopp3);
+        jumping.add(SoundEffects.hopp4);
         loadTextures();
         animation = idleAnimation;
         animation.start();
@@ -160,6 +165,7 @@ public class Player extends Entity {
        if(keyHandler.up && isGrounded && !collideTop){
             animation = jumpAnimation;
             animation.start();
+            jumping.get(random.nextInt(jumping.size())).play();
             dy -= jumpHeight;
             isGrounded = false;
             keyHandler.up = false;
