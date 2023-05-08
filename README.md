@@ -21,3 +21,4 @@ Spelaren kontrolleras genom WASD eller piltangenterna.
  - Pausa spelet (esc)
  - Irretera polis (F)
  - Dansa och sjunga (H)
+ - Gå in i dörr (E)
