@@ -13,7 +13,7 @@ public class Enemy extends Entity {
     private Animation animation;
     private int walkDirection = 1;
     private Player player;
-    private boolean isChasing;
+    public boolean isChasing;
     private boolean copVisible = false;
 
     private boolean collidePlayer = false;

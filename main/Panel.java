@@ -183,7 +183,9 @@ public class Panel extends JPanel implements Runnable{
                 menu.pausePanel.setVisible(true);
             }else{
                 tileManager.update();
-                
+                for (Enemy enemy : enemies) {
+                    if(enemy.isChasing) enemy.update();
+                }
                 if (state != STATE.CUTSCENE) player.update();
             }
 
@@ -195,8 +197,9 @@ public class Panel extends JPanel implements Runnable{
             }
         }    
         for (Enemy enemy : enemies) {
-            enemy.update();
+            if(!enemy.isChasing) enemy.update();
         }
+        
         action.update();
         player.updateAnimation();
     }
