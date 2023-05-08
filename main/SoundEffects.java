@@ -12,33 +12,43 @@ import java.util.Objects;
  */
 public enum SoundEffects{
 
-    sniffle("sounds/Sniffle.wav"),
-    bananMelon("sounds/BananMelon.wav"),
-    girlInWorld("sounds/girlInWorld.wav"),
-    summer("sounds/summer.wav"),
-    ramlar("sounds/ramlar.wav"),
-    ramlar2("sounds/ramlar2.wav"),
-    ramlar3("sounds/ramlar3.wav"), 
-    harklar("sounds/harklar.wav"),//används ej i nuläget
-    rap("sounds/rap.wav"),//används ej i nuläget
-    studenten("sounds/studenten.wav"),
-    beatbox("sounds/epicBeatbox.wav"),
-    theNights("sounds/theNights.wav"),
-    fAina("sounds/fAina.wav"),
-    kattjaKatt("sounds/katjaKatt.wav"),
-    chilla("sounds/chilla.wav"), 
-    kollaInte("sounds/kollaInte.wav"),
-    snark("sounds/snark1.wav"),
-    snark2("sounds/snark2.wav"),
-    snark3("sounds/snark3.wav"), 
-    hemmaAntligen("sounds/hemmaAntligen.wav"),
-    hemmaAntligen2("sounds/hemmaAntligen2.wav"),
-    hopp("sounds/Hopp1.wav"),
-    hopp2("sounds/Hopp2.wav"),
-    hopp3("sounds/Hopp3.wav"),
-    hopp4("sounds/Hopp4.wav"), 
-    marInteBra("sounds/marInteBra.wav"),
-    hanSomBörja("sounds/hanSomBorja.wav");//används ej i nuläget
+    //songs 
+    bananMelon("sounds/songs/BananMelon.wav"),
+    girlInWorld("sounds/songs/girlInWorld.wav"),
+    kattjaKatt("sounds/songs/katjaKatt.wav"),
+    beatbox("sounds/songs/epicBeatbox.wav"),
+    theNights("sounds/songs/theNights.wav"),
+    studenten("sounds/songs/studenten.wav"),
+    summer("sounds/songs/summer.wav"),
+
+    //movement
+    hopp("sounds/movement/Hopp1.wav"),
+    hopp2("sounds/movement/Hopp2.wav"),
+    hopp3("sounds/movement/Hopp3.wav"),
+    hopp4("sounds/movement/Hopp4.wav"), 
+    ramlar("sounds/movement/ramlar.wav"),
+    ramlar2("sounds/movement/ramlar2.wav"),
+    ramlar3("sounds/movement/ramlar3.wav"), 
+
+    //noise
+    harklar("sounds/noise/harklar.wav"),//används ej i nuläget
+    rap("sounds/noise/rap.wav"),//används ej i nuläget
+    sniffle("sounds/noise/Sniffle.wav"),
+    snark("sounds/noise/snark1.wav"),
+    snark2("sounds/noise/snark2.wav"),
+    snark3("sounds/noise/snark3.wav"), 
+
+    //voicelines
+    hanSomBörja("sounds/voicelines/hanSomBorja.wav"),//används ej i nuläget
+    fAina("sounds/voicelines/fAina.wav"),
+    chilla("sounds/voicelines/chilla.wav"), 
+    marInteBra("sounds/voicelines/marInteBra.wav"),
+    kollaInte("sounds/voicelines/kollaInte.wav"),
+    hemmaAntligen("sounds/voicelines/hemmaAntligen.wav"),//används ej i nuläget
+    hemmaAntligen2("sounds/voicelines/hemmaAntligen2.wav");//används ej i nuläget
+
+    
+
 
 
     private Clip clip;
