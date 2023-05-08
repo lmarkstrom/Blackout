@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-
 /**
  * Class that extends panel that contains the game graphic and runs the main thread.
  * 
@@ -107,6 +106,10 @@ public class Panel extends JPanel implements Runnable{
         System.out.println(state);
     }
 
+    public void stopCutScene(){
+        state = STATE.GAME;
+    }
+  
     public void startCutScene(String path, int dur){
         state = STATE.CUTSCENE;
         cutScene.cutSceneDone = false;
@@ -177,11 +180,8 @@ public class Panel extends JPanel implements Runnable{
                 menu.pausePanel.setVisible(true);
             }else{
                 tileManager.update();
-                for (Enemy enemy : enemies) {
-                    enemy.update();
-                }
-                player.update();
-                action.update();
+                
+                if (state != STATE.CUTSCENE) player.update();
             }
 
             // LEVEL TEST (tryck "L" för att få ny bana)
@@ -191,6 +191,11 @@ public class Panel extends JPanel implements Runnable{
                 keyHandler.L = false;
             }
         }    
+        for (Enemy enemy : enemies) {
+            enemy.update();
+        }
+        action.update();
+        player.updateAnimation();
     }
 
     private void updateLevel() {

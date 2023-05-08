@@ -20,12 +20,9 @@ public class Player extends Entity {
     private BufferedImage idle, walk, jump, crouch;
     private Animation walkAnimation, idleAnimation, jumpAnimation, crouchAnimation;
     public Animation animation;
-
     private BufferedImage dance1, dance2, dance3;
     public Animation danceAnimation1, danceAnimation2, danceAnimation3;
-
     public int anger; 
-
     private ArrayList<SoundEffects> snoring = new ArrayList<>();
     private ArrayList<SoundEffects> injuries = new ArrayList<>();
     private ArrayList<SoundEffects> jumping = new ArrayList<>();
@@ -87,14 +84,13 @@ public class Player extends Entity {
             jumpAnimation = new Animation(jump, 10, 1, 4);
             crouchAnimation = new Animation(crouch, 20, 1, 2);
 
-            dance1 = ImageIO.read(getClass().getResourceAsStream("/tex/dance1.png"));
-            dance2 = ImageIO.read(getClass().getResourceAsStream("/tex/dance2.png"));
-            dance3 = ImageIO.read(getClass().getResourceAsStream("/tex/dance3.png"));
+            dance1 = ImageIO.read(getClass().getResourceAsStream("/tex/anim/dance1.png"));
+            dance2 = ImageIO.read(getClass().getResourceAsStream("/tex/anim/dance2.png"));
+            dance3 = ImageIO.read(getClass().getResourceAsStream("/tex/anim/dance3.png"));
 
             danceAnimation1 = new Animation(dance1, 10, 1, 2);
             danceAnimation2 = new Animation(dance2, 10, 1, 2);
             danceAnimation3 = new Animation(dance3, 10, 1, 2);
-            
         }
         catch(Exception e){
             System.out.println(e);
@@ -124,6 +120,10 @@ public class Player extends Entity {
             Thread.sleep(10);
             set(currentx, currenty);
         }
+    }
+
+    public void updateAnimation(){
+        animation.update();
     }
 
     /**
@@ -171,7 +171,7 @@ public class Player extends Entity {
             keyHandler.up = false;
        }
         
-        if(!keyHandler.up && !keyHandler.down && !keyHandler.left && !keyHandler.right && !keyHandler.J){
+        if(!keyHandler.up && !keyHandler.down && !keyHandler.left && !keyHandler.right && !keyHandler.H){
             animation = idleAnimation;
             animation.start();
         } 
@@ -189,7 +189,6 @@ public class Player extends Entity {
         }
         
         super.updateCollission();
-        animation.update();
     }
 
     private void takeFallDamage(){

@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
      * @author Elsa
      */
 public class KeyHandler implements KeyListener {
-    boolean left, right, up, down, pause, L, F, H, J, E;
+    boolean left, right, up, down, pause, L, F, H, E;
 
 
     @Override
@@ -46,12 +46,9 @@ public class KeyHandler implements KeyListener {
             F = true;
         }
 
-        // dance
-        if (key == KeyEvent.VK_J){
-            J = true;
-        }
+      
 
-        //sing
+        //dance and sing
         if (key == KeyEvent.VK_H){
             H = true;
         }
@@ -90,9 +87,6 @@ public class KeyHandler implements KeyListener {
 
         if (key == KeyEvent.VK_F){
             F = false;
-        }
-        if (key == KeyEvent.VK_J){
-            J = false;
         }
 
         if (key == KeyEvent.VK_H){

@@ -10,7 +10,7 @@ public class Animation {
     private int ticks;                 
     private int frameDelay;
     private int currentFrame;
-    private int totalFrames;              
+    public int totalFrames;              
     private List<Frame> frames = new ArrayList<Frame>();  
 
     private int col, row, height, width;

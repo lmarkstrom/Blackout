@@ -3,6 +3,7 @@ package main;
 import java.io.*;
 import javax.sound.sampled.*;
 import java.net.URL;
+import java.util.Objects;
 
 /**
  * An enumeration of sound effects, each containing a Clip object that can be played.
@@ -37,7 +38,8 @@ public enum SoundEffects{
 
 
     private Clip clip;
-    public float durationInSeconds;
+    public FileInputStream fileInputStream = null;
+    public long duration = 0;
  
     /**
      * Constructs a new SoundEffect object with the specified sound file name.
@@ -47,12 +49,17 @@ public enum SoundEffects{
         try {
             URL url = this.getClass().getClassLoader().getResource(soundFileName);
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
-            // AudioFormat format = audioInputStream.getFormat();
-            // long audioFileLength = url.length(); //måste va file inte url
-            // int frameSize = format.getFrameSize();
-            // float frameRate = format.getFrameRate();
-            // durationInSeconds = (audioFileLength / (frameSize * frameRate));
-            // TODO gör ett sätt att veta hur lång klippet är
+
+            try {
+                fileInputStream = new FileInputStream(soundFileName);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            try {
+                duration = Objects.requireNonNull(fileInputStream).getChannel().size() / 128;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
         } catch (UnsupportedAudioFileException e){
