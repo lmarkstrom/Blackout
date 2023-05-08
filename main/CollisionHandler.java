@@ -70,6 +70,7 @@ public class CollisionHandler{
                 } else if((objVal1 != 0 && tileManager.objects[objVal1].collision == true) || (objVal2 != 0 && tileManager.objects[objVal2].collision == true)){
                     player.collideX = true;
                 } else if(player.isPlayer && ((objVal1 != 0 && tileManager.objects[objVal1].donkeCutscene == true) || (objVal2 != 0 && tileManager.objects[objVal2].donkeCutscene == true))){
+                    System.out.println(keyHandler.E);
                     panel.cutScene.startDonken();
                 }else {
                     player.collideX = false;
@@ -103,7 +104,7 @@ public class CollisionHandler{
     public void update(Entity player){
         controllTop(player);
         if(player.isPlayer){
-            if (keyHandler.right || keyHandler.left){
+            if (keyHandler.right || keyHandler.left || keyHandler.E){
                 controllside(player.direction, player);
             }
         } else{
