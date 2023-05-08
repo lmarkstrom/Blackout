@@ -16,7 +16,10 @@ the map layout and a separate array to store the tile images.
 */
 public class TileManager {
     // constants
+    public final int maxTiles = 10;
+    public final int maxObjects = 20;
     public int map[][];
+    public int mapObj[][];
     public int mapSizeX;
     public int mapSizeY;
     private int posX;
@@ -24,6 +27,7 @@ public class TileManager {
     // objects
     private Panel panel;
     public Tile[] tiles;
+    public Object[] objects;
     private Player player;
     private BufferedImage background;
     
@@ -35,10 +39,13 @@ public class TileManager {
     public TileManager(Panel panel, Player player, String levelPath, String bgPath){
         this.panel = panel;
         this.player = player;
-        this.tiles = new Tile[10];
+        this.tiles = new Tile[maxTiles];
+        this.objects = new Object[20]; 
         setMaxXY(levelPath);
         this.map = new int[mapSizeX][mapSizeY];
+        this.mapObj = new int[mapSizeX][mapSizeY];
         this.tiles = getTileImage();
+        this.objects = getObjectImage();
 
         loadMap(levelPath);
         try {
@@ -81,7 +88,7 @@ public class TileManager {
     @return An array of Tile objects containing the loaded images.
     */
     private Tile[] getTileImage() {
-        Tile[] tile = new Tile[10];
+        Tile[] tile = new Tile[maxTiles];
         try {
             tile[0] = new Tile(false, "/tex/tiles/0empty.png", false);
             tile[1] = new Tile(true, "/tex/tiles/1dirt.png", false);
@@ -93,6 +100,23 @@ public class TileManager {
             System.out.println(e);
         }
         return tile;
+    }
+
+    /**
+    Loads the images for the different objects and returns an array of Tile
+    objects.
+    
+    @return An array of Tile objects containing the loaded images.
+    */
+    private Object[] getObjectImage() {
+        Object[] objects = new Object[maxObjects];
+        try {
+            objects[1] = new Object("/tex/obj/car.png");
+            objects[2] = new Object("/tex/obj/donken.png");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return objects;
     }
 
     /**
@@ -112,6 +136,7 @@ public class TileManager {
         for (int y = 0; y < mapSizeY; y++) {
             for (int x = 0; x < mapSizeX; x++) {
                 g.drawImage(tiles[map[x][y]].image, (x * panel.tileSize - posX), (y * panel.tileSize), panel.tileSize, panel.tileSize, null);
+                if(mapObj[x][y] != 0) g.drawImage(objects[mapObj[x][y]].image, (x * panel.tileSize - posX), (y * panel.tileSize), panel.tileSize, panel.tileSize, null);
             }
         }
     }
@@ -129,18 +154,37 @@ public class TileManager {
                 String nums[] = line.split(" ");
                 for (int x = 0; x < mapSizeX; x++) {
                     int num = 0;
+                    int num2 = 0;
                     try {
                         num = Integer.parseInt(nums[x]);
+                        
                     } catch (Exception e) {
-                        panel.enemies.add(new Enemy(panel, x*panel.tileSize, y*panel.tileSize, player, 2, false));
+                        if (nums[x].equals("e")){
+                            panel.enemies.add(new Enemy(panel, x*panel.tileSize, y*panel.tileSize, player, 2, false));
+                            num2 = 0;
+                        } else {
+                            num2 = translateObj(nums[x]); 
+                        }
                     }
                     map[x][y] = num;
+                    mapObj[x][y] = num2;   
                 }
             }
 
             reader.close();
         } catch (Exception e) {
             System.out.println(e);
+        }
+    }
+
+    private int translateObj(String num){
+        switch(num){
+            case "a":
+                return 1;
+            case "b":
+                return 2;
+            default:
+                return 0;
         }
     }
 }
