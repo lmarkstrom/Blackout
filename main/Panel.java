@@ -38,7 +38,7 @@ public class Panel extends JPanel implements Runnable{
     public CutScene cutScene;
     private Action action;
 
-    private enum STATE{
+    public enum STATE{
         MENU,
         GAME,
         CUTSCENE

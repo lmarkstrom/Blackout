@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
+import main.Panel.STATE;
+
 public class Enemy extends Entity {
     
     private BufferedImage walk;
@@ -67,8 +69,7 @@ public class Enemy extends Entity {
             collidePlayer = false;
         }
 
-        if(cam > (player.cam - 6*panel.tileSize) && cam < (player.cam + 6*panel.tileSize) && !copVisible){
-            // if(cam > (player.cam - 6*panel.tileSize) && cam < (player.cam + 6*panel.tileSize) && !copVisible){
+        if(cam > (player.cam - 6*panel.tileSize) && cam < (player.cam + 6*panel.tileSize) && !copVisible && panel.state == STATE.GAME){
             copVisible = true;
             SoundEffects.kollaInte.play();
         }
@@ -91,11 +92,8 @@ public class Enemy extends Entity {
         }
 
         if ( player.cam <= cam){
-            //TODO här är lite buggigt 
             SoundEffects.chilla.play();
             panel.startCutScene();
-            //TODO spelare och polis ska stanna 
-
             //TODO play cutScene: fyllecell
         } 
     }
