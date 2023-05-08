@@ -15,14 +15,18 @@ public class CutScene{
     public boolean cutSceneDone = true;
     private Panel panel;
     private ArrayList<BufferedImage> frames;
+    private KeyHandler keyHandler;
     public int count;
+    private int frameDur = 29;
     public int frameCount = 0;
 
-    public CutScene(Panel panel){
+    public CutScene(Panel panel, KeyHandler keyHandler){
+        this.keyHandler = keyHandler;
         this.panel = panel;
     }
 
-    public void getFrames(String fileName){
+    public void getFrames(String fileName, int dur){
+        this.frameDur = dur;
         ArrayList<BufferedImage> frames = new ArrayList<>();
         try {
             ImageReader reader = ImageIO.getImageReadersByFormatName("gif").next();
@@ -40,9 +44,16 @@ public class CutScene{
         this.frames = frames;
     }
 
+    public void startDonken(){
+        System.out.println("enter donken");
+        if(keyHandler.E){
+            panel.startCutScene("cutscenes/donkenScene.gif", 10);
+        } 
+    }
+
     public void draw (Graphics g){
         g.drawImage(frames.get(frameCount), 0, 0, panel.width, panel.height, null);
-        if (count > 29) {
+        if (count > frameDur) {
             frameCount++;
             count = 0;
         }
@@ -52,8 +63,9 @@ public class CutScene{
                 Thread.sleep(2000);
             } catch (Exception e) {
             }
+            panel.startGame();
         }
         count++;
-    }       
+    }     
 }
 
