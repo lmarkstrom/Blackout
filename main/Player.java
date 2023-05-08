@@ -187,6 +187,9 @@ public class Player extends Entity {
             dy = 0;
             fallHeight = 0;
         }
+
+        if(stamina < 300) SoundEffects.marInteBra.play();
+        
         
         super.updateCollission();
     }

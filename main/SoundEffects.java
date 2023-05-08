@@ -14,20 +14,20 @@ public enum SoundEffects{
 
     sniffle("sounds/Sniffle.wav"),
     bananMelon("sounds/BananMelon.wav"),
-    girlInWorld("sounds/GirlInWorld.wav"),
+    girlInWorld("sounds/girlInWorld.wav"),
     summer("sounds/summer.wav"),
     ramlar("sounds/ramlar.wav"),
     ramlar2("sounds/ramlar2.wav"),
     ramlar3("sounds/ramlar3.wav"), 
-    harklar("sounds/harklar.wav"),
-    rap("sounds/rap.wav"),
+    harklar("sounds/harklar.wav"),//används ej i nuläget
+    rap("sounds/rap.wav"),//används ej i nuläget
     studenten("sounds/studenten.wav"),
     beatbox("sounds/epicBeatbox.wav"),
     theNights("sounds/theNights.wav"),
     fAina("sounds/fAina.wav"),
     kattjaKatt("sounds/katjaKatt.wav"),
     chilla("sounds/chilla.wav"), 
-    kollaInte("sounds/kolla inte.wav"),
+    kollaInte("sounds/kollaInte.wav"),
     snark("sounds/snark1.wav"),
     snark2("sounds/snark2.wav"),
     snark3("sounds/snark3.wav"), 
@@ -36,7 +36,9 @@ public enum SoundEffects{
     hopp("sounds/Hopp1.wav"),
     hopp2("sounds/Hopp2.wav"),
     hopp3("sounds/Hopp3.wav"),
-    hopp4("sounds/Hopp4.wav");
+    hopp4("sounds/Hopp4.wav"), 
+    marInteBra("sounds/marInteBra.wav"),
+    hanSomBörja("sounds/hanSomBorja.wav");//används ej i nuläget
 
 
     private Clip clip;
