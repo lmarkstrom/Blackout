@@ -3,6 +3,10 @@ package main;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * The Action class handles player actions such as singing a song and starting dance animations.
+ * @author Elsa
+ */
 public class Action {
 
     private int minAnger;
@@ -13,14 +17,19 @@ public class Action {
     private ArrayList<SoundEffects> songs = new ArrayList<>();
     private ArrayList<SoundEffects> noise = new ArrayList<>();
     private Random random = new Random();
-    private int ticks;                 
+    // private int ticks;                 
     private ArrayList<Animation> dances = new ArrayList<>();
 
     private long duration;
     private boolean danceing;
     private int dur = 0;
 
-
+    /**
+     * Constructs an Action object with the specified KeyHandler, Player, and Panel.
+     * @param keyHandler the KeyHandler object to handle keyboard input
+     * @param player the Player object to control the game's main character
+     * @param panel the Panel object that displays the game
+     */
     public Action(KeyHandler keyHandler, Player player, Panel panel){
         this.keyHandler = keyHandler;
         this.player = player;
@@ -28,7 +37,7 @@ public class Action {
         minAnger = 0;
         player.anger = minAnger;
         busted = false;
-        ticks = 0;
+        // ticks = 0;
         songs.add(SoundEffects.bananMelon);
         songs.add(SoundEffects.girlInWorld);
         songs.add(SoundEffects.summer);
@@ -47,11 +56,17 @@ public class Action {
         danceing = false;
     }
 
-
+    /**
+     * Returns a random song from the list of available songs.
+     * @return a SoundEffects object representing the chosen song
+     */
     public SoundEffects changeSong(){
         return songs.get(random.nextInt(songs.size()));
     }
 
+    /**
+     * Updates actions based on the current keyboard input
+     */
     public void update(){
         if(keyHandler.F){
             SoundEffects.fAina.play();

@@ -7,6 +7,8 @@ import java.util.Objects;
 
 /**
  * An enumeration of sound effects, each containing a Clip object that can be played.
+ * @author Elsa
+ * 
  */
 public enum SoundEffects{
 
