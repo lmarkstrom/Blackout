@@ -93,6 +93,7 @@ public class Enemy extends Entity {
         if ( player.cam <= cam){
             //TODO här är lite buggigt 
             SoundEffects.chilla.play();
+            panel.stopGame();
             //TODO spelare och polis ska stanna 
 
             //TODO play cutScene: fyllecell
