@@ -2,6 +2,9 @@ package main;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Random;
+
 import javax.imageio.ImageIO;
 
 /**
@@ -16,7 +19,18 @@ public class Player extends Entity {
     public KeyHandler keyHandler;
     private BufferedImage idle, walk, jump, crouch;
     private Animation walkAnimation, idleAnimation, jumpAnimation, crouchAnimation;
-    private Animation animation;
+    public Animation animation;
+
+    private BufferedImage dance1, dance2, dance3;
+    public Animation danceAnimation1, danceAnimation2, danceAnimation3;
+
+    public int anger; 
+
+    private ArrayList<SoundEffects> snoring = new ArrayList<>();
+    private ArrayList<SoundEffects> injuries = new ArrayList<>();
+    private ArrayList<SoundEffects> jumping = new ArrayList<>();
+    private Random random = new Random();
+
 
     /**
      * Constructs a new Player object with the given KeyHandler and Panel.
@@ -40,10 +54,21 @@ public class Player extends Entity {
         x = panel.width/2;
         y = panel.height/2;
         direction = size;
+        injuries.add(SoundEffects.ramlar); //TODO denna skullle unna va när man dör istället? 
+        injuries.add(SoundEffects.ramlar2);
+        injuries.add(SoundEffects.ramlar3);
+        snoring.add(SoundEffects.snark);
+        snoring.add(SoundEffects.snark2);
+        snoring.add(SoundEffects.snark3);
+        snoring.add(SoundEffects.hemmaAntligen);
+        snoring.add(SoundEffects.hemmaAntligen2);
+        jumping.add(SoundEffects.hopp);
+        jumping.add(SoundEffects.hopp2);
+        jumping.add(SoundEffects.hopp3);
+        jumping.add(SoundEffects.hopp4);
         loadTextures();
         animation = idleAnimation;
         animation.start();
-
     }
 
     /**
@@ -61,6 +86,14 @@ public class Player extends Entity {
             idleAnimation = new Animation(idle, 30, 1, 4);
             jumpAnimation = new Animation(jump, 10, 1, 4);
             crouchAnimation = new Animation(crouch, 20, 1, 2);
+
+            dance1 = ImageIO.read(getClass().getResourceAsStream("/tex/dance1.png"));
+            dance2 = ImageIO.read(getClass().getResourceAsStream("/tex/dance2.png"));
+            dance3 = ImageIO.read(getClass().getResourceAsStream("/tex/dance3.png"));
+
+            danceAnimation1 = new Animation(dance1, 10, 1, 2);
+            danceAnimation2 = new Animation(dance2, 10, 1, 2);
+            danceAnimation3 = new Animation(dance3, 10, 1, 2);
             
         }
         catch(Exception e){
@@ -77,6 +110,8 @@ public class Player extends Entity {
     private void victoryAnimation(int y) throws InterruptedException {
         int currentx = panel.width/2;
         int currenty = y;
+
+        snoring.get(random.nextInt(snoring.size())).play();
 
         while (currenty < 484) {
             currenty += 1;
@@ -105,7 +140,7 @@ public class Player extends Entity {
                 e.printStackTrace();
             }
         }
-       if (keyHandler.right){
+        if (keyHandler.right){
             animation = walkAnimation;
             animation.start();
             direction = size;
@@ -130,16 +165,16 @@ public class Player extends Entity {
        if(keyHandler.up && isGrounded && !collideTop){
             animation = jumpAnimation;
             animation.start();
+            jumping.get(random.nextInt(jumping.size())).play();
             dy -= jumpHeight;
             isGrounded = false;
             keyHandler.up = false;
        }
         
-        if(!keyHandler.up && !keyHandler.down && !keyHandler.left && !keyHandler.right){
+        if(!keyHandler.up && !keyHandler.down && !keyHandler.left && !keyHandler.right && !keyHandler.J){
             animation = idleAnimation;
             animation.start();
-
-       } 
+        } 
         
 
        if(!isGrounded){
@@ -161,6 +196,8 @@ public class Player extends Entity {
         if(fallHeight > 28){
             health -= 5;
             fallHeight = 0;
+            injuries.get(random.nextInt(injuries.size())).play();
+
         }
     }
 

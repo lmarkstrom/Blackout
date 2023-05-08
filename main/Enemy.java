@@ -12,6 +12,9 @@ public class Enemy extends Entity {
     private int walkDirection = 1;
     private Player player;
     private boolean isChasing;
+    private boolean copVisible = false;
+
+    private boolean collidePlayer = false;
 
     public Enemy(Panel panel, int x, int y, Player player, int speed, boolean isChasing){
         super();
@@ -27,6 +30,7 @@ public class Enemy extends Entity {
         direction = size;
         loadTextures();
         animation.start();
+
     }
 
     private void loadTextures(){
@@ -52,6 +56,23 @@ public class Enemy extends Entity {
             collideX = false;
             cam += walkDirection*speed;
         } 
+
+        int width = animation.getSprite().getWidth();
+        if(cam > player.cam - width && cam < player.cam + width && player.y == y && !collidePlayer){
+            player.anger +=20;
+            collidePlayer = true;
+        } 
+        
+        if(cam < player.cam - width || cam > player.cam + width && collidePlayer){
+            collidePlayer = false;
+        }
+
+        if(cam > (player.cam - 6*panel.tileSize) && cam < (player.cam + 6*panel.tileSize) && !copVisible){
+            // if(cam > (player.cam - 6*panel.tileSize) && cam < (player.cam + 6*panel.tileSize) && !copVisible){
+            copVisible = true;
+            SoundEffects.kollaInte.play();
+        }
+
     }
 
     private void updateChase(){
@@ -68,6 +89,15 @@ public class Enemy extends Entity {
         } else {
             dy = 0;
         }
+
+        if ( player.cam <= cam){
+            //TODO här är lite buggigt 
+            SoundEffects.chilla.play();
+            panel.stopGame();
+            //TODO spelare och polis ska stanna 
+
+            //TODO play cutScene: fyllecell
+        } 
     }
 
     public void update(){ 
