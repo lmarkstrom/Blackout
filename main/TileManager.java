@@ -92,7 +92,7 @@ public class TileManager {
         try {
             tile[0] = new Tile(false, "/tex/tiles/0empty.png", false);
             tile[1] = new Tile(true, "/tex/tiles/1dirt.png", false);
-            tile[2] = new Tile(true, "/tex/tiles/2grass.png", false);
+            tile[2] = new Tile(true, "/tex/tiles/street.png", false);
             tile[3] = new Tile(false, "/tex/tiles/3flagPole.png", false);
             tile[4] = new Tile(false, "/tex/tiles/4flagTop.png", false);
             tile[5] = new Tile(false, "/tex/tiles/5playerHouse.png", false);
@@ -111,8 +111,8 @@ public class TileManager {
     private Object[] getObjectImage() {
         Object[] objects = new Object[maxObjects];
         try {
-            objects[1] = new Object("/tex/obj/car.png");
-            objects[2] = new Object("/tex/obj/donken.png");
+            objects[1] = new Object("/tex/obj/car.png", true);
+            objects[2] = new Object("/tex/obj/donken.png", 4, 3 ,true);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -136,7 +136,10 @@ public class TileManager {
         for (int y = 0; y < mapSizeY; y++) {
             for (int x = 0; x < mapSizeX; x++) {
                 g.drawImage(tiles[map[x][y]].image, (x * panel.tileSize - posX), (y * panel.tileSize), panel.tileSize, panel.tileSize, null);
-                if(mapObj[x][y] != 0) g.drawImage(objects[mapObj[x][y]].image, (x * panel.tileSize - posX), (y * panel.tileSize), panel.tileSize, panel.tileSize, null);
+                if(mapObj[x][y] != 0) {
+                    Object obj = objects[mapObj[x][y]];
+                    g.drawImage(obj.image, (x * panel.tileSize - posX), ((y - obj.rows + 1) * panel.tileSize), panel.tileSize*obj.cols, panel.tileSize*obj.rows, null);
+                }
             }
         }
     }

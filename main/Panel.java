@@ -36,7 +36,7 @@ public class Panel extends JPanel implements Runnable{
     public CollisionHandler collisionHandler;
     private Menu menu;
     public PlayerData playerData;
-    private CutScene cutScene;
+    public CutScene cutScene;
     private Action action;
 
     private enum STATE{

@@ -7,8 +7,10 @@ import javax.imageio.ImageIO;
 
 public class Object {
     public BufferedImage image;
-    public int offsetCol = 0;
-    public int offsetRow = 0;
+    public int cols = 1;
+    public int rows = 1;
+    public boolean collision = false;
+    public boolean donkeCutscene = false;
 
     /**
     Constructor for the Tile class.
@@ -16,13 +18,15 @@ public class Object {
     @param path The path to the image file for this tile.
     @throws IOException If an error occurs while reading the image file.
     */
-    public Object(String path) throws IOException{
+    public Object(String path, boolean collision) throws IOException{
+        this.collision = collision;
         this.image = ImageIO.read(getClass().getResourceAsStream(path));
     }
 
-    public Object(String path, int offsetCol, int offsetRow) throws IOException{
-        this.offsetCol = offsetCol;
-        this.offsetRow = offsetRow;
+    public Object(String path, int cols, int rows, boolean donkeCutscene) throws IOException{
+        this.donkeCutscene = donkeCutscene;
+        this.cols = cols;
+        this.rows = rows;
         this.image = ImageIO.read(getClass().getResourceAsStream(path));
     }
 }

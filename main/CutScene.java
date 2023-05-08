@@ -40,6 +40,10 @@ public class CutScene{
         this.frames = frames;
     }
 
+    public void startDonken(){
+        System.out.println("enter donken");
+    }
+
     public void draw (Graphics g){
         g.drawImage(frames.get(frameCount), 0, 0, panel.width, panel.height, null);
         if (count > 29) {
@@ -54,6 +58,6 @@ public class CutScene{
             }
         }
         count++;
-    }       
+    }     
 }
 
