@@ -28,19 +28,19 @@ public class Panel extends JPanel implements Runnable{
 
     // thread that runs the game update and drawing
     public Thread thread;
-    private KeyHandler keyHandler = new KeyHandler();
+    public KeyHandler keyHandler = new KeyHandler();
     public ArrayList<Enemy> enemies;
     public Player player;
     private TileManager tileManager;
     public CollisionHandler collisionHandler;
     private Menu menu;
     public PlayerData playerData;
-    private CutScene cutScene;
+    public CutScene cutScene;
     private Action action;
 
     private enum STATE{
         MENU,
-        GAME, 
+        GAME,
         CUTSCENE
     }
 
@@ -67,7 +67,7 @@ public class Panel extends JPanel implements Runnable{
         this.tileManager = new TileManager(this, player, level[0], "/tex/bg/gameBg.png");
         this.collisionHandler = new CollisionHandler(this, tileManager, keyHandler);
         this.playerData = new PlayerData(this);
-        this.cutScene = new CutScene(this);
+        this.cutScene = new CutScene(this, keyHandler);
         this.action = new Action(keyHandler, player, this);
         try {
             this.backgroundImage = ImageIO.read(getClass().getResourceAsStream("/tex/bg/gameBg.png"));
@@ -106,22 +106,26 @@ public class Panel extends JPanel implements Runnable{
         System.out.println(state);
     }
 
-    public void startCutScene(){
-        state = STATE.CUTSCENE;
-    }
-
     public void stopCutScene(){
         state = STATE.GAME;
     }
+  
+    public void startCutScene(String path, int dur){
+        state = STATE.CUTSCENE;
+        cutScene.cutSceneDone = false;
+        cutScene.count = 0;
+        cutScene.frameCount = 0;
+        cutScene.getFrames(path, dur);
+    }
 
     public void startNewGame(){
-        state = STATE.GAME;
+        state = STATE.CUTSCENE;
         cutScene.cutSceneDone = false;
         cutScene.count = 0;
         cutScene.frameCount = 0;
         player.cam = 0;
         player.y = height/2;
-        cutScene.getFrames("cutscenes/introScene.gif");
+        cutScene.getFrames("cutscenes/introScene.gif", 29);
         System.out.println(state);
     }
 
@@ -213,7 +217,7 @@ public class Panel extends JPanel implements Runnable{
 
         
         
-        if(!cutScene.cutSceneDone && state == STATE.GAME){
+        if(!cutScene.cutSceneDone && state == STATE.CUTSCENE){
             cutScene.draw(g);
         } else if (cutScene.cutSceneDone){
             // Draw background

@@ -18,3 +18,7 @@ Spelaren kontrolleras genom WASD eller piltangenterna.
  - Gå vänster (Pil vänster / A)
  - Hoppa (Pil upp / W)
  - Ducka (Pil ner / S)
+ - Pausa spelet (esc)
+ - Irretera polis (F)
+ - Dansa och sjunga (H)
+ - Gå in i dörr (E)

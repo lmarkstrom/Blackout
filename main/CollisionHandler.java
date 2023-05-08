@@ -9,12 +9,14 @@ public class CollisionHandler{
     private boolean damageTaken;
 
     public int map[][];
+    public int mapObj[][];
 
     public CollisionHandler(Panel panel, TileManager tileManager, KeyHandler keyHandler){
         this.panel = panel;
         this.tileManager = tileManager;
         this.keyHandler = keyHandler;
-        map = tileManager.map;
+        this.map = tileManager.map;
+        this.mapObj = tileManager.mapObj;
     }
 
     private void controllGround(Entity player){
@@ -28,7 +30,11 @@ public class CollisionHandler{
             if (playerPosYBottom > panel.height) player.collideY = true;
             if (player.dy >= 0){
                 int tileVal = map[playerCol][bottomRow];
-                if (tileManager.tiles[tileVal].collision == true) {
+                int objVal = mapObj[playerCol][bottomRow];
+                if (tileManager.tiles[tileVal].collision == true ) {
+                    player.isGrounded = true;
+                    if (player.dy >= 0) player.y = (player.y/panel.tileSize)*panel.tileSize;
+                } else if(objVal != 0 && tileManager.objects[objVal].collision == true){
                     player.isGrounded = true;
                     if (player.dy >= 0) player.y = (player.y/panel.tileSize)*panel.tileSize;
                 } else {
@@ -48,7 +54,7 @@ public class CollisionHandler{
         double playerPosYBottom = player.y + 50;
         int playerPosX;
         if (direction > 0) playerPosX = panel.width/2 + player.cam + panel.tileSize/2 - 10;
-        else playerPosX = panel.width/2 + player.cam - panel.tileSize/2 + 10; 
+        else playerPosX = panel.width/2 + player.cam - panel.tileSize/2 + 10;
         int playerCol = playerPosX/panel.tileSize;
         int playerRow1 = (int) playerPosYTop/panel.tileSize;
         int playerRow2 = (int) playerPosYBottom/panel.tileSize;
@@ -57,9 +63,16 @@ public class CollisionHandler{
             if (true){
                 int tileVal1 = map[playerCol][playerRow1]; 
                 int tileVal2 = map[playerCol][playerRow2];
-                if (tileManager.tiles[tileVal1].collision == true || tileManager.tiles[tileVal2].collision == true ) {
+                int objVal1 = mapObj[playerCol][playerRow1];
+                int objVal2 = mapObj[playerCol][playerRow2];
+                if (tileManager.tiles[tileVal1].collision == true || tileManager.tiles[tileVal2].collision == true) {
                     player.collideX = true;
-                } else {
+                } else if((objVal1 != 0 && tileManager.objects[objVal1].collision == true) || (objVal2 != 0 && tileManager.objects[objVal2].collision == true)){
+                    player.collideX = true;
+                } else if(player.isPlayer && ((objVal1 != 0 && tileManager.objects[objVal1].donkeCutscene == true) || (objVal2 != 0 && tileManager.objects[objVal2].donkeCutscene == true))){
+                    System.out.println(keyHandler.E);
+                    panel.cutScene.startDonken();
+                }else {
                     player.collideX = false;
                 }
             }
@@ -91,7 +104,7 @@ public class CollisionHandler{
     public void update(Entity player){
         controllTop(player);
         if(player.isPlayer){
-            if (keyHandler.right || keyHandler.left){
+            if (keyHandler.right || keyHandler.left || keyHandler.E){
                 controllside(player.direction, player);
             }
         } else{
