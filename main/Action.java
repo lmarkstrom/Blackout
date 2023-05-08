@@ -16,6 +16,10 @@ public class Action {
     private int ticks;                 
     private ArrayList<Animation> dances = new ArrayList<>();
 
+    private long duration;
+    private boolean danceing;
+    private int dur = 0;
+
 
     public Action(KeyHandler keyHandler, Player player, Panel panel){
         this.keyHandler = keyHandler;
@@ -32,6 +36,7 @@ public class Action {
         songs.add(SoundEffects.theNights);
         songs.add(SoundEffects.studenten);
         songs.add(SoundEffects.kattjaKatt);
+
         noise.add(SoundEffects.rap);
         noise.add(SoundEffects.harklar);
 
@@ -39,8 +44,13 @@ public class Action {
         dances.add(player.danceAnimation2);
         dances.add(player.danceAnimation3);
 
+        danceing = false;
     }
 
+
+    public SoundEffects changeSong(){
+        return songs.get(random.nextInt(songs.size()));
+    }
 
     public void update(){
         if(keyHandler.F){
@@ -48,20 +58,24 @@ public class Action {
             player.anger += 20;
             keyHandler.F = false;
         }
-        if(keyHandler.H){
-            songs.get(random.nextInt(songs.size())).play();
-            keyHandler.H = false;
-            //TODO ex. spela låten och gör en dansanimation så länge klippet håller på
-        }
 
-        if(keyHandler.J){
-            //TODO spela animationen en stund inte bara när man håller in
-            //TODO och under tiden ska man inte kunna trycka på nåot annat ex gå 
-            
-            // player.animation = dances.get(random.nextInt(dances.size()));
-            // TODO vill växla mellan dem men i nuläget blir det lite knäppt
-            player.animation = player.danceAnimation1;
-            player.animation.start();  
+        if(keyHandler.H && !danceing ){
+            var song = changeSong();
+            duration = song.duration/10;
+            danceing = true;
+            panel.startCutScene();
+            song.play();
+            player.animation = dances.get(random.nextInt(dances.size()));
+            player.animation.start();      
+            keyHandler.H = false;
+        }
+        if (danceing){
+            dur ++;
+        } 
+        if (dur > duration){
+            dur = 0;
+            panel.stopCutScene();
+            danceing = false;
         }
 
         if(player.anger >= 100 && !busted){
