@@ -31,7 +31,7 @@ public class Panel extends JPanel implements Runnable{
     public KeyHandler keyHandler = new KeyHandler();
     public ArrayList<Enemy> enemies;
     public Player player;
-    private TileManager tileManager;
+    private LevelManager levelManager;
     public CollisionHandler collisionHandler;
     private Menu menu;
     public PlayerData playerData;
@@ -48,7 +48,6 @@ public class Panel extends JPanel implements Runnable{
     public STATE state;
     private Image backgroundImage;
 
-    private String[] level;
     public int levelIndex;
 
     public Panel(){
@@ -60,13 +59,11 @@ public class Panel extends JPanel implements Runnable{
         this.setFocusable(true);
         this.addKeyListener(keyHandler);
         
-
-        this.level = new String[] {"/data/map.txt", "/data/map2.txt"};
         this.levelIndex = 0;
         this.enemies = new ArrayList<>();
         this.player = new Player(keyHandler, this);
-        this.tileManager = new TileManager(this, player, level[0], "/tex/bg/gameBg.png");
-        this.collisionHandler = new CollisionHandler(this, tileManager, keyHandler);
+        this.levelManager = new LevelManager(this, player);
+        this.collisionHandler = new CollisionHandler(this, levelManager, keyHandler);
         this.playerData = new PlayerData(this);
         this.cutScene = new CutScene(this, keyHandler);
         this.action = new Action(keyHandler, player, this);
@@ -114,7 +111,7 @@ public class Panel extends JPanel implements Runnable{
         player.anger = 0;
         for (Enemy enemy : enemies) enemy.isChasing = false;
         deleteEnemies();
-        tileManager = new TileManager(this, player, level[levelIndex], "/tex/bg/gameBg.png");
+        levelManager.resetGame();
         player.cam = 0;
         player.y = height/2;
     }
@@ -204,7 +201,7 @@ public class Panel extends JPanel implements Runnable{
                 state = STATE.MENU;
                 menu.pausePanel.setVisible(true);
             }else{
-                tileManager.update();
+                levelManager.update();
                 for (Enemy enemy : enemies) {
                     if(enemy.isChasing){
                         enemy.update();
@@ -215,8 +212,9 @@ public class Panel extends JPanel implements Runnable{
 
             // LEVEL TEST (tryck "L" för att få ny bana)
             if (keyHandler.L) {
-                this.levelIndex = (this.levelIndex+1)%level.length;
-                updateLevel();
+                this.levelIndex = 1;
+                if(levelIndex > levelManager.maxLevel) this.levelIndex--;
+                levelManager.setLevel(); 
                 keyHandler.L = false;
             }
         }    
@@ -231,14 +229,6 @@ public class Panel extends JPanel implements Runnable{
         player.updateAnimation();
     }
 
-    private void updateLevel() {
-        deleteEnemies();
-        this.tileManager = new TileManager(this, player, level[levelIndex], "/tex/bg/gameBg.png");
-        this.collisionHandler = new CollisionHandler(this, tileManager, keyHandler);
-        // player.x = width/2;
-        // player.y = height/2;
-    }
-
     /*
      * PaintComponent method thats calls super method paintComponent, draws all graphic
      */
@@ -251,7 +241,8 @@ public class Panel extends JPanel implements Runnable{
         g.drawImage(backgroundImage, 0, 0, this.getWidth(), this.getHeight(), this);
 
         // call method to paint player and map here:
-        tileManager.draw(g);
+        levelManager.draw(g);
+        //tileManager.draw(g);
         for (Enemy enemy : enemies) {
             enemy.draw(g);
         }

@@ -11,9 +11,9 @@ public class CollisionHandler{
     public int map[][];
     public int mapObj[][];
 
-    public CollisionHandler(Panel panel, TileManager tileManager, KeyHandler keyHandler){
+    public CollisionHandler(Panel panel, LevelManager levelManager, KeyHandler keyHandler){
         this.panel = panel;
-        this.tileManager = tileManager;
+        this.tileManager = levelManager.tileManager;
         this.keyHandler = keyHandler;
         this.map = tileManager.map;
         this.mapObj = tileManager.mapObj;
@@ -69,9 +69,10 @@ public class CollisionHandler{
                     player.collideX = true;
                 } else if((objVal1 != 0 && tileManager.objects[objVal1].collision == true) || (objVal2 != 0 && tileManager.objects[objVal2].collision == true)){
                     player.collideX = true;
-                } else if(player.isPlayer && ((objVal1 != 0 && tileManager.objects[objVal1].donkeCutscene == true) || (objVal2 != 0 && tileManager.objects[objVal2].donkeCutscene == true))){
-                    System.out.println(keyHandler.E);
-                    panel.cutScene.startDonken();
+                } else if(player.isPlayer && ((objVal1 != 0 && !tileManager.objects[objVal1].actionString.equals("")) || (objVal2 != 0 && !tileManager.objects[objVal2].actionString.equals("")))){
+                    System.out.println("donken");
+                    checkObjAction(objVal2);
+
                 }else {
                     player.collideX = false;
                 }
@@ -111,5 +112,17 @@ public class CollisionHandler{
             controllside(player.direction, player); 
         }
         controllGround(player);
+    }
+
+    public void checkObjAction(int objVal){
+        
+        String action = tileManager.objects[objVal].actionString;
+        switch (action){
+            case "donken":
+                panel.cutScene.startDonken();
+                break;
+            default:
+                break;
+        }
     }
 }

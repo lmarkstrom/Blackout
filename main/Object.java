@@ -11,6 +11,7 @@ public class Object {
     public int rows = 1;
     public boolean collision = false;
     public boolean donkeCutscene = false;
+    public String actionString = "";
 
     /**
     Constructor for the Tile class.
@@ -23,8 +24,8 @@ public class Object {
         this.image = ImageIO.read(getClass().getResourceAsStream(path));
     }
 
-    public Object(String path, int cols, int rows, boolean donkeCutscene) throws IOException{
-        this.donkeCutscene = donkeCutscene;
+    public Object(String path, int cols, int rows, String actionString) throws IOException{
+        this.actionString = actionString;
         this.cols = cols;
         this.rows = rows;
         this.image = ImageIO.read(getClass().getResourceAsStream(path));
