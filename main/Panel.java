@@ -41,7 +41,8 @@ public class Panel extends JPanel implements Runnable{
     public enum STATE{
         MENU,
         GAME,
-        CUTSCENE
+        CUTSCENE, 
+        DANCE
     }
 
     public STATE state;
@@ -131,8 +132,17 @@ public class Panel extends JPanel implements Runnable{
     }
     public void startCutScene(){
         state = STATE.CUTSCENE;
-        System.out.println("här startar cutscene");
-        System.out.println(state);
+        cutScene.cutSceneDone = false;
+        cutScene.count = 0;
+        cutScene.frameCount = 0;
+    }
+
+    public void startDanceState(){
+        state = STATE.DANCE;
+    }
+
+    public void stopDanceState(){
+        state = STATE.GAME;
     }
 
     public void startNewGame(){
@@ -143,12 +153,10 @@ public class Panel extends JPanel implements Runnable{
         player.cam = 0;
         player.y = height/2;
         cutScene.getFrames("cutscenes/introScene.gif", 29);
-        System.out.println(state);
     }
 
     public void stopGame(){
         state = STATE.MENU;
-        System.out.println(state);
     }
 
     /*
@@ -192,7 +200,6 @@ public class Panel extends JPanel implements Runnable{
         // call method that should be updated here:
         playerData.update();
         if (state == STATE.GAME){
-            System.out.println(state);
             if(keyHandler.pause) {
                 state = STATE.MENU;
                 menu.pausePanel.setVisible(true);
@@ -200,7 +207,6 @@ public class Panel extends JPanel implements Runnable{
                 tileManager.update();
                 for (Enemy enemy : enemies) {
                     if(enemy.isChasing){
-                        System.out.println(" chasing");
                         enemy.update();
                     } 
                 }
@@ -217,7 +223,6 @@ public class Panel extends JPanel implements Runnable{
         for (Enemy enemy : enemies) {
             if(!enemy.isChasing)
             {
-                System.out.println("inte chasing");
                 enemy.update();
             } 
         }

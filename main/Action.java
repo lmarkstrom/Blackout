@@ -78,7 +78,7 @@ public class Action {
             var song = changeSong();
             duration = song.duration;
             danceing = true;
-            panel.startCutScene();
+            panel.startDanceState();
             song.play();
             player.animation = dances.get(random.nextInt(dances.size()));
             player.animation.start();      
@@ -89,7 +89,7 @@ public class Action {
         } 
         if (dur > duration-60 && danceing){
             dur = 0;
-            panel.stopCutScene();
+            panel.stopDanceState();
             danceing = false;
         }
 
