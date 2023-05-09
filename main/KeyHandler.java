@@ -56,7 +56,6 @@ public class KeyHandler implements KeyListener {
         // enter door
         if (key == KeyEvent.VK_E){
             E = true;
-            System.out.println("den trycks ner nu");
         }
     }
 

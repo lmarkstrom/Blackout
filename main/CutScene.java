@@ -72,7 +72,6 @@ public class CutScene{
     }
 
     public void startDonken(){
-        System.out.println("enter donken");
         if(keyHandler.E){
             panel.startCutScene("cutscenes/donkenScene.gif", 10);
         } 

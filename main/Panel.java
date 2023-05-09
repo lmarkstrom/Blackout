@@ -25,7 +25,6 @@ public class Panel extends JPanel implements Runnable{
     public final int width = tileSize*maxCol;
     public final int height = tileSize*maxRows;
     public final int FPS = 60;
-    private boolean lost = false;
 
     // thread that runs the game update and drawing
     public Thread thread;

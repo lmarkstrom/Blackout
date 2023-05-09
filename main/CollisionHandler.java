@@ -71,12 +71,12 @@ public class CollisionHandler{
                     player.collideX = true;
                 } else if((objVal1 != 0 && tileManager.objects[objVal1].collision == true) || (objVal2 != 0 && tileManager.objects[objVal2].collision == true)){
                     player.collideX = true;
-                } else if(player.isPlayer && ((objVal1 != 0 && !tileManager.objects[objVal1].actionString.equals("")) || (objVal2 != 0 && !tileManager.objects[objVal2].actionString.equals("")))){
-                    System.out.println("donken");
-                    checkObjAction(objVal2);
-
                 }else {
                     player.collideX = false;
+                }
+                objVal1 = mapObj[playerCol - 1][playerRow2]; // check wider area for collisoon
+                if(player.isPlayer && ((objVal1 != 0 && !tileManager.objects[objVal1].actionString.equals("")) || (objVal2 != 0 && !tileManager.objects[objVal2].actionString.equals("")))){
+                    checkObjAction(objVal2);
                 }
             }
         } else {
