@@ -112,7 +112,7 @@ public class TileManager {
         Object[] objects = new Object[maxObjects];
         try {
             objects[1] = new Object("/tex/obj/car.png", true);
-            objects[2] = new Object("/tex/obj/donken.png", 4, 3 ,true);
+            objects[2] = new Object("/tex/obj/donken.png", 4, 3 , "donken");
         } catch (Exception e) {
             System.out.println(e);
         }
