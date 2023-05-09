@@ -134,13 +134,14 @@ public class Player extends Entity {
      * @throws InterruptedException
      */
     public void update(){
+        /* 
         if (cam >= 2800) {
             try {
                 victoryAnimation(y);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
         if (keyHandler.right){
             animation = walkAnimation;
             animation.start();

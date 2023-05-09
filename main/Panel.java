@@ -25,6 +25,7 @@ public class Panel extends JPanel implements Runnable{
     public final int width = tileSize*maxCol;
     public final int height = tileSize*maxRows;
     public final int FPS = 60;
+    private boolean lost = false;
 
     // thread that runs the game update and drawing
     public Thread thread;
@@ -98,6 +99,16 @@ public class Panel extends JPanel implements Runnable{
         state = STATE.GAME;
         cutScene.cutSceneDone = true;
         System.out.println(state);
+    }
+
+    public void loseGame(){
+        state = STATE.MENU;
+        menu.openMainMenu();
+    }
+
+    public void winGame(){
+        state = STATE.MENU;
+        menu.openMainMenu();
     }
 
     public void resetGame(){
@@ -194,6 +205,7 @@ public class Panel extends JPanel implements Runnable{
         // call method that should be updated here:
         playerData.update();
         if (state == STATE.GAME){
+            controlLoss();
             if(keyHandler.pause) {
                 state = STATE.MENU;
                 menu.pausePanel.setVisible(true);
@@ -235,6 +247,7 @@ public class Panel extends JPanel implements Runnable{
         // create graphic object
         Graphics2D g = (Graphics2D) graphics;
 
+        
         g.drawImage(backgroundImage, 0, 0, this.getWidth(), this.getHeight(), this);
 
         // call method to paint player and map here:
@@ -246,11 +259,23 @@ public class Panel extends JPanel implements Runnable{
         player.draw(g);
         playerData.draw(g);
         
+       
+        
         if(!cutScene.cutSceneDone && state == STATE.CUTSCENE){
             cutScene.draw(g);
         }
         
         // dispose graphic
         g.dispose();
+    }
+
+    private void controlLoss(){
+        if(player.y > height){
+            System.out.println("LOST");
+            loseGame();
+        } else if(player.health <= 0){
+            System.out.println("LOST");
+            loseGame();
+        }
     }
 }

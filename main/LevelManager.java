@@ -10,8 +10,8 @@ public class LevelManager {
 
     public int levelIndex;
     public int currentIndex;
-    private String[] levelPath = new String[] {"/data/map.txt", "/data/map2.txt"};
-    private String[] bgPath = new String[] {"/tex/bg/gameBg.png", "/tex/bg/gameBg.png"};
+    private String[] levelPath = new String[] {"/data/map.txt", "/data/map2.txt", "/data/map3.txt"};
+    private String[] bgPath = new String[] {"/tex/bg/gameBg.png", "/tex/bg/gameBg.png", "/tex/bg/gameBg.png"};
 
     public int maxLevel = levelPath.length - 1;
 
@@ -24,13 +24,17 @@ public class LevelManager {
     }
 
     public void nextLevel(){
-        if(levelIndex < maxLevel) levelIndex++;
-        panel.deleteEnemies();
-        player.cam = 0;
-        player.y = panel.height/2;
-        this.currentIndex = levelIndex;
-        tileManager = new TileManager(panel, player, levelPath[levelIndex], bgPath[levelIndex]);
-        panel.collisionHandler = new CollisionHandler(panel, this, panel.keyHandler);
+        if((levelIndex + 1) > maxLevel){
+            panel.winGame();
+        } else{
+            if(levelIndex < maxLevel) levelIndex++;
+            panel.deleteEnemies();
+            player.cam = 0;
+            player.y = panel.height/2;
+            this.currentIndex = levelIndex;
+            tileManager = new TileManager(panel, player, levelPath[levelIndex], bgPath[levelIndex]);
+            panel.collisionHandler = new CollisionHandler(panel, this, panel.keyHandler);
+        }
     }
 
     public void setLevel(){

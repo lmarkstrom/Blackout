@@ -117,7 +117,6 @@ public class CollisionHandler{
     }
 
     public void checkObjAction(int objVal){
-        
         String action = tileManager.objects[objVal].actionString;
         switch (action){
             case "donken":
