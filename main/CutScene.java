@@ -74,6 +74,7 @@ public class CutScene{
     public void startDonken(){
         if(keyHandler.E){
             panel.startCutScene("cutscenes/donkenScene.gif", 10);
+            panel.player.stamina = panel.player.maxStamina; 
         } 
     }
 

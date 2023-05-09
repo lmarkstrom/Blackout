@@ -102,7 +102,8 @@ public class Panel extends JPanel implements Runnable{
 
     public void loseGame(){
         state = STATE.MENU;
-        menu.openMainMenu();
+        resetGame();
+        //menu.openMainMenu();
     }
 
     public void winGame(){
@@ -272,7 +273,7 @@ public class Panel extends JPanel implements Runnable{
         if(player.y > height){
             System.out.println("LOST");
             loseGame();
-        } else if(player.health <= 0){
+        } else if(player.health <= 0 || player.stamina <= 0){
             System.out.println("LOST");
             loseGame();
         }
