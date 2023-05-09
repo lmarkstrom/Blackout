@@ -34,6 +34,7 @@ public class LevelManager {
             this.currentIndex = levelIndex;
             tileManager = new TileManager(panel, player, levelPath[levelIndex], bgPath[levelIndex]);
             panel.collisionHandler = new CollisionHandler(panel, this, panel.keyHandler);
+            panel.startCutScene("cutscenes/nextLvl.gif", 5);
         }
     }
 

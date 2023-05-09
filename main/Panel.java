@@ -33,7 +33,7 @@ public class Panel extends JPanel implements Runnable{
     public Player player;
     private LevelManager levelManager;
     public CollisionHandler collisionHandler;
-    private Menu menu;
+    public Menu menu;
     public PlayerData playerData;
     public CutScene cutScene;
     private Action action;
@@ -80,9 +80,9 @@ public class Panel extends JPanel implements Runnable{
 
     
     public void deleteEnemies() {
-        for (int i = 0; i < enemies.size(); i++) {
-            enemies.remove(i);
-        }
+        ArrayList<Enemy> list = new ArrayList<>(enemies);
+        enemies.removeAll(list);
+        
     }
 
     /*
@@ -95,6 +95,7 @@ public class Panel extends JPanel implements Runnable{
     }
 
     public void startGame(){
+        levelManager.setLevel();
         state = STATE.GAME;
         cutScene.cutSceneDone = true;
         System.out.println(state);
@@ -103,12 +104,16 @@ public class Panel extends JPanel implements Runnable{
     public void loseGame(){
         state = STATE.MENU;
         resetGame();
+        player.health = player.maxHealth;
+        player.stamina = player.maxStamina;
+        levelManager.levelIndex = 0;
+        startCutScene("cutscenes/death.gif", 24);
         //menu.openMainMenu();
     }
 
     public void winGame(){
-        state = STATE.MENU;
-        menu.openMainMenu();
+        startCutScene("cutscenes/endScene.gif", 16);
+        player.won = true;
     }
 
     public void resetGame(){
@@ -151,6 +156,7 @@ public class Panel extends JPanel implements Runnable{
 
     public void startNewGame(){
         state = STATE.CUTSCENE;
+        player.won = false;
         cutScene.cutSceneDone = false;
         cutScene.count = 0;
         cutScene.frameCount = 0;
@@ -226,14 +232,13 @@ public class Panel extends JPanel implements Runnable{
                 levelManager.setLevel(); 
                 keyHandler.L = false;
             }
-        }    
+        }
         for (Enemy enemy : enemies) {
             if(!enemy.isChasing)
             {
                 enemy.update();
             } 
         }
-        
         action.update();
         player.updateAnimation();
     }

@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 public class Player extends Entity {
     
     private int fallHeight = 0;
+    public boolean won = false;
     public KeyHandler keyHandler;
     private BufferedImage idle, walk, jump, crouch;
     private Animation walkAnimation, idleAnimation, jumpAnimation, crouchAnimation;

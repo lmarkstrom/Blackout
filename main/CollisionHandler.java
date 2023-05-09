@@ -74,7 +74,7 @@ public class CollisionHandler{
                 }else {
                     player.collideX = false;
                 }
-                objVal1 = mapObj[playerCol - 1][playerRow2]; // check wider area for collisoon
+                if ((playerCol - 1) >= 0) objVal1 = mapObj[playerCol - 1][playerRow2]; // check wider area for collisoon
                 if(player.isPlayer && ((objVal1 != 0 && !tileManager.objects[objVal1].actionString.equals("")) || (objVal2 != 0 && !tileManager.objects[objVal2].actionString.equals("")))){
                     checkObjAction(objVal2);
                 }
