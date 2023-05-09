@@ -92,11 +92,11 @@ public class Enemy extends Entity {
         }
 
         if ( player.cam <= cam){
+            System.out.println("BUSTED");
             SoundEffects.chilla.play();
             panel.startCutScene();
             //TODO play cutScene: fyllecell
             panel.cutScene.getFrameBusted();
-            System.out.println(panel.cutScene.frames.size());
             player.isBusted = true;
             panel.startCutScene();
         } 

@@ -131,6 +131,8 @@ public class Panel extends JPanel implements Runnable{
     }
     public void startCutScene(){
         state = STATE.CUTSCENE;
+        System.out.println("här startar cutscene");
+        System.out.println(state);
     }
 
     public void startNewGame(){
@@ -190,15 +192,19 @@ public class Panel extends JPanel implements Runnable{
         // call method that should be updated here:
         playerData.update();
         if (state == STATE.GAME){
+            System.out.println(state);
             if(keyHandler.pause) {
                 state = STATE.MENU;
                 menu.pausePanel.setVisible(true);
             }else{
                 tileManager.update();
                 for (Enemy enemy : enemies) {
-                    if(enemy.isChasing) enemy.update();
+                    if(enemy.isChasing){
+                        System.out.println(" chasing");
+                        enemy.update();
+                    } 
                 }
-                if (state != STATE.CUTSCENE) player.update();
+                player.update();
             }
 
             // LEVEL TEST (tryck "L" för att få ny bana)
@@ -209,7 +215,11 @@ public class Panel extends JPanel implements Runnable{
             }
         }    
         for (Enemy enemy : enemies) {
-            if(!enemy.isChasing) enemy.update();
+            if(!enemy.isChasing)
+            {
+                System.out.println("inte chasing");
+                enemy.update();
+            } 
         }
         
         action.update();

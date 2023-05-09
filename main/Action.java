@@ -87,7 +87,7 @@ public class Action {
         if (danceing){
             dur ++;
         } 
-        if (dur > duration-60){
+        if (dur > duration-60 && danceing){
             dur = 0;
             panel.stopCutScene();
             danceing = false;
