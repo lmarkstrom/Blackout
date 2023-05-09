@@ -48,8 +48,6 @@ public class Panel extends JPanel implements Runnable{
     public STATE state;
     private Image backgroundImage;
 
-    public int levelIndex;
-
     public Panel(){
         state = STATE.MENU;
         // setUp game panel
@@ -58,13 +56,11 @@ public class Panel extends JPanel implements Runnable{
         this.setDoubleBuffered(true); // Buffer to the panel, so it starts painting before the next drawtime
         this.setFocusable(true);
         this.addKeyListener(keyHandler);
-        
-        this.levelIndex = 0;
         this.enemies = new ArrayList<>();
         this.player = new Player(keyHandler, this);
         this.levelManager = new LevelManager(this, player);
         this.collisionHandler = new CollisionHandler(this, levelManager, keyHandler);
-        this.playerData = new PlayerData(this);
+        this.playerData = new PlayerData(this, levelManager);
         this.cutScene = new CutScene(this, keyHandler);
         this.action = new Action(keyHandler, player, this);
         try {
@@ -149,6 +145,7 @@ public class Panel extends JPanel implements Runnable{
         cutScene.frameCount = 0;
         player.cam = 0;
         player.y = height/2;
+        levelManager.levelIndex = 0;
         cutScene.getFrames("cutscenes/introScene.gif", 29);
     }
 
@@ -212,8 +209,8 @@ public class Panel extends JPanel implements Runnable{
 
             // LEVEL TEST (tryck "L" för att få ny bana)
             if (keyHandler.L) {
-                this.levelIndex = 1;
-                if(levelIndex > levelManager.maxLevel) this.levelIndex--;
+                this.levelManager.levelIndex = 1;
+                if(levelManager.levelIndex > levelManager.maxLevel) this.levelManager.levelIndex--;
                 levelManager.setLevel(); 
                 keyHandler.L = false;
             }

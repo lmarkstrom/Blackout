@@ -113,6 +113,7 @@ public class TileManager {
         try {
             objects[1] = new Object("/tex/obj/car.png", true);
             objects[2] = new Object("/tex/obj/donken.png", 4, 3 , "donken");
+            objects[3] = new Object("/tex/obj/door.png", 1, 1 , "next");
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -186,6 +187,8 @@ public class TileManager {
                 return 1;
             case "b":
                 return 2;
+            case "c":
+                return 3;
             default:
                 return 0;
         }

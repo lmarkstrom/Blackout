@@ -27,10 +27,12 @@ public class PlayerData {
     // objects
     private Player player;
     private Panel panel;
+    private LevelManager levelManager;
 
-    public PlayerData(Panel panel){
+    public PlayerData(Panel panel, LevelManager levelManager){
         this.player = panel.player;
         this.panel = panel;
+        this.levelManager = levelManager;
         posX = panel.width/2 - player.maxHealth*2;
         loadTex();
     }
@@ -90,7 +92,7 @@ public class PlayerData {
         String[] save = loadList.get(saveNum - 1);
         player.health = Integer.parseInt(save[1]);
         player.stamina = Integer.parseInt(save[2]);
-        panel.levelIndex = Integer.parseInt(save[3]);
+        levelManager.levelIndex = Integer.parseInt(save[3]);
         player.cam = Integer.parseInt(save[4]);
         player.y = Integer.parseInt(save[5]);
     }
@@ -100,7 +102,7 @@ public class PlayerData {
         save[0] = Integer.toString(saveNum);
         save[1] = Integer.toString(player.health);
         save[2] = Integer.toString(player.stamina);
-        save[3] = Integer.toString(panel.levelIndex);
+        save[3] = Integer.toString(levelManager.levelIndex);
         save[4] = Integer.toString(player.cam);
         save[5] = Integer.toString(player.y);
         if (loadList.size() > saveNum - 1) loadList.set(saveNum - 1, save);

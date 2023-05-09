@@ -5,6 +5,7 @@ public class CollisionHandler{
     // private Entity player;
     private Panel panel;
     private TileManager tileManager;
+    private LevelManager levelManager;
     private KeyHandler keyHandler;
     private boolean damageTaken;
 
@@ -13,6 +14,7 @@ public class CollisionHandler{
 
     public CollisionHandler(Panel panel, LevelManager levelManager, KeyHandler keyHandler){
         this.panel = panel;
+        this.levelManager = levelManager;
         this.tileManager = levelManager.tileManager;
         this.keyHandler = keyHandler;
         this.map = tileManager.map;
@@ -121,6 +123,8 @@ public class CollisionHandler{
             case "donken":
                 panel.cutScene.startDonken();
                 break;
+            case "next":
+                levelManager.nextLevel();
             default:
                 break;
         }
