@@ -131,9 +131,6 @@ public class Panel extends JPanel implements Runnable{
     }
     public void startCutScene(){
         state = STATE.CUTSCENE;
-        cutScene.cutSceneDone = false;
-        cutScene.count = 0;
-        cutScene.frameCount = 0;
     }
 
     public void startNewGame(){
