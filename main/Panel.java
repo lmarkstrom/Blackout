@@ -106,6 +106,18 @@ public class Panel extends JPanel implements Runnable{
         System.out.println(state);
     }
 
+    public void resetGame(){
+        state = STATE.GAME;
+        cutScene.cutSceneDone = true;
+        player.isBusted = false;
+        player.anger = 0;
+        for (Enemy enemy : enemies) enemy.isChasing = false;
+        deleteEnemies();
+        tileManager = new TileManager(this, player, level[levelIndex], "/tex/bg/gameBg.png");
+        player.cam = 0;
+        player.y = height/2;
+    }
+
     public void stopCutScene(){
         state = STATE.GAME;
     }
@@ -119,6 +131,9 @@ public class Panel extends JPanel implements Runnable{
     }
     public void startCutScene(){
         state = STATE.CUTSCENE;
+        cutScene.cutSceneDone = false;
+        cutScene.count = 0;
+        cutScene.frameCount = 0;
     }
 
     public void startNewGame(){
@@ -221,21 +236,18 @@ public class Panel extends JPanel implements Runnable{
         // create graphic object
         Graphics2D g = (Graphics2D) graphics;
 
-        
+        g.drawImage(backgroundImage, 0, 0, this.getWidth(), this.getHeight(), this);
+
+        // call method to paint player and map here:
+        tileManager.draw(g);
+        for (Enemy enemy : enemies) {
+            enemy.draw(g);
+        }
+        player.draw(g);
+        playerData.draw(g);
         
         if(!cutScene.cutSceneDone && state == STATE.CUTSCENE){
             cutScene.draw(g);
-        } else if (cutScene.cutSceneDone){
-            // Draw background
-            g.drawImage(backgroundImage, 0, 0, this.getWidth(), this.getHeight(), this);
-
-            // call method to paint player and map here:
-            tileManager.draw(g);
-            for (Enemy enemy : enemies) {
-                enemy.draw(g);
-            }
-            player.draw(g);
-            playerData.draw(g);
         }
         
         // dispose graphic

@@ -14,15 +14,41 @@ public class CutScene{
     public int n;
     public boolean cutSceneDone = true;
     private Panel panel;
-    private ArrayList<BufferedImage> frames;
+    public ArrayList<BufferedImage> frames;
     private KeyHandler keyHandler;
     public int count;
     private int frameDur = 29;
     public int frameCount = 0;
+    private BufferedImage image;
 
     public CutScene(Panel panel, KeyHandler keyHandler){
         this.keyHandler = keyHandler;
         this.panel = panel;
+    }
+
+    public void getFrameBusted(){
+        this.frameDur = 20;
+        ArrayList<BufferedImage> frames = new ArrayList<>();
+        try {
+            for (int i = 1; i <= 10; i++){
+                image = ImageIO.read(getClass().getResource("/cutscenes/bustedScene/bustedScene" + i + ".png"));
+                frames.add(image);
+                
+            }
+            ImageReader reader = ImageIO.getImageReadersByFormatName("gif").next();
+            File input = new File("cutscenes/cell.gif");
+            ImageInputStream stream = ImageIO.createImageInputStream(input);
+            reader.setInput(stream);
+            int count = reader.getNumImages(true);
+            for (int index = 0; index < count; index++) {
+                BufferedImage frame = reader.read(index);
+                frames.add(frame);
+            }
+        } catch (IOException e) {
+            System.out.println("File not found for cutscene: " + e);
+        }
+        
+        this.frames = frames;
     }
 
     public void getFrames(String fileName, int dur){
@@ -39,8 +65,9 @@ public class CutScene{
                 frames.add(frame);
             }
         } catch (IOException e) {
-            System.out.println("File not found for cutscne: " + e);
+            System.out.println("File not found for cutscene: " + e);
         }
+        
         this.frames = frames;
     }
 
@@ -63,7 +90,9 @@ public class CutScene{
                 Thread.sleep(2000);
             } catch (Exception e) {
             }
-            panel.startGame();
+            if (panel.player.isBusted){
+                panel.resetGame();
+            }else panel.startGame();
         }
         count++;
     }     

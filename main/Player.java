@@ -22,7 +22,8 @@ public class Player extends Entity {
     public Animation animation;
     private BufferedImage dance1, dance2, dance3;
     public Animation danceAnimation1, danceAnimation2, danceAnimation3;
-    public int anger; 
+    public int anger;
+    public boolean isBusted;
     private ArrayList<SoundEffects> snoring = new ArrayList<>();
     private ArrayList<SoundEffects> injuries = new ArrayList<>();
     private ArrayList<SoundEffects> jumping = new ArrayList<>();
