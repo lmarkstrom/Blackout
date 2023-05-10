@@ -69,10 +69,10 @@ public class Enemy extends Entity {
             collidePlayer = false;
         }
 
-        if(cam > (player.cam - 6*panel.tileSize) && cam < (player.cam + 6*panel.tileSize) && !copVisible && panel.state == STATE.GAME){
-            copVisible = true;
-            SoundEffects.kollaInte.play();
-        }
+        // if(cam > (player.cam - 6*panel.tileSize) && cam < (player.cam + 6*panel.tileSize) && !copVisible && panel.state == STATE.GAME){
+        //     copVisible = true;
+        //     SoundEffects.kollaInte.play();
+        // }
 
     }
 
@@ -92,10 +92,8 @@ public class Enemy extends Entity {
         }
 
         if ( player.cam <= cam){
-            System.out.println("BUSTED");
             SoundEffects.chilla.play();
             panel.startCutScene();
-            //TODO play cutScene: fyllecell
             panel.cutScene.getFrameBusted();
             player.isBusted = true;
             panel.startCutScene();
@@ -103,8 +101,6 @@ public class Enemy extends Entity {
     }
 
     public void update(){ 
-        //xx = x - player.x;
-        //x = player.xx;
         if(isChasing) updateChase();
         else if (isGrounded) updateAI();
         else if(!isGrounded){
