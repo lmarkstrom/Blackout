@@ -1,7 +1,10 @@
 package main;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+
+import main.Panel.STATE;
 
 /**
  * The Action class handles player actions such as singing a song and starting dance animations.
@@ -17,12 +20,14 @@ public class Action {
     private ArrayList<SoundEffects> songs = new ArrayList<>();
     private ArrayList<SoundEffects> noise = new ArrayList<>();
     private Random random = new Random();
-    // private int ticks;                 
+    private int ticks;                 
     private ArrayList<Animation> dances = new ArrayList<>();
 
     private long duration;
     private boolean danceing;
     private int dur = 0;
+    private boolean played;
+
 
     /**
      * Constructs an Action object with the specified KeyHandler, Player, and Panel.
@@ -37,7 +42,7 @@ public class Action {
         minAnger = 0;
         player.anger = minAnger;
         busted = false;
-        // ticks = 0;
+        ticks = 0;
         songs.add(SoundEffects.bananMelon);
         songs.add(SoundEffects.girlInWorld);
         songs.add(SoundEffects.summer);
@@ -54,6 +59,7 @@ public class Action {
         dances.add(player.danceAnimation3);
 
         danceing = false;
+        played = false;
     }
 
     /**
@@ -74,7 +80,7 @@ public class Action {
             keyHandler.F = false;
         }
 
-        if(keyHandler.H && !danceing ){
+        if(keyHandler.Q && !danceing ){
             var song = changeSong();
             duration = song.duration;
             danceing = true;
@@ -82,7 +88,7 @@ public class Action {
             song.play();
             player.animation = dances.get(random.nextInt(dances.size()));
             player.animation.start();      
-            keyHandler.H = false;
+            keyHandler.Q = false;
         }
         if (danceing){
             dur ++;
@@ -98,14 +104,42 @@ public class Action {
             panel.enemies.add(new Enemy(panel, 0, panel.height/2, player, 5, true));
         }
 
+        ticks ++;
 
-        //TODO dethär vill bara göra  om ingget annat ljud spelas upp samtidigt, hur?
-        // ticks++;
-        // if(ticks >= 60*7){
-        //     noise.get(random.nextInt(noise.size())).play();
-        //     ticks = 0;
-        // } 
-
+        if(panel.state == STATE.GAME){
+            var light = panel.levelManager.tileManager.objects[4];
+            if ( ticks > 60*11){
+                try {
+                    light = new Object("/tex/obj/redLightYellow.png", 1, 2, "yellowLight");
+                    ticks = 0;
+                    played = false;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if(ticks > 60*8 && player.animation == player.walkAnimation && !played){
+                noise.get(random.nextInt(noise.size())).play();
+                played = true;
+            } else if(ticks > 60*6){
+                try{
+                    light = new Object("/tex/obj/redLightRed.png", 1, 2, "redLight");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if(ticks > 60*5){
+                try {
+                    light = new Object("/tex/obj/redLightYellow.png", 1, 2, "yellowLight");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if (ticks > 60){
+                try{
+                    light = new Object("/tex/obj/redLightGreen.png", 1, 2, "greenLight");
+                } catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+            panel.levelManager.tileManager.objects[4] = light;
+        }   
 
     }
 
