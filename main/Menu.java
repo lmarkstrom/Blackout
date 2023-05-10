@@ -89,11 +89,13 @@ public class Menu implements ActionListener{
         bg.setBounds(0, 0, width, height);
 
         // Main title
+        /* 
         JLabel title = new JLabel("GAME TITLE", SwingConstants.CENTER);
         Font titleFont = new Font("Arial", Font.BOLD, 80);
         title.setForeground(Color.WHITE);
         title.setFont(titleFont);
         title.setBounds(width/2 - 300, 50, 600, 150);
+        */
         
         // Start game button
         JButton startNewGame = new JButton("START GAME");
@@ -114,7 +116,7 @@ public class Menu implements ActionListener{
         exit.setBounds(width/2 - 100, 400, 200, 50);
         
         layers.add(bg, JLayeredPane.DEFAULT_LAYER);
-        layers.add(title, JLayeredPane.POPUP_LAYER);
+        //layers.add(title, JLayeredPane.POPUP_LAYER);
         layers.add(startNewGame, JLayeredPane.POPUP_LAYER);
         layers.add(loadGame, JLayeredPane.POPUP_LAYER);
         layers.add(exit, JLayeredPane.POPUP_LAYER);
