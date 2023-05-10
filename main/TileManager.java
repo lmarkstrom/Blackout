@@ -117,6 +117,8 @@ public class TileManager {
             objects[1] = new Object("/tex/obj/car.png", true);
             objects[2] = new Object("/tex/obj/donken.png", 4, 3 , "donken");
             objects[3] = new Object("/tex/obj/door.png", 1, 1 , "next");
+            objects[4] = new Object("/tex/obj/redLightGreen.png", 1, 2, "greenLight");
+            objects[5] = new Object("/tex/obj/car.png", false, "carCrash");
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -142,7 +144,7 @@ public class TileManager {
                 g.drawImage(tiles[map[x][y]].image, (x * panel.tileSize - posX), (y * panel.tileSize), panel.tileSize, panel.tileSize, null);
                 if(mapObj[x][y] != 0) {
                     Object obj = objects[mapObj[x][y]];
-                    g.drawImage(obj.image, (x * panel.tileSize - posX), ((y - obj.rows + 1) * panel.tileSize), panel.tileSize*obj.cols, panel.tileSize*obj.rows, null);
+                    if(obj.isVisible) g.drawImage(obj.image, (x * panel.tileSize - posX), ((y - obj.rows + 1) * panel.tileSize), panel.tileSize*obj.cols, panel.tileSize*obj.rows, null);
                 }
             }
         }
@@ -192,6 +194,10 @@ public class TileManager {
                 return 2;
             case "c":
                 return 3;
+            case "d":
+                return 4;
+            case "f":
+                return 5;
             default:
                 return 0;
         }
