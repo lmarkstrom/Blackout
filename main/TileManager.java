@@ -23,20 +23,23 @@ public class TileManager {
     public int mapSizeX;
     public int mapSizeY;
     private int posX;
+    public int bgIndex;
 
     // objects
     private Panel panel;
     public Tile[] tiles;
     public Object[] objects;
     private Player player;
-    private BufferedImage background;
+    private BufferedImage background1;
+    private BufferedImage background2;
     
     /**
     Constructor for the TileManager class. 
     @param panel The game panel object.
     @param player The player object.
     */
-    public TileManager(Panel panel, Player player, String levelPath, String bgPath){
+    public TileManager(Panel panel, Player player, String levelPath, int bgIndex){
+        this.bgIndex = bgIndex;
         this.panel = panel;
         this.player = player;
         this.tiles = new Tile[maxTiles];
@@ -49,7 +52,8 @@ public class TileManager {
 
         loadMap(levelPath);
         try {
-            background = ImageIO.read(getClass().getResourceAsStream(bgPath));
+            background1 = ImageIO.read(getClass().getResourceAsStream("/tex/bg/bgForest.png"));
+            background2 = ImageIO.read(getClass().getResourceAsStream("/tex/bg/bgCity2.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -138,7 +142,12 @@ public class TileManager {
     @param g The Graphics object to draw the tiles with.
     */
     public void draw(Graphics g) {
-        g.drawImage(background, 0, 0, panel.width, panel.height, null);
+        if(bgIndex == 0){
+            g.drawImage(background1, 0, 0, panel.width, panel.height, null);
+        }else{
+            g.drawImage(background2, 0, 0, panel.width, panel.height, null);
+        }
+        
         for (int y = 0; y < mapSizeY; y++) {
             for (int x = 0; x < mapSizeX; x++) {
                 g.drawImage(tiles[map[x][y]].image, (x * panel.tileSize - posX), (y * panel.tileSize), panel.tileSize, panel.tileSize, null);

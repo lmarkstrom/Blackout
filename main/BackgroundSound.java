@@ -10,12 +10,11 @@ public class BackgroundSound {
     }
 
     public void setSound(){
-        //TODO check level type: forrest / traffic
-        
+        if(panel.levelManager.tileManager.bgIndex == 0){
+            sound = SoundEffects.forest;
+        }else{
             sound = SoundEffects.morningHighwayInDistance;
-        // else {
-        //     sound = SoundEffects.forest;
-        // }
+        }
 
         sound.play();
     }
