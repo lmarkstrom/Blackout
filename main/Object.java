@@ -24,8 +24,9 @@ public class Object {
         this.image = ImageIO.read(getClass().getResourceAsStream(path));
     }
 
-    public Object(String path, int cols, int rows, String actionString) throws IOException{
+    public Object(String path, int cols, int rows, String actionString, boolean collision) throws IOException{
         this.actionString = actionString;
+        this.collision = collision;
         this.cols = cols;
         this.rows = rows;
         this.image = ImageIO.read(getClass().getResourceAsStream(path));

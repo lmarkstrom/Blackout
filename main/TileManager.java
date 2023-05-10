@@ -115,8 +115,10 @@ public class TileManager {
         try {
             objects[0] = new Object("/tex/tiles/0empty.png", false);
             objects[1] = new Object("/tex/obj/car.png", true);
-            objects[2] = new Object("/tex/obj/donken.png", 4, 3 , "donken");
-            objects[3] = new Object("/tex/obj/door.png", 1, 1 , "next");
+            objects[2] = new Object("/tex/obj/donken.png", 4, 3 , "donken", false);
+            objects[3] = new Object("/tex/obj/house.png", 6, 6 , "next", true);
+            // collision border
+            objects[4] = new Object("/tex/tiles/0empty.png", true);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -192,6 +194,8 @@ public class TileManager {
                 return 2;
             case "c":
                 return 3;
+            case "I":
+                return 4;
             default:
                 return 0;
         }
