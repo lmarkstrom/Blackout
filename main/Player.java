@@ -7,6 +7,8 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import main.Panel.STATE;
+
 /**
  * The Player class represents a character in the game.
  * It handles player movement, animation, and rendering.
@@ -19,16 +21,23 @@ public class Player extends Entity {
     public boolean won = false;
     public KeyHandler keyHandler;
     private BufferedImage idle, walk, jump, crouch;
-    private Animation walkAnimation, idleAnimation, jumpAnimation, crouchAnimation;
+    public Animation walkAnimation, idleAnimation, jumpAnimation, crouchAnimation;
     public Animation animation;
     private BufferedImage dance1, dance2, dance3;
     public Animation danceAnimation1, danceAnimation2, danceAnimation3;
+    private BufferedImage standup, puke;
+    public Animation standupAnimation, pukeAnimation;
     public int anger;
     public boolean isBusted;
     private ArrayList<SoundEffects> snoring = new ArrayList<>();
     private ArrayList<SoundEffects> injuries = new ArrayList<>();
     private ArrayList<SoundEffects> jumping = new ArrayList<>();
     private Random random = new Random();
+    private boolean isStanding;
+    private boolean isPuking; 
+    private int tick;
+    private int tick2;
+    public boolean done, done2, done3, done4;
 
 
     /**
@@ -51,9 +60,9 @@ public class Player extends Entity {
         size = panel.tileSize;
         cam = 0;
         x = panel.width/2;
-        y = panel.height/2;
+        y = panel.height-panel.tileSize*3;
         direction = size;
-        injuries.add(SoundEffects.ramlar); //TODO denna skullle unna va när man dör istället? 
+        injuries.add(SoundEffects.ramlar);
         injuries.add(SoundEffects.ramlar2);
         injuries.add(SoundEffects.ramlar3);
         snoring.add(SoundEffects.snark);
@@ -66,7 +75,12 @@ public class Player extends Entity {
         jumping.add(SoundEffects.hopp3);
         jumping.add(SoundEffects.hopp4);
         loadTextures();
-        animation = idleAnimation;
+
+        isStanding = false;
+        tick = 0;
+        tick2 = 0;
+
+        animation = standupAnimation;
         animation.start();
     }
 
@@ -93,40 +107,53 @@ public class Player extends Entity {
             danceAnimation1 = new Animation(dance1, 10, 1, 2);
             danceAnimation2 = new Animation(dance2, 10, 1, 2);
             danceAnimation3 = new Animation(dance3, 10, 1, 2);
+
+            standup = ImageIO.read(getClass().getResourceAsStream("/tex/anim/standup.png"));
+            puke = ImageIO.read(getClass().getResourceAsStream("/tex/anim/puke.png"));
+
+            standupAnimation = new Animation(standup, 20, 1, 7);
+            pukeAnimation = new Animation(puke, 10, 1, 6);
         }
         catch(Exception e){
             System.out.println(e);
         }
     }
 
-    private void set(int newX, int newY) {
-        this.x = newX;
-        this.y = newY;
-        panel.repaint();
-    }
-
-    private void victoryAnimation(int y) throws InterruptedException {
-        int currentx = panel.width/2;
-        int currenty = y;
-
-        snoring.get(random.nextInt(snoring.size())).play();
-
-        while (currenty < 484) {
-            currenty += 1;
-            Thread.sleep(10);
-            set(currentx, currenty);
-        }
-
-        while (currentx < panel.width/2 + panel.width/5) {
-            currentx += 1;
-            Thread.sleep(10);
-            set(currentx, currenty);
-        }
-    }
-
     public void updateAnimation(){
         animation.update();
+
+        if (panel.state == STATE.DANCE){
+
+            if(!isStanding) tick++;
+            if(tick > 60) { 
+                panel.stopDanceState(); 
+                isStanding = true; 
+                tick = 0;
+            }
+
+            if(isPuking) tick2 ++;
+            if(tick2 > 60){
+                panel.stopDanceState(); 
+                animation = idleAnimation; 
+                isPuking = false;
+                tick2 = 0;
+            }
+     
+        }
     }
+
+    private void puke(){
+        panel.startDanceState();
+        SoundEffects.vomiting.play();
+        animation = pukeAnimation;
+        direction = -direction;
+        animation.start();
+        isPuking = true;
+    }
+
+    private boolean isBetween(int x, int lower, int upper) {
+        return lower <= x && x <= upper;
+      }
 
     /**
      * Updates the player's position and movement based on keyboard input.
@@ -135,35 +162,49 @@ public class Player extends Entity {
      * @throws InterruptedException
      */
     public void update(){
-        /* 
-        if (cam >= 2800) {
-            try {
-                victoryAnimation(y);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        if(!isPuking){
+            if (keyHandler.right){
+                animation = walkAnimation;
+                animation.start();
+                direction = size;
+                if(collideX == false){  
+                    cam += speed;
+                    stamina -= 5;
+                }
+           } else if(keyHandler.left){
+                animation = walkAnimation;
+                animation.start();
+                direction = -size;
+                if(collideX == false){
+                    cam -= speed;
+                    stamina -= 5;
+                }
+           } else if(keyHandler.down){
+                animation = crouchAnimation;
+                animation.start();
+                SoundEffects.sniffle.play();
+           }
+            var ran = random.nextInt(100, 500);
+            if (!done && isBetween(stamina, 3000+ran , 3000+ran+50) && isGrounded){
+                puke();
+                done = true;
+            } 
+            if (!done2 && isBetween(stamina, 3000, 3050) && isGrounded){
+                puke();
+                done2 = true;
+            } 
+            if (!done3 && isBetween(stamina, 2000, 2050) && isGrounded){ 
+                puke();
+                done3 = true;
             }
-        }*/
-        if (keyHandler.right){
-            animation = walkAnimation;
-            animation.start();
-            direction = size;
-            if(collideX == false){  
-                cam += speed;
-                stamina -= 1;
+            if (!done4 && isBetween(stamina, 1000, 1050) && isGrounded){ 
+                puke();
+                done4 = true;
             }
-       } else if(keyHandler.left){
-            animation = walkAnimation;
-            animation.start();
-            direction = -size;
-            if(collideX == false){
-                cam -= speed;
-                stamina -= 1;
-            }
-       } else if(keyHandler.down){
-            animation = crouchAnimation;
-            animation.start();
-            SoundEffects.sniffle.play();
-       }
+
+            if(stamina == 4000) SoundEffects.marInteBra.play();
+
+        }      
 
        if(keyHandler.up && isGrounded && !collideTop){
             animation = jumpAnimation;
@@ -174,13 +215,18 @@ public class Player extends Entity {
             keyHandler.up = false;
        }
         
-        if(!keyHandler.up && !keyHandler.down && !keyHandler.left && !keyHandler.right && !keyHandler.H){
+        if(!keyHandler.up && !keyHandler.down && !keyHandler.left && !keyHandler.right && !keyHandler.Q && animation != pukeAnimation){
             animation = idleAnimation;
             animation.start();
         } 
-        
 
-       if(!isGrounded){
+        if(!isStanding){
+            direction = -direction;
+            animation = standupAnimation; 
+            animation.start();
+            panel.startDanceState();
+            tick = 0;
+        } else if(!isGrounded){
             animation = jumpAnimation;
             y += dy;
             dy += gravity;
@@ -190,10 +236,6 @@ public class Player extends Entity {
             dy = 0;
             fallHeight = 0;
         }
-
-        if(stamina < 300) SoundEffects.marInteBra.play();
-        
-        
         super.updateCollission();
     }
 
@@ -202,7 +244,6 @@ public class Player extends Entity {
             health -= 5;
             fallHeight = 0;
             injuries.get(random.nextInt(injuries.size())).play();
-
         }
     }
 
@@ -213,6 +254,5 @@ public class Player extends Entity {
      */
     public void draw(Graphics g){    
         g.drawImage(animation.getSprite(), x-direction/2, y, direction, size, null);
-
     }
 }

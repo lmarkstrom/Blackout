@@ -11,7 +11,7 @@ public class LevelManager {
     public int levelIndex;
     public int currentIndex;
     private String[] levelPath = new String[] {"/data/map.txt", "/data/map2.txt", "/data/map3.txt"};
-    private String[] bgPath = new String[] {"/tex/bg/bgForest.png", "/tex/bg/bgCity.png", "/tex/bg/bgCity.png"};
+    private int[] bgIndex = new int[] {0, 0, 1};
 
     public int maxLevel = levelPath.length - 1;
 
@@ -20,7 +20,7 @@ public class LevelManager {
         this.panel = panel;
         this.player = player;
         this.currentIndex = levelIndex;
-        this.tileManager = new TileManager(panel, player, levelPath[levelIndex], bgPath[levelIndex]);
+        this.tileManager = new TileManager(panel, player, levelPath[levelIndex], bgIndex[levelIndex]);
     }
 
     public void nextLevel(){
@@ -32,7 +32,7 @@ public class LevelManager {
             player.cam = 0;
             player.y = panel.height/2;
             this.currentIndex = levelIndex;
-            tileManager = new TileManager(panel, player, levelPath[levelIndex], bgPath[levelIndex]);
+            tileManager = new TileManager(panel, player, levelPath[levelIndex], bgIndex[levelIndex]);
             panel.collisionHandler = new CollisionHandler(panel, this, panel.keyHandler);
             panel.startCutScene("cutscenes/nextLvl.gif", 5);
         }
@@ -41,13 +41,13 @@ public class LevelManager {
     public void setLevel(){
         panel.deleteEnemies();
         this.currentIndex = levelIndex;
-        tileManager = new TileManager(panel, player, levelPath[levelIndex], bgPath[levelIndex]);
+        tileManager = new TileManager(panel, player, levelPath[levelIndex], bgIndex[levelIndex]);
         panel.collisionHandler = new CollisionHandler(panel, this, panel.keyHandler);
     }
 
     public void resetGame(){
         this.currentIndex = levelIndex;
-        tileManager = new TileManager(panel, player, levelPath[levelIndex], bgPath[levelIndex]);
+        tileManager = new TileManager(panel, player, levelPath[levelIndex], bgIndex[levelIndex]);
     }
 
     public void update(){

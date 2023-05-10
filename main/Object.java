@@ -12,6 +12,7 @@ public class Object {
     public boolean collision = false;
     public boolean donkeCutscene = false;
     public String actionString = "";
+    public boolean isVisible = true;
 
     /**
     Constructor for the Tile class.
@@ -30,5 +31,13 @@ public class Object {
         this.cols = cols;
         this.rows = rows;
         this.image = ImageIO.read(getClass().getResourceAsStream(path));
+    }
+
+    public Object(String path, boolean isVisible, String actionString) throws IOException{
+        this.isVisible = isVisible;
+        this.collision = false;
+        this.actionString = actionString;
+        this.image = ImageIO.read(getClass().getResourceAsStream(path));
+        
     }
 }

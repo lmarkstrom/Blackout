@@ -23,20 +23,23 @@ public class TileManager {
     public int mapSizeX;
     public int mapSizeY;
     private int posX;
+    public int bgIndex;
 
     // objects
     private Panel panel;
     public Tile[] tiles;
     public Object[] objects;
     private Player player;
-    private BufferedImage background;
+    private BufferedImage background1;
+    private BufferedImage background2;
     
     /**
     Constructor for the TileManager class. 
     @param panel The game panel object.
     @param player The player object.
     */
-    public TileManager(Panel panel, Player player, String levelPath, String bgPath){
+    public TileManager(Panel panel, Player player, String levelPath, int bgIndex){
+        this.bgIndex = bgIndex;
         this.panel = panel;
         this.player = player;
         this.tiles = new Tile[maxTiles];
@@ -49,7 +52,8 @@ public class TileManager {
 
         loadMap(levelPath);
         try {
-            background = ImageIO.read(getClass().getResourceAsStream(bgPath));
+            background1 = ImageIO.read(getClass().getResourceAsStream("/tex/bg/bgForest.png"));
+            background2 = ImageIO.read(getClass().getResourceAsStream("/tex/bg/bgCity2.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -115,10 +119,14 @@ public class TileManager {
         try {
             objects[0] = new Object("/tex/tiles/0empty.png", false);
             objects[1] = new Object("/tex/obj/car.png", true);
+            objects[2] = new Object("/tex/obj/donken.png", 4, 3 , "donken");
+            objects[3] = new Object("/tex/obj/house.png", 1, 1 , "next");
+            objects[4] = new Object("/tex/obj/redLightGreen.png", 1, 2, "greenLight");
+            objects[5] = new Object("/tex/obj/car.png", false, "carCrash");
             objects[2] = new Object("/tex/obj/donken.png", 4, 3 , "donken", false);
             objects[3] = new Object("/tex/obj/house.png", 6, 6 , "next", true);
             // collision border
-            objects[4] = new Object("/tex/tiles/0empty.png", true);
+            objects[6] = new Object("/tex/tiles/0empty.png", true);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -138,13 +146,18 @@ public class TileManager {
     @param g The Graphics object to draw the tiles with.
     */
     public void draw(Graphics g) {
-        g.drawImage(background, 0, 0, panel.width, panel.height, null);
+        if(bgIndex == 0){
+            g.drawImage(background1, 0, 0, panel.width, panel.height, null);
+        }else{
+            g.drawImage(background2, 0, 0, panel.width, panel.height, null);
+        }
+        
         for (int y = 0; y < mapSizeY; y++) {
             for (int x = 0; x < mapSizeX; x++) {
                 g.drawImage(tiles[map[x][y]].image, (x * panel.tileSize - posX), (y * panel.tileSize), panel.tileSize, panel.tileSize, null);
                 if(mapObj[x][y] != 0) {
                     Object obj = objects[mapObj[x][y]];
-                    g.drawImage(obj.image, (x * panel.tileSize - posX), ((y - obj.rows + 1) * panel.tileSize), panel.tileSize*obj.cols, panel.tileSize*obj.rows, null);
+                    if(obj.isVisible) g.drawImage(obj.image, (x * panel.tileSize - posX), ((y - obj.rows + 1) * panel.tileSize), panel.tileSize*obj.cols, panel.tileSize*obj.rows, null);
                 }
             }
         }
@@ -194,8 +207,12 @@ public class TileManager {
                 return 2;
             case "c":
                 return 3;
-            case "I":
+            case "d":
                 return 4;
+            case "f":
+                return 5;
+            case "I":
+                return 6;
             default:
                 return 0;
         }
