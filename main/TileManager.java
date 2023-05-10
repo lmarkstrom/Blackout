@@ -92,10 +92,12 @@ public class TileManager {
         try {
             tile[0] = new Tile(false, "/tex/tiles/0empty.png", false);
             tile[1] = new Tile(true, "/tex/tiles/1dirt.png", false);
-            tile[2] = new Tile(true, "/tex/tiles/street.png", false);
-            tile[3] = new Tile(false, "/tex/tiles/3flagPole.png", false);
-            tile[4] = new Tile(false, "/tex/tiles/4flagTop.png", false);
-            tile[5] = new Tile(false, "/tex/tiles/5playerHouse.png", false);
+            tile[2] = new Tile(true, "/tex/tiles/2street.png", false);
+            tile[3] = new Tile(false, "/tex/tiles/3grass.png", false);
+            tile[4] = new Tile(false, "/tex/tiles/4streetEndR.png", false);
+            tile[5] = new Tile(false, "/tex/tiles/5streetEndL.png", false);
+            tile[6] = new Tile(false, "/tex/tiles/6dirtEndR.png", false);
+            tile[7] = new Tile(false, "/tex/tiles/7dirtEndL.png", false);
         } catch (Exception e) {
             System.out.println(e);
         }

@@ -11,7 +11,7 @@ public class LevelManager {
     public int levelIndex;
     public int currentIndex;
     private String[] levelPath = new String[] {"/data/map.txt", "/data/map2.txt", "/data/map3.txt"};
-    private String[] bgPath = new String[] {"/tex/bg/gameBg.png", "/tex/bg/gameBg.png", "/tex/bg/gameBg.png"};
+    private String[] bgPath = new String[] {"/tex/bg/bgForest.png", "/tex/bg/bgCity.png", "/tex/bg/bgCity.png"};
 
     public int maxLevel = levelPath.length - 1;
 
