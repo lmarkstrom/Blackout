@@ -100,6 +100,11 @@ public class Animation {
         this.currentFrame = 0;
         this.stopped = false;
     }
+
+    public boolean done(){
+        System.out.println("DONE");
+        return currentFrame == totalFrames -1;
+    }
     /**
      * runs the animation
      * change current frame
@@ -114,6 +119,7 @@ public class Animation {
 
                 if (currentFrame > totalFrames - 1) {
                     currentFrame = 0;
+
                 }
                 else if (currentFrame < 0) {
                     currentFrame = totalFrames - 1;
