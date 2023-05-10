@@ -31,12 +31,13 @@ public class Panel extends JPanel implements Runnable{
     public KeyHandler keyHandler = new KeyHandler();
     public ArrayList<Enemy> enemies;
     public Player player;
-    private LevelManager levelManager;
+    public LevelManager levelManager;
     public CollisionHandler collisionHandler;
     public Menu menu;
     public PlayerData playerData;
     public CutScene cutScene;
     private Action action;
+    private BackgroundSound backgroundSound;
 
     public enum STATE{
         MENU,
@@ -63,6 +64,7 @@ public class Panel extends JPanel implements Runnable{
         this.playerData = new PlayerData(this, levelManager);
         this.cutScene = new CutScene(this, keyHandler);
         this.action = new Action(keyHandler, player, this);
+        this.backgroundSound = new BackgroundSound(this);
         try {
             this.backgroundImage = ImageIO.read(getClass().getResourceAsStream("/tex/bg/gameBg.png"));
         } catch (IOException e) {
@@ -99,6 +101,7 @@ public class Panel extends JPanel implements Runnable{
         state = STATE.GAME;
         cutScene.cutSceneDone = true;
         System.out.println(state);
+        backgroundSound.setSound();
     }
 
     public void loseGame(){
@@ -107,11 +110,16 @@ public class Panel extends JPanel implements Runnable{
         player.health = player.maxHealth;
         player.stamina = player.maxStamina;
         levelManager.levelIndex = 0;
+        player.done = false; 
+        player.done2 = false;
+        player.done3 = false;
+        player.done4 = false;
         startCutScene("cutscenes/death.gif", 24);
         //menu.openMainMenu();
     }
 
     public void winGame(){
+        SoundEffects.hemmaAntligen2.play();
         startCutScene("cutscenes/endScene.gif", 16);
         player.won = true;
     }
@@ -156,12 +164,13 @@ public class Panel extends JPanel implements Runnable{
 
     public void startNewGame(){
         state = STATE.CUTSCENE;
+        SoundEffects.music.play();
         player.won = false;
         cutScene.cutSceneDone = false;
         cutScene.count = 0;
         cutScene.frameCount = 0;
         player.cam = 0;
-        player.y = height/2;
+        player.y = height-tileSize*3;
         levelManager.levelIndex = 0;
         cutScene.getFrames("cutscenes/introScene.gif", 29);
     }
@@ -232,6 +241,8 @@ public class Panel extends JPanel implements Runnable{
                 levelManager.setLevel(); 
                 keyHandler.L = false;
             }
+
+            backgroundSound.update();
         }
         for (Enemy enemy : enemies) {
             if(!enemy.isChasing)
