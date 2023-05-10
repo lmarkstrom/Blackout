@@ -1,5 +1,7 @@
 package main;
 
+import main.Panel.STATE;
+
 public class CollisionHandler{
 
     // private Entity player;
@@ -76,7 +78,7 @@ public class CollisionHandler{
                 }
                 if ((playerCol - 1) >= 0) objVal1 = mapObj[playerCol - 1][playerRow2]; // check wider area for collisoon
                 if(player.isPlayer && ((objVal1 != 0 && !tileManager.objects[objVal1].actionString.equals("")) || (objVal2 != 0 && !tileManager.objects[objVal2].actionString.equals("")))){
-                    checkObjAction(objVal2);
+                    checkObjAction(objVal2, player);
                 }
             }
         } else {
@@ -116,7 +118,7 @@ public class CollisionHandler{
         controllGround(player);
     }
 
-    public void checkObjAction(int objVal){
+    public void checkObjAction(int objVal, Entity player){
         String action = tileManager.objects[objVal].actionString;
         switch (action){
             case "donken":
@@ -124,6 +126,12 @@ public class CollisionHandler{
                 break;
             case "next":
                 levelManager.nextLevel();
+            case "carCrash":
+                if(panel.state == STATE.GAME &&levelManager.tileManager.objects[4].actionString == "redLight"){
+                    levelManager.tileManager.objects[5].isVisible = true;
+                    player.health -= 100;
+                    SoundEffects.crach.play();
+                }
             default:
                 break;
         }
