@@ -32,6 +32,12 @@ public class Object {
         this.rows = rows;
         this.image = ImageIO.read(getClass().getResourceAsStream(path));
     }
+    public Object(String path, int cols, int rows, String actionString) throws IOException{
+        this.actionString = actionString;
+        this.cols = cols;
+        this.rows = rows;
+        this.image = ImageIO.read(getClass().getResourceAsStream(path));
+    }
 
     public Object(String path, boolean isVisible, String actionString) throws IOException{
         this.isVisible = isVisible;
