@@ -29,6 +29,7 @@ public class Menu implements ActionListener{
     private int width, height;
 
     private BufferedImage background;
+    private BufferedImage background2;
     
     public Menu(Panel panel, JFrame window, JLayeredPane pane){
         this.panel = panel;
@@ -71,6 +72,7 @@ public class Menu implements ActionListener{
     private void loadImage(){
         try{
             background = ImageIO.read(getClass().getResourceAsStream("/tex/bg/menuBg.png"));
+            background2 = ImageIO.read(getClass().getResourceAsStream("/tex/bg/menuBg2.png"));
         }
         catch(Exception e){
             System.out.println(e);
@@ -87,18 +89,9 @@ public class Menu implements ActionListener{
         ImageIcon icon = new ImageIcon(dimg);
         JLabel bg = new JLabel(icon);
         bg.setBounds(0, 0, width, height);
-
-        // Main title
-        /* 
-        JLabel title = new JLabel("GAME TITLE", SwingConstants.CENTER);
-        Font titleFont = new Font("Arial", Font.BOLD, 80);
-        title.setForeground(Color.WHITE);
-        title.setFont(titleFont);
-        title.setBounds(width/2 - 300, 50, 600, 150);
-        */
         
         // Start game button
-        JButton startNewGame = new JButton("START GAME");
+        JButton startNewGame = new JButton("START NEW GAME");
         startNewGame.setActionCommand("start");
         startNewGame.addActionListener(this);
         startNewGame.setBounds(width/2 - 100, 300, 200, 50);
@@ -116,7 +109,6 @@ public class Menu implements ActionListener{
         exit.setBounds(width/2 - 100, 400, 200, 50);
         
         layers.add(bg, JLayeredPane.DEFAULT_LAYER);
-        //layers.add(title, JLayeredPane.POPUP_LAYER);
         layers.add(startNewGame, JLayeredPane.POPUP_LAYER);
         layers.add(loadGame, JLayeredPane.POPUP_LAYER);
         layers.add(exit, JLayeredPane.POPUP_LAYER);
@@ -168,17 +160,10 @@ public class Menu implements ActionListener{
         layers.setPreferredSize(new Dimension(width, height));
 
         // Background image
-        Image dimg = background.getScaledInstance(background.getWidth()*3, background.getHeight()*3, Image.SCALE_SMOOTH);
+        Image dimg = background2.getScaledInstance(background.getWidth()*3, background.getHeight()*3, Image.SCALE_SMOOTH);
         ImageIcon icon = new ImageIcon(dimg);
         JLabel bg = new JLabel(icon);
         bg.setBounds(0, 0, width, height);
-
-        // Load title
-        JLabel title = new JLabel("CHOOSE LOAD", SwingConstants.CENTER);
-        Font titleFont = new Font("Arial", Font.BOLD, 80);
-        title.setForeground(Color.WHITE);
-        title.setFont(titleFont);
-        title.setBounds(width/2 - 300, 50, 600, 150);
         
         for (int i = 0; i < panel.playerData.loadCount; i++){
             JButton newBt = new JButton("LOAD: " + (i + 1));
@@ -195,7 +180,6 @@ public class Menu implements ActionListener{
         exit.setBounds(width/2 - 100, 700, 200, 50);
         
         layers.add(bg, JLayeredPane.DEFAULT_LAYER);
-        layers.add(title, JLayeredPane.POPUP_LAYER);
         layers.add(exit, JLayeredPane.POPUP_LAYER);
         layers.setVisible(true);
         
