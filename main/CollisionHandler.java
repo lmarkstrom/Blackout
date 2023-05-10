@@ -5,6 +5,7 @@ public class CollisionHandler{
     // private Entity player;
     private Panel panel;
     private TileManager tileManager;
+    private LevelManager levelManager;
     private KeyHandler keyHandler;
     private boolean damageTaken;
 
@@ -13,6 +14,7 @@ public class CollisionHandler{
 
     public CollisionHandler(Panel panel, LevelManager levelManager, KeyHandler keyHandler){
         this.panel = panel;
+        this.levelManager = levelManager;
         this.tileManager = levelManager.tileManager;
         this.keyHandler = keyHandler;
         this.map = tileManager.map;
@@ -69,12 +71,12 @@ public class CollisionHandler{
                     player.collideX = true;
                 } else if((objVal1 != 0 && tileManager.objects[objVal1].collision == true) || (objVal2 != 0 && tileManager.objects[objVal2].collision == true)){
                     player.collideX = true;
-                } else if(player.isPlayer && ((objVal1 != 0 && !tileManager.objects[objVal1].actionString.equals("")) || (objVal2 != 0 && !tileManager.objects[objVal2].actionString.equals("")))){
-                    System.out.println("donken");
-                    checkObjAction(objVal2);
-
                 }else {
                     player.collideX = false;
+                }
+                if ((playerCol - 1) >= 0) objVal1 = mapObj[playerCol - 1][playerRow2]; // check wider area for collisoon
+                if(player.isPlayer && ((objVal1 != 0 && !tileManager.objects[objVal1].actionString.equals("")) || (objVal2 != 0 && !tileManager.objects[objVal2].actionString.equals("")))){
+                    checkObjAction(objVal2);
                 }
             }
         } else {
@@ -115,12 +117,13 @@ public class CollisionHandler{
     }
 
     public void checkObjAction(int objVal){
-        
         String action = tileManager.objects[objVal].actionString;
         switch (action){
             case "donken":
                 panel.cutScene.startDonken();
                 break;
+            case "next":
+                levelManager.nextLevel();
             default:
                 break;
         }

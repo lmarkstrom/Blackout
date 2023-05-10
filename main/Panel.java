@@ -33,7 +33,7 @@ public class Panel extends JPanel implements Runnable{
     public Player player;
     private LevelManager levelManager;
     public CollisionHandler collisionHandler;
-    private Menu menu;
+    public Menu menu;
     public PlayerData playerData;
     public CutScene cutScene;
     private Action action;
@@ -48,8 +48,6 @@ public class Panel extends JPanel implements Runnable{
     public STATE state;
     private Image backgroundImage;
 
-    public int levelIndex;
-
     public Panel(){
         state = STATE.MENU;
         // setUp game panel
@@ -58,13 +56,11 @@ public class Panel extends JPanel implements Runnable{
         this.setDoubleBuffered(true); // Buffer to the panel, so it starts painting before the next drawtime
         this.setFocusable(true);
         this.addKeyListener(keyHandler);
-        
-        this.levelIndex = 0;
         this.enemies = new ArrayList<>();
         this.player = new Player(keyHandler, this);
         this.levelManager = new LevelManager(this, player);
         this.collisionHandler = new CollisionHandler(this, levelManager, keyHandler);
-        this.playerData = new PlayerData(this);
+        this.playerData = new PlayerData(this, levelManager);
         this.cutScene = new CutScene(this, keyHandler);
         this.action = new Action(keyHandler, player, this);
         try {
@@ -84,9 +80,9 @@ public class Panel extends JPanel implements Runnable{
 
     
     public void deleteEnemies() {
-        for (int i = 0; i < enemies.size(); i++) {
-            enemies.remove(i);
-        }
+        ArrayList<Enemy> list = new ArrayList<>(enemies);
+        enemies.removeAll(list);
+        
     }
 
     /*
@@ -99,9 +95,25 @@ public class Panel extends JPanel implements Runnable{
     }
 
     public void startGame(){
+        levelManager.setLevel();
         state = STATE.GAME;
         cutScene.cutSceneDone = true;
         System.out.println(state);
+    }
+
+    public void loseGame(){
+        state = STATE.MENU;
+        resetGame();
+        player.health = player.maxHealth;
+        player.stamina = player.maxStamina;
+        levelManager.levelIndex = 0;
+        startCutScene("cutscenes/death.gif", 24);
+        //menu.openMainMenu();
+    }
+
+    public void winGame(){
+        startCutScene("cutscenes/endScene.gif", 16);
+        player.won = true;
     }
 
     public void resetGame(){
@@ -144,11 +156,13 @@ public class Panel extends JPanel implements Runnable{
 
     public void startNewGame(){
         state = STATE.CUTSCENE;
+        player.won = false;
         cutScene.cutSceneDone = false;
         cutScene.count = 0;
         cutScene.frameCount = 0;
         player.cam = 0;
         player.y = height/2;
+        levelManager.levelIndex = 0;
         cutScene.getFrames("cutscenes/introScene.gif", 29);
     }
 
@@ -197,6 +211,7 @@ public class Panel extends JPanel implements Runnable{
         // call method that should be updated here:
         playerData.update();
         if (state == STATE.GAME){
+            controlLoss();
             if(keyHandler.pause) {
                 state = STATE.MENU;
                 menu.pausePanel.setVisible(true);
@@ -212,19 +227,18 @@ public class Panel extends JPanel implements Runnable{
 
             // LEVEL TEST (tryck "L" för att få ny bana)
             if (keyHandler.L) {
-                this.levelIndex = 1;
-                if(levelIndex > levelManager.maxLevel) this.levelIndex--;
+                this.levelManager.levelIndex = 1;
+                if(levelManager.levelIndex > levelManager.maxLevel) this.levelManager.levelIndex--;
                 levelManager.setLevel(); 
                 keyHandler.L = false;
             }
-        }    
+        }
         for (Enemy enemy : enemies) {
             if(!enemy.isChasing)
             {
                 enemy.update();
             } 
         }
-        
         action.update();
         player.updateAnimation();
     }
@@ -238,6 +252,7 @@ public class Panel extends JPanel implements Runnable{
         // create graphic object
         Graphics2D g = (Graphics2D) graphics;
 
+        
         g.drawImage(backgroundImage, 0, 0, this.getWidth(), this.getHeight(), this);
 
         // call method to paint player and map here:
@@ -249,11 +264,23 @@ public class Panel extends JPanel implements Runnable{
         player.draw(g);
         playerData.draw(g);
         
+       
+        
         if(!cutScene.cutSceneDone && state == STATE.CUTSCENE){
             cutScene.draw(g);
         }
         
         // dispose graphic
         g.dispose();
+    }
+
+    private void controlLoss(){
+        if(player.y > height){
+            System.out.println("LOST");
+            loseGame();
+        } else if(player.health <= 0 || player.stamina <= 0){
+            System.out.println("LOST");
+            loseGame();
+        }
     }
 }

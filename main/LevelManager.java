@@ -9,8 +9,9 @@ public class LevelManager {
     Panel panel;
 
     public int levelIndex;
-    private String[] levelPath = new String[] {"/data/map.txt", "/data/map2.txt"};
-    private String[] bgPath = new String[] {"/tex/bg/gameBg.png", "/tex/bg/gameBg.png"};
+    public int currentIndex;
+    private String[] levelPath = new String[] {"/data/map.txt", "/data/map2.txt", "/data/map3.txt"};
+    private String[] bgPath = new String[] {"/tex/bg/gameBg.png", "/tex/bg/gameBg.png", "/tex/bg/gameBg.png"};
 
     public int maxLevel = levelPath.length - 1;
 
@@ -18,22 +19,39 @@ public class LevelManager {
     public LevelManager(Panel panel, Player player){
         this.panel = panel;
         this.player = player;
+        this.currentIndex = levelIndex;
         this.tileManager = new TileManager(panel, player, levelPath[levelIndex], bgPath[levelIndex]);
     }
 
+    public void nextLevel(){
+        if((levelIndex + 1) > maxLevel){
+            panel.winGame();
+        } else{
+            if(levelIndex < maxLevel) levelIndex++;
+            panel.deleteEnemies();
+            player.cam = 0;
+            player.y = panel.height/2;
+            this.currentIndex = levelIndex;
+            tileManager = new TileManager(panel, player, levelPath[levelIndex], bgPath[levelIndex]);
+            panel.collisionHandler = new CollisionHandler(panel, this, panel.keyHandler);
+            panel.startCutScene("cutscenes/nextLvl.gif", 5);
+        }
+    }
+
     public void setLevel(){
-        levelIndex = panel.levelIndex;
         panel.deleteEnemies();
+        this.currentIndex = levelIndex;
         tileManager = new TileManager(panel, player, levelPath[levelIndex], bgPath[levelIndex]);
         panel.collisionHandler = new CollisionHandler(panel, this, panel.keyHandler);
     }
 
     public void resetGame(){
+        this.currentIndex = levelIndex;
         tileManager = new TileManager(panel, player, levelPath[levelIndex], bgPath[levelIndex]);
     }
 
     public void update(){
-        if(panel.levelIndex != levelIndex){
+        if(levelIndex != currentIndex){
             setLevel();
         }
         tileManager.update();

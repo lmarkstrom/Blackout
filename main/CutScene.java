@@ -67,19 +67,21 @@ public class CutScene{
         } catch (IOException e) {
             System.out.println("File not found for cutscene: " + e);
         }
-        
+        System.out.println(frames.size());
         this.frames = frames;
     }
 
     public void startDonken(){
-        System.out.println("enter donken");
         if(keyHandler.E){
-            panel.startCutScene("cutscenes/donkenScene.gif", 10);
+            panel.startCutScene("cutscenes/donkenScene.gif", 8);
+            panel.player.stamina = panel.player.maxStamina; 
         } 
     }
 
     public void draw (Graphics g){
         g.drawImage(frames.get(frameCount), 0, 0, panel.width, panel.height, null);
+        System.out.println("draw");
+        System.out.println(count + " " + frameCount);
         if (count > frameDur) {
             frameCount++;
             count = 0;
@@ -87,11 +89,14 @@ public class CutScene{
         if (frameCount >= frames.size()) {
             cutSceneDone = true;
             try {
-                Thread.sleep(2000);
+                Thread.sleep(200);
             } catch (Exception e) {
             }
             if (panel.player.isBusted){
                 panel.resetGame();
+            } else if(panel.player.won){
+                panel.stopGame();
+                panel.menu.openMainMenu();
             }else panel.startGame();
         }
         count++;

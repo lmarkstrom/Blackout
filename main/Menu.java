@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 public class Menu implements ActionListener{
-    private JPanel menuPanel = new JPanel();
+    public JPanel menuPanel = new JPanel();
     public JPanel pausePanel = new JPanel();
     private JFrame window;
     private Panel panel;
@@ -59,6 +59,13 @@ public class Menu implements ActionListener{
         // Add menu to window
         pane.add(menuPanel, JLayeredPane.POPUP_LAYER);
         pane.add(pausePanel, JLayeredPane.POPUP_LAYER);
+    }
+
+    public void openMainMenu(){
+        System.out.println("exitToMain");
+        loadPage.setVisible(false);
+        startPage.setVisible(true);
+        menuPanel.setVisible(true);
     }
 
     private void loadImage(){
@@ -226,9 +233,7 @@ public class Menu implements ActionListener{
             menuPanel.setVisible(true);
             pausePanel.setVisible(false);
         }else if(actionStr.equals("exitToMain")){
-            System.out.println("exitToMain");
-            loadPage.setVisible(false);
-            startPage.setVisible(true);
+            openMainMenu();
         } else if(actionStr.equals("loadSave")){
             System.out.println("loadSave");
             JButton button = (JButton) e.getSource();
