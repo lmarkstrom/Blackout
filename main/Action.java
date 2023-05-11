@@ -7,7 +7,7 @@ import java.util.Random;
 import main.Panel.STATE;
 
 /**
- * The Action class handles player actions such as singing a song and starting dance animations.
+ * The Action class handles game and player actions such as singing, starting dance animations and functionality of the redLight.
  * @author Elsa
  */
 public class Action {
@@ -106,6 +106,7 @@ public class Action {
 
         ticks ++;
 
+        //funcitionality of the redlight
         if(panel.state == STATE.GAME){
             var light = panel.levelManager.tileManager.objects[4];
             if ( ticks > 60*11){
@@ -117,6 +118,7 @@ public class Action {
                     e.printStackTrace();
                 }
             } else if(ticks > 60*8 && player.animation == player.walkAnimation && !played){
+                //this just plays a random noise now and then to give the game more life
                 noise.get(random.nextInt(noise.size())).play();
                 played = true;
             } else if(ticks > 60*6){

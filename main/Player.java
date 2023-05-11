@@ -37,7 +37,7 @@ public class Player extends Entity {
     private boolean isPuking; 
     private int tick;
     private int tick2;
-    public boolean done, done2, done3, done4;
+    public boolean done, done2;
 
 
     /**
@@ -62,6 +62,9 @@ public class Player extends Entity {
         x = panel.width/2;
         y = panel.height-panel.tileSize*3;
         direction = size;
+        isStanding = false;
+        tick = 0;
+        tick2 = 0;
         injuries.add(SoundEffects.ramlar);
         injuries.add(SoundEffects.ramlar2);
         injuries.add(SoundEffects.ramlar3);
@@ -75,11 +78,6 @@ public class Player extends Entity {
         jumping.add(SoundEffects.hopp3);
         jumping.add(SoundEffects.hopp4);
         loadTextures();
-
-        isStanding = false;
-        tick = 0;
-        tick2 = 0;
-
         animation = standupAnimation;
         animation.start();
     }
@@ -119,6 +117,10 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * Updates the animation and handles dance state logic.
+     * N.B. this method will be updated regardless of the panel.state
+     */
     public void updateAnimation(){
         animation.update();
 
@@ -138,10 +140,12 @@ public class Player extends Entity {
                 isPuking = false;
                 tick2 = 0;
             }
-     
         }
     }
 
+    /**
+     * Triggers puking animation and sound effect.
+     */
     private void puke(){
         panel.startDanceState();
         SoundEffects.vomiting.play();
@@ -151,14 +155,23 @@ public class Player extends Entity {
         isPuking = true;
     }
 
+    /**
+     * Checks if the given integer is within the given range.
+     * 
+     * @param x     the integer to be checked
+     * @param lower the lower bound of the range (inclusive)
+     * @param upper the upper bound of the range (inclusive)
+     * @return      true if x is within the range, false otherwise
+     */
     private boolean isBetween(int x, int lower, int upper) {
         return lower <= x && x <= upper;
-      }
+    }
 
     /**
      * Updates the player's position and movement based on keyboard input.
      * Handles player jumping and gravity.
      * Updates the walking animation if the player is moving.
+     * N.B. This update method will only run if panel.state == STATE.GAME
      * @throws InterruptedException
      */
     public void update(){
@@ -184,26 +197,36 @@ public class Player extends Entity {
                 animation.start();
                 SoundEffects.sniffle.play();
            }
+           //this warns the player of low stamina
             var ran = random.nextInt(100, 500);
-            if (!done && isBetween(stamina, 3000+ran , 3000+ran+50) && isGrounded){
-                puke();
+            if(!done && isBetween(stamina, 4000, 4050)){ 
+                SoundEffects.marInteBra.play();
                 done = true;
-            } 
-            if (!done2 && isBetween(stamina, 3000, 3050) && isGrounded){
+            }
+            if (!done2 && isBetween(stamina, 3000+ran , 3000+ran+50) && isGrounded){
                 puke();
                 done2 = true;
+                done = false;
             } 
-            if (!done3 && isBetween(stamina, 2000, 2050) && isGrounded){ 
+            if (!done && isBetween(stamina, 3000, 3050) && isGrounded){
                 puke();
-                done3 = true;
-            }
-            if (!done4 && isBetween(stamina, 1000, 1050) && isGrounded){ 
+                done = true;
+                done2 = false;
+            } 
+            if (!done2 && isBetween(stamina, 2000, 2050) && isGrounded){ 
                 puke();
-                done4 = true;
+                done2 = true;
+                done = false;
             }
-
-            if(stamina == 4000) SoundEffects.marInteBra.play();
-
+            if(!done && isBetween(stamina, 1500, 1550)){
+                SoundEffects.marInteBra.play();
+                done = true;
+                done2 = false;
+            }
+            if (!done2 && isBetween(stamina, 1000, 1050) && isGrounded){ 
+                puke();
+                done2 = true;
+            }
         }      
 
        if(keyHandler.up && isGrounded && !collideTop){
@@ -239,6 +262,10 @@ public class Player extends Entity {
         super.updateCollission();
     }
 
+    /**
+    * This method calculates and applies fall damage to the player if the fall height is greater than 28.
+    * If fall damage is applied, a random injury sound effect is played.
+    */
     private void takeFallDamage(){
         if(fallHeight > 28){
             health -= 5;
