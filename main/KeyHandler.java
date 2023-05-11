@@ -46,8 +46,6 @@ public class KeyHandler implements KeyListener {
             F = true;
         }
 
-      
-
         //dance and sing
         if (key == KeyEvent.VK_Q){
             Q = true;

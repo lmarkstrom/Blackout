@@ -101,10 +101,15 @@ public class Animation {
         this.stopped = false;
     }
 
+    /**
+     * Checks if the animation is complete.
+     * @return true if the current frame is the last frame, false otherwise.
+     */
     public boolean done(){
         System.out.println("DONE");
         return currentFrame == totalFrames -1;
     }
+
     /**
      * runs the animation
      * change current frame

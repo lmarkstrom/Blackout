@@ -119,6 +119,10 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * Updates the animation and handles dance state logic.
+     * N.B. this method will be updated regardless of the panel.state
+     */
     public void updateAnimation(){
         animation.update();
 
@@ -142,6 +146,9 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * Triggers puking animation and sound effect.
+     */
     private void puke(){
         panel.startDanceState();
         SoundEffects.vomiting.play();
@@ -151,14 +158,23 @@ public class Player extends Entity {
         isPuking = true;
     }
 
+    /**
+     * Checks if the given integer is within the given range.
+     * 
+     * @param x     the integer to be checked
+     * @param lower the lower bound of the range (inclusive)
+     * @param upper the upper bound of the range (inclusive)
+     * @return      true if x is within the range, false otherwise
+     */
     private boolean isBetween(int x, int lower, int upper) {
         return lower <= x && x <= upper;
-      }
+    }
 
     /**
      * Updates the player's position and movement based on keyboard input.
      * Handles player jumping and gravity.
      * Updates the walking animation if the player is moving.
+     * N.B. This update method will only run if panel.state == STATE.GAME
      * @throws InterruptedException
      */
     public void update(){
@@ -239,6 +255,10 @@ public class Player extends Entity {
         super.updateCollission();
     }
 
+    /**
+    * This method calculates and applies fall damage to the player if the fall height is greater than 28.
+    * If fall damage is applied, a random injury sound effect is played.
+    */
     private void takeFallDamage(){
         if(fallHeight > 28){
             health -= 5;

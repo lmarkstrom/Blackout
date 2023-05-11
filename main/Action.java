@@ -7,7 +7,7 @@ import java.util.Random;
 import main.Panel.STATE;
 
 /**
- * The Action class handles player actions such as singing a song and starting dance animations.
+ * The Action class handles game and player actions such as singing, starting dance animations and functionality of the redLight.
  * @author Elsa
  */
 public class Action {
