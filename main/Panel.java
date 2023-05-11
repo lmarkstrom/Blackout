@@ -112,8 +112,6 @@ public class Panel extends JPanel implements Runnable{
         levelManager.levelIndex = 0;
         player.done = false; 
         player.done2 = false;
-        player.done3 = false;
-        player.done4 = false;
         startCutScene("cutscenes/death.gif", 24);
         //menu.openMainMenu();
     }

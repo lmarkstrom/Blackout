@@ -37,7 +37,7 @@ public class Player extends Entity {
     private boolean isPuking; 
     private int tick;
     private int tick2;
-    public boolean done, done2, done3, done4;
+    public boolean done, done2;
 
 
     /**
@@ -62,6 +62,9 @@ public class Player extends Entity {
         x = panel.width/2;
         y = panel.height-panel.tileSize*3;
         direction = size;
+        isStanding = false;
+        tick = 0;
+        tick2 = 0;
         injuries.add(SoundEffects.ramlar);
         injuries.add(SoundEffects.ramlar2);
         injuries.add(SoundEffects.ramlar3);
@@ -75,11 +78,6 @@ public class Player extends Entity {
         jumping.add(SoundEffects.hopp3);
         jumping.add(SoundEffects.hopp4);
         loadTextures();
-
-        isStanding = false;
-        tick = 0;
-        tick2 = 0;
-
         animation = standupAnimation;
         animation.start();
     }
@@ -142,7 +140,6 @@ public class Player extends Entity {
                 isPuking = false;
                 tick2 = 0;
             }
-     
         }
     }
 
@@ -200,26 +197,36 @@ public class Player extends Entity {
                 animation.start();
                 SoundEffects.sniffle.play();
            }
+           //this warns the player of low stamina
             var ran = random.nextInt(100, 500);
-            if (!done && isBetween(stamina, 3000+ran , 3000+ran+50) && isGrounded){
-                puke();
+            if(!done && isBetween(stamina, 4000, 4050)){ 
+                SoundEffects.marInteBra.play();
                 done = true;
-            } 
-            if (!done2 && isBetween(stamina, 3000, 3050) && isGrounded){
+            }
+            if (!done2 && isBetween(stamina, 3000+ran , 3000+ran+50) && isGrounded){
                 puke();
                 done2 = true;
+                done = false;
             } 
-            if (!done3 && isBetween(stamina, 2000, 2050) && isGrounded){ 
+            if (!done && isBetween(stamina, 3000, 3050) && isGrounded){
                 puke();
-                done3 = true;
-            }
-            if (!done4 && isBetween(stamina, 1000, 1050) && isGrounded){ 
+                done = true;
+                done2 = false;
+            } 
+            if (!done2 && isBetween(stamina, 2000, 2050) && isGrounded){ 
                 puke();
-                done4 = true;
+                done2 = true;
+                done = false;
             }
-
-            if(stamina == 4000) SoundEffects.marInteBra.play();
-
+            if(!done && isBetween(stamina, 1500, 1550)){
+                SoundEffects.marInteBra.play();
+                done = true;
+                done2 = false;
+            }
+            if (!done2 && isBetween(stamina, 1000, 1050) && isGrounded){ 
+                puke();
+                done2 = true;
+            }
         }      
 
        if(keyHandler.up && isGrounded && !collideTop){

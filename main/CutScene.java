@@ -76,8 +76,6 @@ public class CutScene{
             panel.player.stamina = panel.player.maxStamina; 
             panel.player.done = false;
             panel.player.done2 = false;
-            panel.player.done3= false;
-            panel.player.done4 = false;
         } 
     }
 
