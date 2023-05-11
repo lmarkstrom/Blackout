@@ -1,5 +1,7 @@
 package main;
 
+import main.Panel.STATE;
+
 public class BackgroundSound {
     
     private SoundEffects sound;
@@ -24,6 +26,7 @@ public class BackgroundSound {
             sound.clip.setFramePosition(0);
             sound.clip.start();
         }
+        if(panel.state != STATE.GAME) sound.clip.stop();
         
     }
 }
