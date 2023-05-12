@@ -16,7 +16,7 @@ the map layout and a separate array to store the tile images.
 */
 public class TileManager {
     // constants
-    public final int maxTiles = 20;
+    public final int maxTiles = 10;
     public final int maxObjects = 20;
     public int map[][];
     public int mapObj[][];
@@ -94,14 +94,14 @@ public class TileManager {
     private Tile[] getTileImage() {
         Tile[] tile = new Tile[maxTiles];
         try {
-            tile[0] = new Tile(false, "/tex/tiles/0empty.png");
-            tile[1] = new Tile(true, "/tex/tiles/1dirt.png");
-            tile[2] = new Tile(true, "/tex/tiles/2street.png");
-            tile[3] = new Tile(true, "/tex/tiles/3grass.png");
-            tile[4] = new Tile(true, "/tex/tiles/4streetEndR.png");
-            tile[5] = new Tile(true, "/tex/tiles/5streetEndL.png");
-            tile[6] = new Tile(true, "/tex/tiles/6dirtEndR.png");
-            tile[7] = new Tile(true, "/tex/tiles/7dirtEndL.png");
+            tile[0] = new Tile(false, "/tex/tiles/0empty.png", false);
+            tile[1] = new Tile(true, "/tex/tiles/1dirt.png", false);
+            tile[2] = new Tile(true, "/tex/tiles/2street.png", false);
+            tile[3] = new Tile(false, "/tex/tiles/3grass.png", false);
+            tile[4] = new Tile(false, "/tex/tiles/4streetEndR.png", false);
+            tile[5] = new Tile(false, "/tex/tiles/5streetEndL.png", false);
+            tile[6] = new Tile(false, "/tex/tiles/6dirtEndR.png", false);
+            tile[7] = new Tile(false, "/tex/tiles/7dirtEndL.png", false);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -120,8 +120,11 @@ public class TileManager {
             objects[0] = new Object("/tex/tiles/0empty.png", false);
             objects[1] = new Object("/tex/obj/car.png", true);
             objects[2] = new Object("/tex/obj/donken.png", 4, 3 , "donken");
-            objects[3] = new Object("/tex/obj/house.png", 6, 6 , "next");
+            objects[3] = new Object("/tex/obj/house.png", 1, 1 , "next");
             objects[4] = new Object("/tex/obj/redLightGreen.png", 1, 2, "greenLight");
+            objects[5] = new Object("/tex/obj/car.png", false, "carCrash");
+            objects[2] = new Object("/tex/obj/donken.png", 4, 3 , "donken", false);
+            objects[3] = new Object("/tex/obj/house.png", 6, 6 , "next", true);
             // collision border
             objects[6] = new Object("/tex/tiles/0empty.png", true);
         } catch (Exception e) {
@@ -151,16 +154,11 @@ public class TileManager {
         
         for (int y = 0; y < mapSizeY; y++) {
             for (int x = 0; x < mapSizeX; x++) {
-                try {
-                    g.drawImage(tiles[map[x][y]].image, (x * panel.tileSize - posX), (y * panel.tileSize), panel.tileSize, panel.tileSize, null);
+                g.drawImage(tiles[map[x][y]].image, (x * panel.tileSize - posX), (y * panel.tileSize), panel.tileSize, panel.tileSize, null);
                 if(mapObj[x][y] != 0) {
                     Object obj = objects[mapObj[x][y]];
                     if(obj.isVisible) g.drawImage(obj.image, (x * panel.tileSize - posX), ((y - obj.rows + 1) * panel.tileSize), panel.tileSize*obj.cols, panel.tileSize*obj.rows, null);
                 }
-                } catch (Exception e) {
-                    // TODO: handle exception
-                }
-                
             }
         }
     }
