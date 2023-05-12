@@ -10,8 +10,8 @@ public class LevelManager {
 
     public int levelIndex;
     public int currentIndex;
-    private String[] levelPath = new String[] {"/data/map.txt", "/data/map2.txt", "/data/map3.txt"};
-    private int[] bgIndex = new int[] {0, 0, 1};
+    private String[] levelPath = new String[] {"/data/map.txt", "/data/map2.txt", "/data/map3.txt", "/data/map4.txt"};
+    private int[] bgIndex = new int[] {0, 1, 1, 0};
 
     public int maxLevel = levelPath.length - 1;
 
