@@ -16,7 +16,7 @@ public class Action {
     private KeyHandler keyHandler;
     private Player player;
     private Panel panel;
-    private boolean busted;
+    public boolean busted;
     private ArrayList<SoundEffects> songs = new ArrayList<>();
     private ArrayList<SoundEffects> noise = new ArrayList<>();
     private Random random = new Random();

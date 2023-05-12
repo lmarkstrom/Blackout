@@ -126,6 +126,7 @@ public class Panel extends JPanel implements Runnable{
         state = STATE.GAME;
         cutScene.cutSceneDone = true;
         player.isBusted = false;
+        action.busted = false;
         player.anger = 0;
         for (Enemy enemy : enemies) enemy.isChasing = false;
         deleteEnemies();
